@@ -328,6 +328,35 @@ img{display:block;max-width:100%;}
 }
 
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+
+/* ---------------- ANIMATION TOGGLE ---------------- */
+.anim-toggle{
+  position:fixed;right:20px;bottom:20px;z-index:60;
+  display:flex;align-items:center;gap:9px;
+  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:10px 16px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line-strong);background:rgba(20,9,15,.85);
+  color:var(--muted);transition:border-color .2s ease,color .2s ease;
+}
+.anim-toggle:hover{border-color:var(--gold);color:var(--gold-2);}
+.anim-toggle .anim-toggle-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);}
+html.anim-off .anim-toggle .anim-toggle-dot{background:var(--muted-2);box-shadow:none;}
+@media (max-width:640px){
+  .anim-toggle{right:14px;bottom:14px;padding:9px 12px;}
+}
+
+/* animations disabled: kill all CSS transitions/animations + smooth scroll + nav blur */
+html.anim-off, html.anim-off *{
+  transition-duration:0s !important;
+  transition-delay:0s !important;
+  animation-duration:0s !important;
+  animation-delay:0s !important;
+  scroll-behavior:auto !important;
+}
+html.anim-off .nav.scrolled{
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+  background:rgba(18,7,14,.94);
+}
 </style>
 </head>
 <body>
@@ -374,7 +403,7 @@ img{display:block;max-width:100%;}
       <div class="hero-visual">
         <div class="chip-panel">
           <canvas id="chip-canvas"></canvas>
-          <div class="chip-tag">UMN-ASIC · QFP · rev_a</div>
+          <div class="chip-tag">UMN-ASIC · 2026 · rev_a</div>
           <div class="chip-hint">drag to rotate</div>
         </div>
       </div>
@@ -539,6 +568,11 @@ img{display:block;max-width:100%;}
   </div>
 </footer>
 
+<button id="animToggle" class="anim-toggle" type="button" aria-pressed="false" title="Toggle site animations">
+  <span class="anim-toggle-dot" aria-hidden="true"></span>
+  <span class="anim-toggle-label">Animations: On</span>
+</button>
+
 <!-- Three.js (r128 UMD global, works on GitHub Pages) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -564,6 +598,23 @@ const io = new IntersectionObserver((entries) => {
 }, {threshold:.14});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+/* ---------- animation toggle ---------- */
+// Actual state lives on <html class="anim-off">, set by the three.js block below
+// (which also runs a one-time FPS probe to auto-disable on machines that are struggling).
+// This just wires the button and mirrors that state; window.__setSiteAnimations is
+// defined synchronously later in this same script, so it exists by the time a click fires.
+const animBtn = document.getElementById('animToggle');
+const animLabel = animBtn.querySelector('.anim-toggle-label');
+function syncAnimBtn(enabled){
+  animBtn.setAttribute('aria-pressed', String(!enabled));
+  animLabel.textContent = enabled ? 'Animations: On' : 'Animations: Off';
+}
+window.__animToggleSync = syncAnimBtn;
+animBtn.addEventListener('click', () => {
+  const currentlyEnabled = !document.documentElement.classList.contains('anim-off');
+  window.__setSiteAnimations(!currentlyEnabled, true);
+});
+
 /* ---------- 3D chip ---------- */
 (function(){
   const canvas = document.getElementById('chip-canvas');
@@ -584,81 +635,8 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   const chip = new THREE.Group();
   scene.add(chip);
 
-  // ---- top-face texture: gold traces + central M ----
-  function rr(c, x, y, w, h, r){
-    c.beginPath();
-    c.moveTo(x+r, y);
-    c.arcTo(x+w, y,   x+w, y+h, r);
-    c.arcTo(x+w, y+h, x,   y+h, r);
-    c.arcTo(x,   y+h, x,   y,   r);
-    c.arcTo(x,   y,   x+w, y,   r);
-    c.closePath();
-  }
-  function topTexture(){
-    const S = 1024;
-    const cv = document.createElement('canvas'); cv.width = cv.height = S;
-    const c = cv.getContext('2d');
-    c.fillStyle = '#150a10'; c.fillRect(0,0,S,S);
-
-    // outer ring
-    c.strokeStyle = '#d9ad44'; c.lineWidth = 7;
-    rr(c, 70,70,S-140,S-140, 54); c.stroke();
-
-    // grid of traces + nodes around the border
-    c.strokeStyle = 'rgba(216,173,68,.55)';
-    c.fillStyle = '#e9b949';
-    c.lineWidth = 5;
-    const inset = 120, pad = 96, span = S - inset*2, n = 6;
-    for (let i=0;i<=n;i++){
-      const t = inset + (span/n)*i;
-      // top + bottom stubs
-      [[t, pad, t, pad+70],[t, S-pad, t, S-pad-70],
-       [pad, t, pad+70, t],[S-pad, t, S-pad-70, t]].forEach(seg=>{
-        c.beginPath(); c.moveTo(seg[0],seg[1]); c.lineTo(seg[2],seg[3]); c.stroke();
-        c.beginPath(); c.arc(seg[0],seg[1],7,0,7); c.fill();
-      });
-    }
-
-    // central die pad
-    c.fillStyle = '#0f0609';
-    rr(c, S/2-168, S/2-168, 336, 336, 26); c.fill();
-    c.strokeStyle = '#e9b949'; c.lineWidth = 5;
-    rr(c, S/2-168, S/2-168, 336, 336, 26); c.stroke();
-    // bond-pad dots inside die
-    c.fillStyle = 'rgba(233,185,73,.85)';
-    for (let i=0;i<10;i++){
-      const a = -168 + 20 + i*(316/9);
-      [[S/2-168+18, S/2-168+a],[S/2+168-18, S/2-168+a],
-       [S/2-168+a, S/2-168+18],[S/2-168+a, S/2+168-18]].forEach(p=>{
-        c.beginPath(); c.arc(p[0],p[1],5,0,7); c.fill();
-      });
-    }
-
-    // pin-1 indicator
-    c.fillStyle = '#f6d27a';
-    c.beginPath(); c.arc(150,150,16,0,7); c.fill();
-
-    // the M
-    const g = c.createLinearGradient(0,S/2-130,0,S/2+130);
-    g.addColorStop(0,'#fbe29a'); g.addColorStop(.5,'#eebd54'); g.addColorStop(1,'#c2862c');
-    c.fillStyle = g;
-    c.font = '900 250px Georgia, "Times New Roman", serif';
-    c.textAlign = 'center'; c.textBaseline = 'middle';
-    c.fillText('M', S/2, S/2 + 6);
-
-    // wordmark
-    c.fillStyle = 'rgba(233,185,73,.7)';
-    c.font = '700 38px "JetBrains Mono", monospace';
-    c.fillText('UMN ASIC', S/2, S - 138);
-
-    const tex = new THREE.CanvasTexture(cv);
-    tex.encoding = THREE.sRGBEncoding;
-    tex.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
-    return tex;
-  }
-
   // ---- package body ----
-  const W = 2.3, D = 2.3, H = 0.46;
+  const W = 2.3, D = 2.3, H = 0.36;
   const bodyMat = new THREE.MeshStandardMaterial({color:0x0e0c0f, metalness:0.45, roughness:0.5});
   const body = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), bodyMat);
   chip.add(body);
@@ -671,8 +649,20 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   rim.position.y = -H*0.28;
   chip.add(rim);
 
-  // ---- top detail plane ----
-  const ttex = topTexture();
+  // ---- top detail plane: club logo texture ----
+  // Loads async, so force a render once it lands: the render loop can auto-stop
+  // (animations off / low-fps auto-detect) before the image finishes fetching,
+  // which would otherwise freeze the chip on a stale pre-texture frame forever.
+  const ttex = new THREE.TextureLoader().load('assets/logo.png', () => ensureLoop());
+  ttex.encoding = THREE.sRGBEncoding;
+  ttex.wrapS = ttex.wrapT = THREE.ClampToEdgeWrapping; // avoid tiling artifacts outside 0-1
+  ttex.repeat.set(1.4, 1.4);      // >1 = zoom out (texture appears smaller)
+  ttex.offset.set(-0.2, -0.2);    // recenter: -(repeat-1)/2 on each axis
+  // logo.png is non-power-of-two (1254x1254); mipmapped filtering silently
+  // renders NPOT textures black in WebGL, so use non-mipmap filtering instead.
+  ttex.generateMipmaps = false;
+  ttex.minFilter = THREE.LinearFilter;
+  ttex.magFilter = THREE.LinearFilter;
   const topMat = new THREE.MeshStandardMaterial({
     map:ttex, emissive:0xffffff, emissiveMap:ttex, emissiveIntensity:0.28,
     metalness:0.25, roughness:0.6
@@ -720,12 +710,22 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   const rimL = new THREE.DirectionalLight(0xff9a64, 0.8); rimL.position.set(-4,3,-5); scene.add(rimL);
 
   // ---- interaction / animation ----
-  let rotY = 0.7, rotX = -0.5, velY = 0, velX = 0;
+  let rotY = 0.7, rotX = 0.1, velY = 0, velX = 0;
   let dragging = false, px = 0, py = 0;
+
+  // Animations toggle: explicit user choice (localStorage) beats OS-level
+  // prefers-reduced-motion, which beats a one-time live FPS probe further down.
+  const ANIM_KEY = 'umnasic-animations';
+  const savedPref = localStorage.getItem(ANIM_KEY);
+  let animEnabled = savedPref ? savedPref === 'on' : !reduce;
+  let probed = !!savedPref || reduce; // no need to probe if already decided
+  let probeFrames = 0, probeLast = 0, probeSum = 0;
+  let looping = false, rafId = null;
 
   canvas.addEventListener('pointerdown', (e)=>{
     dragging = true; px = e.clientX; py = e.clientY;
     canvas.setPointerCapture(e.pointerId);
+    ensureLoop();
   });
   addEventListener('pointermove', (e)=>{
     if(!dragging) return;
@@ -741,26 +741,67 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     if(!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w/h; camera.updateProjectionMatrix();
+    ensureLoop();
   }
   new ResizeObserver(resize).observe(host);
   resize();
 
   function tick(){
-    requestAnimationFrame(tick);
-    if (!document.hidden){
-      if (!dragging){
-        if (!reduce) rotY += 0.0032;
-        rotY += velY; rotX += velX;
-        velY *= 0.93; velX *= 0.93;
+    looping = true;
+    rafId = requestAnimationFrame(tick);
+    if (document.hidden) return;
+
+    const t = performance.now();
+    const settled = !dragging && Math.abs(velX) < 0.0001 && Math.abs(velY) < 0.0001;
+
+    if (!dragging){
+      if (animEnabled) rotY += 0.0032;
+      rotY += velY; rotX += velX;
+      velY *= 0.93; velX *= 0.93;
+    }
+    rotX = Math.max(-1.15, Math.min(0.25, rotX));
+    chip.rotation.y = rotY;
+    chip.rotation.x = rotX;
+    chip.position.y = animEnabled ? Math.sin(t*0.0011)*0.06 : 0;
+    renderer.render(scene, camera);
+
+    // One-time live performance probe. There's no reliable, non-fingerprinty way
+    // for a browser to hand over real CPU/GPU specs, so instead we measure how
+    // fast this exact render loop is actually running on the visitor's machine
+    // for the first ~45 frames, and auto-disable if it's visibly struggling.
+    if (!probed){
+      if (probeFrames > 4) probeSum += t - probeLast; // skip warm-up frames
+      probeLast = t;
+      probeFrames++;
+      if (probeFrames >= 45){
+        probed = true;
+        const fps = 1000 / (probeSum / (probeFrames - 5));
+        if (fps < 45) setAnimEnabled(false);
       }
-      rotX = Math.max(-1.15, Math.min(0.25, rotX));
-      chip.rotation.y = rotY;
-      chip.rotation.x = rotX;
-      chip.position.y = reduce ? 0 : Math.sin(performance.now()*0.0011)*0.06;
-      renderer.render(scene, camera);
+    }
+
+    if (!animEnabled && settled){
+      cancelAnimationFrame(rafId); rafId = null; looping = false;
     }
   }
-  tick();
+
+  function ensureLoop(){
+    if (!looping) tick();
+  }
+
+  function setAnimEnabled(enabled){
+    animEnabled = enabled;
+    document.documentElement.classList.toggle('anim-off', !enabled);
+    if (window.__animToggleSync) window.__animToggleSync(enabled);
+    ensureLoop();
+  }
+
+  window.__setSiteAnimations = function(enabled, persist){
+    setAnimEnabled(enabled);
+    if (persist) localStorage.setItem(ANIM_KEY, enabled ? 'on' : 'off');
+  };
+
+  setAnimEnabled(animEnabled);
 })();
 </script>
 </body>
