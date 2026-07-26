@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Stone Arch Silicon — From RTL to silicon</title>
-<meta name="description" content="The University of Minnesota ASIC Club takes students from RTL to GDSII — designing, verifying, and taping out custom chips on open-source PDKs and industry EDA tools." />
+<title>SASi — Stone Arch Silicon · University of Minnesota</title>
+<meta name="description" content="SASi is the University of Minnesota chip design club. We teach undergrads the full ASIC flow — RTL to GDSII — on industry EDA tools and open-source PDKs, and we're a founding chapter of the ASIC Network." />
 <meta name="theme-color" content="#160710" />
 
 <!-- Favicon (your logo) -->
 <link rel="icon" type="image/png" href="assets/logo.png" />
 
-<!-- Open Graph (set og:url + an absolute og:image URL once your GitHub Pages domain is live) -->
+<!-- Open Graph (set og:url + an absolute og:image URL once your Pages domain is live) -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Stone Arch Silicon" />
-<meta property="og:description" content="Undergrads taping out real silicon at the University of Minnesota." />
+<meta property="og:title" content="SASi — Stone Arch Silicon" />
+<meta property="og:description" content="Element 14 and a room full of undergrads. Chip design at the University of Minnesota." />
 <meta property="og:image" content="assets/logo.png" />
 
 <!-- Fonts -->
@@ -54,7 +54,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ambient circuit-grid backdrop */
+/* ambient gradient wash */
 body::before{
   content:"";
   position:fixed;
@@ -81,6 +81,15 @@ body::after{
           mask-image:radial-gradient(120% 90% at 70% 0%, #000 30%, transparent 78%);
 }
 
+/* drifting silicon atoms, behind everything */
+#atom-field{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  display:block;
+}
+
 a{color:inherit;text-decoration:none;}
 img{display:block;max-width:100%;}
 
@@ -95,6 +104,13 @@ img{display:block;max-width:100%;}
   color:var(--gold);
 }
 .gold-text{
+  background:var(--gold-grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* the SA·Si wordmark: last two letters are the element symbol, so they get the gold */
+.sasi{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.02em;}
+.sasi .el{
   background:var(--gold-grad);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
@@ -131,11 +147,12 @@ img{display:block;max-width:100%;}
   content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--gold);transition:width .25s ease;
 }
 .nav-links a:hover::after{width:100%;}
+.nav-links a.btn::after{display:none;}
 
 .btn{
   display:inline-flex;align-items:center;gap:9px;
   font-family:"JetBrains Mono",monospace;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500;
-  padding:11px 20px;border-radius:999px;cursor:pointer;border:1px solid transparent;transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+  padding:11px 20px;border-radius:999px;cursor:pointer;border:1px solid transparent;transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
 }
 .btn-gold{background:var(--gold-grad);color:#2a1004;font-weight:700;box-shadow:0 6px 22px -8px rgba(233,185,73,.6);}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px rgba(233,185,73,.75);}
@@ -153,7 +170,7 @@ img{display:block;max-width:100%;}
   font-size:clamp(2.7rem,6.4vw,5.1rem);line-height:1.0;letter-spacing:-.02em;margin:18px 0 0;
 }
 .hero h1 .glow{display:inline-block;}
-.hero p.lead{color:var(--muted);font-size:clamp(1.02rem,1.6vw,1.22rem);margin:22px 0 0;max-width:42ch;}
+.hero p.lead{color:var(--muted);font-size:clamp(1.02rem,1.6vw,1.22rem);margin:22px 0 0;max-width:44ch;}
 .hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
 
 .stats{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;}
@@ -164,7 +181,7 @@ img{display:block;max-width:100%;}
 .stat b{font-family:"JetBrains Mono",monospace;color:var(--gold-2);font-size:1.02rem;letter-spacing:.02em;display:block;}
 .stat span{font-size:.78rem;color:var(--muted-2);}
 
-/* 3D panel */
+/* ---------------- CHIP PANEL ---------------- */
 .hero-visual{position:relative;}
 .chip-panel{
   position:relative;aspect-ratio:1/1;width:100%;border-radius:24px;overflow:hidden;
@@ -190,9 +207,22 @@ img{display:block;max-width:100%;}
 }
 #chip-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab;}
 #chip-canvas:active{cursor:grabbing;}
+
+/* periodic-table tile, floated over the panel */
+.si-tile{
+  position:absolute;left:26px;top:26px;z-index:3;pointer-events:none;
+  width:88px;padding:9px 10px 8px;border:1px solid var(--line-strong);border-radius:12px;
+  background:rgba(20,9,15,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  font-family:"JetBrains Mono",monospace;
+}
+.si-tile .z{display:block;font-size:.62rem;letter-spacing:.1em;color:var(--gold-deep);}
+.si-tile .sym{display:block;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:2.1rem;line-height:1;margin:2px 0 4px;
+  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.si-tile .mass{display:block;font-size:.58rem;letter-spacing:.08em;color:var(--muted-2);}
+
 .chip-tag{
   position:absolute;left:18px;bottom:16px;z-index:2;
-  font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.14em;color:var(--gold-deep);
+  font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;color:var(--gold-deep);
   text-transform:uppercase;pointer-events:none;
 }
 .chip-hint{
@@ -203,7 +233,7 @@ img{display:block;max-width:100%;}
 
 /* ---------------- SECTIONS ---------------- */
 .section{padding:96px 0;position:relative;}
-.section-head{max-width:680px;}
+.section-head{max-width:700px;}
 .section-head h2{
   font-family:"Space Grotesk",sans-serif;font-weight:700;
   font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.01em;margin:14px 0 0;
@@ -236,25 +266,44 @@ img{display:block;max-width:100%;}
 .step .arrow{position:absolute;right:-8px;top:50%;transform:translateY(-50%);z-index:2;color:var(--gold);font-size:.9rem;background:var(--bg);padding:2px;}
 .step:last-child .arrow{display:none;}
 
-/* chip gallery */
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:48px;}
-.proj{
-  border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--panel);
-  position:relative;overflow:hidden;transition:border-color .25s ease, transform .25s ease;
+/* ways in */
+.ways{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;}
+.way{
+  border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;background:var(--panel);
+  position:relative;transition:border-color .25s ease, transform .25s ease, background .25s ease;
 }
-.proj:hover{border-color:var(--line-strong);transform:translateY(-4px);}
-.proj::after{ /* faint trace corner */
-  content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;
-  background:radial-gradient(circle,rgba(233,185,73,.12),transparent 70%);pointer-events:none;
+.way:hover{border-color:var(--line-strong);transform:translateY(-4px);background:var(--panel-2);}
+.way .e{
+  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;color:var(--gold-deep);
+  text-transform:uppercase;display:block;margin-bottom:12px;
 }
-.proj .kicker{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;color:var(--gold-deep);text-transform:uppercase;}
-.proj h3{font-family:"Space Grotesk",sans-serif;font-size:1.4rem;font-weight:700;margin:8px 0 10px;}
-.proj p{color:var(--muted);font-size:.96rem;margin:0 0 18px;}
-.tags{display:flex;gap:8px;flex-wrap:wrap;}
-.tag{
-  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.04em;
-  padding:5px 10px;border:1px solid var(--line-strong);border-radius:7px;color:var(--gold-2);background:rgba(233,185,73,.05);
+.way h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.06rem;margin:0 0 8px;}
+.way p{color:var(--muted);font-size:.92rem;margin:0;}
+.ways-note{
+  margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.04em;
+  color:var(--muted-2);
 }
+.ways-note b{color:var(--gold-2);font-weight:500;}
+
+/* network */
+.net-wrap{
+  margin-top:48px;border:1px solid var(--line-strong);border-radius:22px;overflow:hidden;
+  background:
+    radial-gradient(90% 120% at 0% 0%, rgba(233,185,73,.11), transparent 55%),
+    linear-gradient(200deg,#250f1b,#160710);
+  display:grid;grid-template-columns:1.15fr .85fr;
+}
+.net-left{padding:44px 42px;}
+.net-left h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.6rem;margin:0 0 14px;}
+.net-left p{color:var(--muted);margin:0 0 16px;max-width:50ch;font-size:.99rem;}
+.net-left p:last-of-type{margin-bottom:26px;}
+.net-links{display:flex;gap:12px;flex-wrap:wrap;}
+.net-right{border-left:1px solid var(--line);padding:44px 38px;display:flex;flex-direction:column;justify-content:center;gap:20px;}
+.net-fact b{
+  display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px;
+}
+.net-fact span{color:var(--cream);font-size:.95rem;}
 
 /* join */
 .join-wrap{
@@ -293,9 +342,11 @@ img{display:block;max-width:100%;}
   .hero-grid{grid-template-columns:1fr;gap:40px;}
   .hero-visual{order:-1;max-width:460px;margin:0 auto;width:100%;}
   .cards{grid-template-columns:repeat(2,1fr);}
+  .ways{grid-template-columns:repeat(2,1fr);}
   .pipeline{grid-template-columns:repeat(2,1fr);}
   .step:nth-child(even) .arrow{display:none;}
-  .gallery{grid-template-columns:1fr;}
+  .net-wrap{grid-template-columns:1fr;}
+  .net-right{border-left:none;border-top:1px solid var(--line);}
   .join-wrap{grid-template-columns:1fr;}
   .join-right{border-left:none;border-top:1px solid var(--line);}
   .footer-grid{grid-template-columns:1fr 1fr;}
@@ -314,12 +365,15 @@ img{display:block;max-width:100%;}
   .nav .btn-gold{display:none;}
   .hero{padding:130px 0 70px;}
   .cards{grid-template-columns:1fr;}
+  .ways{grid-template-columns:1fr;}
   .pipeline{grid-template-columns:1fr;}
   .step{border-right:none;border-bottom:1px solid var(--line);}
   .step:last-child{border-bottom:none;}
   .step .arrow{display:none;}
   .footer-grid{grid-template-columns:1fr;}
-  .join-left,.join-right{padding:32px 26px;}
+  .join-left,.join-right,.net-left,.net-right{padding:32px 26px;}
+  .si-tile{left:18px;top:18px;width:74px;}
+  .si-tile .sym{font-size:1.7rem;}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -361,18 +415,21 @@ html.anim-off .nav.scrolled{
 </head>
 <body>
 
+<!-- ambient silicon-atom field -->
+<canvas id="atom-field" aria-hidden="true"></canvas>
+
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a class="brand" href="#top" aria-label="Stone Arch Silicon home">
       <img src="assets/logo.png" alt="Stone Arch Silicon logo" />
       <span class="name">STONE ARCH<small>S I L I C O N</small></span>
-    </a> 
+    </a>
     <div class="nav-links" id="navLinks">
       <a href="#about">About</a>
       <a href="#flow">The Flow</a>
-      <a href="#chips">Chip Gallery</a>
-      <a href="#join">Join</a>
+      <a href="#ways">Ways In</a>
+      <a href="#network">Network</a>
       <a class="btn btn-gold" href="#join">Join →</a>
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
@@ -386,23 +443,28 @@ html.anim-off .nav.scrolled{
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <div class="eyebrow">// College of Science &amp; Engineering · University of Minnesota</div>
-        <h1>We tape out <span class="glow gold-text">real silicon.</span></h1>
-        <p class="lead">A student team taking undergrads through the full chip-design flow — RTL to GDSII — designing, verifying, and fabricating custom ASICs on open-source PDKs and industry EDA tools.</p>
+        <div class="eyebrow">// <span class="sasi">SA<span class="el">Si</span></span> · College of Science &amp; Engineering · UMN</div>
+        <h1>Undergrads who make <span class="glow gold-text">real silicon.</span></h1>
+        <p class="lead">Stone Arch Silicon is the University of Minnesota's chip design club. We take students from their first line of Verilog to a layout that could go to a fab — on the same tools industry runs, on a cluster we maintain ourselves.</p>
         <div class="hero-cta">
           <a class="btn btn-gold" href="#join">Join the club</a>
-          <a class="btn btn-ghost" href="#chips">See our chips</a>
+          <a class="btn btn-ghost" href="#flow">See how it works</a>
         </div>
         <div class="stats">
-          <div class="stat"><b>SKY130</b><span>Taped-out systolic array</span></div>
-          <div class="stat"><b>RV64IM</b><span>5-stage pipelined core</span></div>
-          <div class="stat"><b>20-node</b><span>EDA compute cluster</span></div>
+          <div class="stat"><b>ASIC 101</b><span>Our own curriculum, from zero</span></div>
+          <div class="stat"><b>20 nodes</b><span>Cadence &amp; Synopsys cluster</span></div>
+          <div class="stat"><b>Element 14</b><span>Four valence electrons</span></div>
         </div>
       </div>
 
       <div class="hero-visual">
         <div class="chip-panel">
           <canvas id="chip-canvas"></canvas>
+          <div class="si-tile" aria-hidden="true">
+            <span class="z">14</span>
+            <span class="sym">Si</span>
+            <span class="mass">28.085</span>
+          </div>
           <div class="chip-tag">STONE ARCH · 2026 · rev_a</div>
           <div class="chip-hint">drag to rotate</div>
         </div>
@@ -418,30 +480,30 @@ html.anim-off .nav.scrolled{
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">// About</div>
-      <h2>Most students never touch real silicon. Our members ship it.</h2>
-      <p>We exist to close the gap between coursework and the fab. From your first Verilog module to a fabricated die in your hand, the club gives you the tools, the cluster, and the teammates to get there.</p>
+      <h2>Four electrons in the outer shell. That's the whole reason any of this works.</h2>
+      <p>Silicon sits exactly halfway between conductor and insulator, which is why you can talk it into being either one. Learning to do that on purpose, at scale, is chip design — and almost nobody gets to try it as an undergrad. <span class="sasi">SA<span class="el">Si</span></span> exists so that you can.</p>
     </div>
 
     <div class="cards">
       <div class="card reveal">
         <div class="ico" aria-hidden="true">⌁</div>
-        <h3>Learn the full flow</h3>
-        <p>RTL → synthesis → place-and-route → GDSII, taught hands-on through our RTL-to-GDS curriculum.</p>
-      </div>
-      <div class="card reveal">
-        <div class="ico" aria-hidden="true">▣</div>
-        <h3>Tape out real chips</h3>
-        <p>We target open-source PDKs like SKY130 and Tiny Tapeout shuttles — designs that actually get fabricated.</p>
+        <h3>The whole flow</h3>
+        <p>RTL through synthesis, place-and-route, and signoff — taught hands-on, in order, with nothing skipped because it's hard.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">⚙</div>
-        <h3>Industry-grade tools</h3>
-        <p>Cadence, Synopsys, and Siemens EDA flows running on our own cluster — the same tools used in industry.</p>
+        <h3>Tools you'll use again</h3>
+        <p>Cadence, Synopsys, and Siemens flows on our own 20-node cluster. Not a browser demo — the real thing, with real licenses.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico" aria-hidden="true">▣</div>
+        <h3>A path to the fab</h3>
+        <p>We work on open PDKs and shuttle programs, so a design that clears signoff has somewhere real to go.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">◈</div>
-        <h3>Build a portfolio</h3>
-        <p>Microarchitecture, verification, and physical design — the concrete skills that semiconductor teams hire for.</p>
+        <h3>People who review your work</h3>
+        <p>Design reviews, verification reviews, and teammates who will tell you your timing doesn't close. That's the part you can't self-teach.</p>
       </div>
     </div>
   </div>
@@ -452,56 +514,81 @@ html.anim-off .nav.scrolled{
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">// The Flow</div>
-      <h2>From a line of RTL to a fabricated die.</h2>
-      <p>Every project moves through the same pipeline. You can plug in at any stage — front-end design, verification, or back-end physical implementation.</p>
+      <h2>Five stages. Plug in wherever you're curious.</h2>
+      <p>You don't have to want to do all of it. Some members live in verification and never open a layout tool; some only care about the back end. Every stage needs people.</p>
     </div>
 
     <div class="pipeline">
-      <div class="step reveal"><div class="num">01</div><h4>RTL Design</h4><p>SystemVerilog microarchitecture and HDL.</p><span class="arrow">→</span></div>
-      <div class="step reveal"><div class="num">02</div><h4>Verification</h4><p>Testbenches, coverage, and signoff.</p><span class="arrow">→</span></div>
-      <div class="step reveal"><div class="num">03</div><h4>Synthesis</h4><p>Logic mapped to a standard-cell library.</p><span class="arrow">→</span></div>
-      <div class="step reveal"><div class="num">04</div><h4>Place &amp; Route</h4><p>Floorplan, placement, clock tree, routing.</p><span class="arrow">→</span></div>
-      <div class="step reveal"><div class="num">05</div><h4>GDSII · Tapeout</h4><p>DRC/LVS-clean layout, off to the fab.</p></div>
+      <div class="step reveal"><div class="num">01</div><h4>RTL Design</h4><p>Describe the hardware in SystemVerilog.</p><span class="arrow">→</span></div>
+      <div class="step reveal"><div class="num">02</div><h4>Verification</h4><p>Prove it does what you claimed it does.</p><span class="arrow">→</span></div>
+      <div class="step reveal"><div class="num">03</div><h4>Synthesis</h4><p>Map that logic onto real standard cells.</p><span class="arrow">→</span></div>
+      <div class="step reveal"><div class="num">04</div><h4>Place &amp; Route</h4><p>Floorplan, clock tree, and every wire.</p><span class="arrow">→</span></div>
+      <div class="step reveal"><div class="num">05</div><h4>Signoff</h4><p>DRC and LVS clean, ready for a shuttle.</p></div>
     </div>
   </div>
 </section>
 
-<!-- CHIP GALLERY -->
-<section class="section" id="chips" style="padding-top:0;">
+<!-- WAYS IN -->
+<section class="section" id="ways" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">// Chip Gallery</div>
-      <h2>What we've designed.</h2>
-      <p>A look at projects our members have built — from full processors to custom memory cells and high-speed I/O.</p>
+      <div class="eyebrow">// Ways In</div>
+      <h2>You do not need to have taken the class.</h2>
+      <p>Our constitution lists four ways to qualify as an active member, and they're deliberately equivalent. We care whether you can do the work, not which course number you have on a transcript.</p>
     </div>
 
-    <div class="gallery">
-      <div class="proj reveal">
-        <div class="kicker">Accelerator · Taped out</div>
-        <h3>2×2 Systolic Array</h3>
-        <p>A MAC-based matrix-multiply accelerator carried all the way through RTL-to-GDSII on SKY130 — DRC-clean and ready for fabrication.</p>
-        <div class="tags"><span class="tag">SKY130</span><span class="tag">50 MHz</span><span class="tag">388 × 378 µm</span><span class="tag">DRC-clean</span></div>
+    <div class="ways">
+      <div class="way reveal">
+        <span class="e">Path 01</span>
+        <h4>Coursework</h4>
+        <p>EE 2301, or an equivalent digital logic, computer engineering, or HDL course from anywhere.</p>
       </div>
-
-      <div class="proj reveal">
-        <div class="kicker">Processor</div>
-        <h3>Pipelined RISC-V Core</h3>
-        <p>A 5-stage RV64IM core in SystemVerilog with a BTB branch predictor, direct-mapped I-cache, hazard detection, and data forwarding.</p>
-        <div class="tags"><span class="tag">SystemVerilog</span><span class="tag">RV64IM</span><span class="tag">5-stage</span><span class="tag">BTB · I$</span></div>
+      <div class="way reveal">
+        <span class="e">Path 02</span>
+        <h4>ASIC 101</h4>
+        <p>Our own curriculum. Start at zero, finish the assessment, you're in. Built for people with no background.</p>
       </div>
-
-      <div class="proj reveal">
-        <div class="kicker">Memory</div>
-        <h3>6T SRAM Bitcell</h3>
-        <p>A custom six-transistor SRAM bitcell, hand-designed and characterized — read/write stability and the sizing trade-offs behind on-chip memory.</p>
-        <div class="tags"><span class="tag">6T</span><span class="tag">Custom layout</span><span class="tag">Characterization</span></div>
+      <div class="way reveal">
+        <span class="e">Path 03</span>
+        <h4>Portfolio</h4>
+        <p>Synthesizable HDL, a testbench, an FPGA build, an open-source hardware contribution, relevant work or research.</p>
       </div>
+      <div class="way reveal">
+        <span class="e">Path 04</span>
+        <h4>A conversation</h4>
+        <p>A short competency review with someone on the board. If you know the material, we'd rather just talk to you.</p>
+      </div>
+    </div>
 
-      <div class="proj reveal">
-        <div class="kicker">High-speed I/O</div>
-        <h3>SerDes Link</h3>
-        <p>A serializer/deserializer with 8b/10b encoding, a digital clock-and-data-recovery loop, and an elastic FIFO for clock-domain crossing.</p>
-        <div class="tags"><span class="tag">SystemVerilog</span><span class="tag">8b/10b</span><span class="tag">Digital CDR</span><span class="tag">Elastic FIFO</span></div>
+    <p class="ways-note reveal">Open to <b>every</b> UMN student — undergraduate, graduate, and professional. EE, CompE, CS, Physics, Math, and anyone else who wants in.</p>
+  </div>
+</section>
+
+<!-- ASIC NETWORK -->
+<section class="section" id="network" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// The ASIC Network</div>
+      <h2>We're not doing this alone.</h2>
+      <p>Chip design is hard to break into and much harder to figure out by yourself. So we helped start a network of university ASIC and VLSI clubs that work in the open and share what they learn.</p>
+    </div>
+
+    <div class="net-wrap reveal">
+      <div class="net-left">
+        <h3>What membership actually gets you</h3>
+        <p>Shared documentation and tooling notes, so nobody re-derives the same install headache from scratch at six different schools. Biweekly calls where clubs trade progress, flows, and the gotchas that cost them a week.</p>
+        <p>Open tutorial tracks for both analog and digital design, written by students at member chapters and free for anyone to work through. Plus a Discord where the whole network talks day to day, and the ASIC Network Hackathon.</p>
+        <div class="net-links">
+          <a class="btn btn-gold" href="https://asicnetwork.net" target="_blank" rel="noopener">Visit the network →</a>
+          <a class="btn btn-ghost" href="https://asic-network.github.io/analog-tutorials/" target="_blank" rel="noopener">Analog tutorials</a>
+          <a class="btn btn-ghost" href="https://asic-network.github.io/digital-tutorials/" target="_blank" rel="noopener">Digital tutorials</a>
+        </div>
+      </div>
+      <div class="net-right">
+        <div class="net-fact"><b>What it is</b><span>A collective of university ASIC and VLSI clubs, working in the open.</span></div>
+        <div class="net-fact"><b>Cadence</b><span>Biweekly updates between chapters.</span></div>
+        <div class="net-fact"><b>Everything public</b><span>Docs, flows, and tutorials on GitHub. Fork it, file issues, send PRs.</span></div>
+        <div class="net-fact"><b>SASi's role</b><span>Founding chapter.</span></div>
       </div>
     </div>
   </div>
@@ -513,22 +600,25 @@ html.anim-off .nav.scrolled{
     <div class="eyebrow reveal" style="margin-bottom:14px;">// Join</div>
     <div class="join-wrap reveal">
       <div class="join-left">
-        <h2>No tapeout experience required.</h2>
-        <p>If you can write a little code and you're curious about how chips actually get built, you belong here. We'll teach you the rest.</p>
+        <h2>Show up curious. We'll handle the rest.</h2>
+        <p>If you can write a little code and you want to know how a chip actually gets built, you belong here. Nobody arrives already knowing this.</p>
         <ul class="join-list">
-          <li><span class="dot">»</span><span>Open to any UMN student — EE, CompE, CS, Physics, and beyond.</span></li>
           <li><span class="dot">»</span><span>Weekly sessions, project teams, and design reviews.</span></li>
-          <li><span class="dot">»</span><span>Real access to industry EDA tools and our compute cluster.</span></li>
+          <li><span class="dot">»</span><span>Access to industry EDA tools and our compute cluster.</span></li>
+          <li><span class="dot">»</span><span>Cleanroom and fabrication training opportunities.</span></li>
+          <li><span class="dot">»</span><span>Speakers, technical tours, hackathons, and competitions.</span></li>
         </ul>
         <div class="hero-cta" style="margin-top:30px;">
-          <a class="btn btn-gold" href="https://docs.google.com/forms/d/1xaHkQvA6xl_dgYuFVjtVT4Lh0T8sVOwujI3mkYbJoNQ/edit ">Join →</a>
+          <!-- TODO: this is the Google Forms EDITOR link (/edit) — only you can open it.
+               Replace with the published link (File → Share → the /viewform URL). -->
+          <a class="btn btn-gold" href="https://docs.google.com/forms/d/1xaHkQvA6xl_dgYuFVjtVT4Lh0T8sVOwujI3mkYbJoNQ/edit">Join →</a>
           <a class="btn btn-ghost" href="mailto:umnasicgroup@gmail.com">Get in touch</a>
         </div>
       </div>
       <div class="join-right">
         <div class="meta"><b>Meetings</b>TBD</div>
-        <div class="meta"><b>Where</b>University of Minnesota, Building tbd</div>
-        <div class="meta"><b>Advisor</b>Prof. Yu “Kevin” Cao</div>
+        <div class="meta"><b>Where</b>University of Minnesota, building TBD</div>
+        <div class="meta"><b>Advisors</b>Prof. Yu “Kevin” Cao<br />Claire Dietz</div>
         <div class="meta"><b>Affiliation</b>CSE Campus Life Program</div>
       </div>
     </div>
@@ -544,26 +634,27 @@ html.anim-off .nav.scrolled{
           <img src="assets/logo.png" alt="Stone Arch Silicon logo" />
           <span class="name">STONE ARCH<small>S I L I C O N</small></span>
         </a>
-        <p class="blurb">Undergraduate semiconductor design at the University of Minnesota — Twin Cities.</p>
+        <p class="blurb">Undergraduate semiconductor design at the University of Minnesota — Twin Cities. Element 14, mostly.</p>
       </div>
       <div class="fcol">
         <h5>Explore</h5>
         <a href="#about">About</a>
         <a href="#flow">The Flow</a>
-        <a href="#chips">Chip Gallery</a>
+        <a href="#ways">Ways In</a>
+        <a href="#network">Network</a>
         <a href="#join">Join</a>
       </div>
       <div class="fcol">
         <h5>Connect</h5>
-        <a href="https://github.com/UMN-ASIC-CLUB">GitHub</a>
-        <a href="https://www.linkedin.com/company/stone-arch-silicon">LinkedIn</a>
-        <a href="asicnetwork.net">ASIC Network</a>
+        <a href="https://github.com/UMN-ASIC-CLUB" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/company/stone-arch-silicon" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://asicnetwork.net" target="_blank" rel="noopener">ASIC Network</a>
         <a href="mailto:umnasicgroup@gmail.com">Email</a>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© <span id="year"></span> Stone Arch Silicon · Built by members</span>
-      <span>Advisor: Prof. Yu “Kevin” Cao</span>
+      <span>Advisors: Prof. Yu “Kevin” Cao · Claire Dietz</span>
     </div>
   </div>
 </footer>
@@ -614,6 +705,164 @@ animBtn.addEventListener('click', () => {
   const currentlyEnabled = !document.documentElement.classList.contains('anim-off');
   window.__setSiteAnimations(!currentlyEnabled, true);
 });
+
+/* storage is wrapped: sandboxed iframes and hard-locked privacy settings throw on
+   access, and a preference is not worth taking the whole page down over. */
+function readPref(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+/* ================================================================
+   AMBIENT SILICON-ATOM FIELD
+   Plain 2D canvas, not a second WebGL context — the chip already owns
+   one, and two contexts on a laptop GPU is a bad trade for background
+   decoration. Each atom is a Bohr silicon: nucleus glow plus three
+   elliptical shells carrying 2, 8, and 4 electrons. Nobody is going to
+   count them, but they're correct.
+   Exposes window.__atomField so the animation toggle can park it.
+   ================================================================ */
+(function(){
+  const cv = document.getElementById('atom-field');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+
+  let W = 0, H = 0;
+  let atoms = [];
+  let enabled = true;
+  let looping = false, rafId = null;
+
+  // One pre-rendered nucleus glow, scaled per atom at draw time. Building a
+  // radial gradient per atom per frame is the thing that actually costs money.
+  const GLOW = (function(){
+    const S = 96, c = document.createElement('canvas');
+    c.width = c.height = S;
+    const g = c.getContext('2d');
+    const grd = g.createRadialGradient(S/2, S/2, 1, S/2, S/2, S/2);
+    grd.addColorStop(0,    'rgba(255,222,150,1)');
+    grd.addColorStop(0.28, 'rgba(233,185,73,.42)');
+    grd.addColorStop(1,    'rgba(233,185,73,0)');
+    g.fillStyle = grd; g.fillRect(0, 0, S, S);
+    return c;
+  })();
+
+  // shell radius as a fraction of the atom's scale, electron count, orbit speed
+  const SHELLS = [
+    {r:0.40, n:2, sp:1.55},
+    {r:0.72, n:8, sp:0.95},
+    {r:1.00, n:4, sp:0.60, valence:true}
+  ];
+
+  function makeAtom(){
+    const depth = Math.random();               // 0 = far and faint, 1 = near
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * (0.05 + depth * 0.13),
+      vy: (Math.random() - 0.5) * (0.05 + depth * 0.13),
+      s: 15 + depth * 30,                      // outer shell radius, px
+      a: 0.07 + depth * 0.13,                  // base alpha
+      tilt: Math.random() * Math.PI,
+      dir: Math.random() < 0.5 ? -1 : 1,
+      phase: Math.random() * Math.PI * 2
+    };
+  }
+
+  function build(){
+    // roughly one atom per 62k css px², clamped so phones aren't drawing 40
+    const n = Math.round(Math.min(24, Math.max(7, (W * H) / 62000)));
+    atoms = [];
+    for (let i = 0; i < n; i++) atoms.push(makeAtom());
+  }
+
+  function resize(){
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width  = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    cv.style.width  = W + 'px';
+    cv.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    build();
+    draw(performance.now());
+  }
+
+  function draw(t){
+    ctx.clearRect(0, 0, W, H);
+
+    for (const a of atoms){
+      ctx.save();
+      ctx.translate(a.x, a.y);
+
+      // nucleus
+      const gr = a.s * 0.58;
+      ctx.globalAlpha = a.a * 1.15;
+      ctx.drawImage(GLOW, -gr, -gr, gr * 2, gr * 2);
+
+      for (let i = 0; i < SHELLS.length; i++){
+        const sh = SHELLS[i];
+        const rx = a.s * sh.r;
+        const ry = rx * 0.34;                   // squashed = seen near edge-on
+        ctx.save();
+        ctx.rotate(a.tilt + i * (Math.PI / 3)); // shells cross each other
+
+        ctx.globalAlpha = a.a * (sh.valence ? 0.6 : 0.34);
+        ctx.strokeStyle = sh.valence ? '#f6d27a' : '#c0892c';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        const er = Math.max(1, a.s * (sh.valence ? 0.055 : 0.042));
+        for (let k = 0; k < sh.n; k++){
+          const ang = a.phase + (k / sh.n) * Math.PI * 2
+                    + t * 0.00035 * sh.sp * a.dir;
+          // electrons on the far side of the ellipse dim out: cheap depth cue
+          const far = Math.sin(ang) < 0 ? 0.4 : 1;
+          ctx.globalAlpha = a.a * 1.7 * far * (sh.valence ? 1.25 : 1);
+          ctx.fillStyle = sh.valence ? '#fff0cf' : '#f6d27a';
+          ctx.beginPath();
+          ctx.arc(Math.cos(ang) * rx, Math.sin(ang) * ry, er, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function step(){
+    for (const a of atoms){
+      a.x += a.vx; a.y += a.vy;
+      const m = a.s * 1.6;                      // wrap past the outer shell
+      if (a.x < -m) a.x = W + m; else if (a.x > W + m) a.x = -m;
+      if (a.y < -m) a.y = H + m; else if (a.y > H + m) a.y = -m;
+    }
+  }
+
+  function tick(){
+    looping = true;
+    rafId = requestAnimationFrame(tick);
+    if (!enabled){                              // toggled off mid-flight
+      cancelAnimationFrame(rafId); rafId = null; looping = false;
+      return;
+    }
+    if (document.hidden) return;                // keep the raf, skip the work
+    step();
+    draw(performance.now());
+  }
+
+  window.__atomField = {
+    setEnabled(on){
+      enabled = on;
+      if (on){ if (!looping) tick(); }
+      else { draw(performance.now()); }         // leave one static frame behind
+    }
+  };
+
+  addEventListener('resize', resize);
+  resize();
+})();
+
 
 /* ---------- 3D chip ---------- */
 (function(){
@@ -715,8 +964,8 @@ animBtn.addEventListener('click', () => {
 
   // Animations toggle: explicit user choice (localStorage) beats OS-level
   // prefers-reduced-motion, which beats a one-time live FPS probe further down.
-  const ANIM_KEY = 'umnasic-animations';
-  const savedPref = localStorage.getItem(ANIM_KEY);
+  const ANIM_KEY = 'sasi-animations';
+  const savedPref = readPref(ANIM_KEY);
   let animEnabled = savedPref ? savedPref === 'on' : !reduce;
   let probed = !!savedPref || reduce; // no need to probe if already decided
   let probeFrames = 0, probeLast = 0, probeSum = 0;
@@ -793,12 +1042,13 @@ animBtn.addEventListener('click', () => {
     animEnabled = enabled;
     document.documentElement.classList.toggle('anim-off', !enabled);
     if (window.__animToggleSync) window.__animToggleSync(enabled);
+    if (window.__atomField) window.__atomField.setEnabled(enabled); // background follows
     ensureLoop();
   }
 
   window.__setSiteAnimations = function(enabled, persist){
     setAnimEnabled(enabled);
-    if (persist) localStorage.setItem(ANIM_KEY, enabled ? 'on' : 'off');
+    if (persist) writePref(ANIM_KEY, enabled ? 'on' : 'off');
   };
 
   setAnimEnabled(animEnabled);
