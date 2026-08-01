@@ -285,6 +285,19 @@ img{display:block;max-width:100%;}
 }
 .ways-note b{color:var(--gold-2);font-weight:500;}
 
+/* links out to the ASIC 101 course site */
+.stat-link{display:block;transition:border-color .2s ease, transform .2s ease;}
+.stat-link:hover{border-color:var(--gold);transform:translateY(-2px);}
+.way-link{
+  display:inline-flex;align-items:center;gap:6px;margin-top:16px;
+  font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid transparent;
+  transition:color .2s ease, border-color .2s ease;
+}
+.way-link:hover{color:var(--gold-2);border-bottom-color:var(--gold-2);}
+.inline-gold{color:var(--gold);border-bottom:1px solid var(--line-strong);transition:border-color .2s ease;}
+.inline-gold:hover{border-bottom-color:var(--gold);}
+
 /* network */
 .net-wrap{
   margin-top:48px;border:1px solid var(--line-strong);border-radius:22px;overflow:hidden;
@@ -430,6 +443,7 @@ html.anim-off .nav.scrolled{
       <a href="#flow">The Flow</a>
       <a href="#ways">Ways In</a>
       <a href="#network">Network</a>
+      <a href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101 ↗</a>
       <a class="btn btn-gold" href="#join">Join →</a>
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
@@ -451,7 +465,7 @@ html.anim-off .nav.scrolled{
           <a class="btn btn-ghost" href="#flow">See how it works</a>
         </div>
         <div class="stats">
-          <div class="stat"><b>ASIC 101</b><span>Our own curriculum, from zero</span></div>
+          <a class="stat stat-link" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener"><b>ASIC 101 ↗</b><span>Our own curriculum, from zero</span></a>
           <div class="stat"><b>20 nodes</b><span>Cadence &amp; Synopsys cluster</span></div>
           <div class="stat"><b>Element 14</b><span>Four valence electrons</span></div>
         </div>
@@ -547,6 +561,7 @@ html.anim-off .nav.scrolled{
         <span class="e">Path 02</span>
         <h4>ASIC 101</h4>
         <p>Our own curriculum. Start at zero, finish the assessment, you're in. Built for people with no background.</p>
+        <a class="way-link" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">Start lesson 01 →</a>
       </div>
       <div class="way reveal">
         <span class="e">Path 03</span>
@@ -607,6 +622,7 @@ html.anim-off .nav.scrolled{
           <li><span class="dot">»</span><span>Access to industry EDA tools and our compute cluster.</span></li>
           <li><span class="dot">»</span><span>Cleanroom and fabrication training opportunities.</span></li>
           <li><span class="dot">»</span><span>Speakers, technical tours, hackathons, and competitions.</span></li>
+          <li><span class="dot">»</span><span><a class="inline-gold" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101</a> is online and free — start it before you show up if you want a head start.</span></li>
         </ul>
         <div class="hero-cta" style="margin-top:30px;">
           <!-- TODO: this is the Google Forms EDITOR link (/edit) — only you can open it.
@@ -642,6 +658,7 @@ html.anim-off .nav.scrolled{
         <a href="#flow">The Flow</a>
         <a href="#ways">Ways In</a>
         <a href="#network">Network</a>
+        <a href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101</a>
         <a href="#join">Join</a>
       </div>
       <div class="fcol">
