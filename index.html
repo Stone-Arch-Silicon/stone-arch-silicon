@@ -141,6 +141,7 @@ img{display:block;max-width:100%;}
   font-family:"JetBrains Mono",monospace;
   font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);transition:color .2s ease;position:relative;
+  white-space:nowrap;
 }
 .nav-links a:hover{color:var(--cream);}
 .nav-links a::after{
@@ -318,6 +319,34 @@ img{display:block;max-width:100%;}
 }
 .net-fact span{color:var(--cream);font-size:.95rem;}
 
+/* ---------------- SPONSOR ---------------- */
+/* Reuses .cards/.card for the "where it goes" grid, then one CTA strip.
+   Deliberately NOT another .net-wrap panel — that block sits directly above
+   and two identical panels back to back read as filler. */
+.sponsor-cta{
+  margin-top:34px;border:1px solid var(--line-strong);border-radius:22px;
+  padding:40px 42px;
+  background:
+    radial-gradient(90% 130% at 100% 0%, rgba(233,185,73,.10), transparent 58%),
+    linear-gradient(200deg,#250f1b,#160710);
+  display:grid;grid-template-columns:1.25fr .75fr;gap:38px;align-items:center;
+}
+.sponsor-cta h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.5rem;margin:0 0 14px;}
+.sponsor-cta p{color:var(--muted);margin:0 0 14px;font-size:.99rem;max-width:54ch;}
+.sponsor-cta p:last-of-type{margin-bottom:26px;}
+.sponsor-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.sponsor-aside{display:grid;gap:18px;}
+.sponsor-aside b{
+  display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px;
+}
+.sponsor-aside span{color:var(--cream);font-size:.94rem;}
+.sponsor-fine{
+  margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.04em;
+  color:var(--muted-2);line-height:1.7;
+}
+.sponsor-fine b{color:var(--gold-2);font-weight:500;}
+
 /* join */
 .join-wrap{
   margin-top:14px;border:1px solid var(--line-strong);border-radius:22px;overflow:hidden;
@@ -351,6 +380,12 @@ img{display:block;max-width:100%;}
 .reveal.in{opacity:1;transform:none;}
 
 /* ---------------- RESPONSIVE ---------------- */
+/* nav gained a sixth link, so tighten it before the mobile breakpoint
+   rather than letting it collide with the brand mark */
+@media (max-width:1080px){
+  .nav-links{gap:20px;}
+  .nav-links a{font-size:.73rem;}
+}
 @media (max-width:1000px){
   .hero-grid{grid-template-columns:1fr;gap:40px;}
   .hero-visual{order:-1;max-width:460px;margin:0 auto;width:100%;}
@@ -360,6 +395,7 @@ img{display:block;max-width:100%;}
   .step:nth-child(even) .arrow{display:none;}
   .net-wrap{grid-template-columns:1fr;}
   .net-right{border-left:none;border-top:1px solid var(--line);}
+  .sponsor-cta{grid-template-columns:1fr;gap:30px;}
   .join-wrap{grid-template-columns:1fr;}
   .join-right{border-left:none;border-top:1px solid var(--line);}
   .footer-grid{grid-template-columns:1fr 1fr;}
@@ -374,6 +410,7 @@ img{display:block;max-width:100%;}
     display:none;
   }
   .nav-links.open{display:flex;}
+  .nav-links a{font-size:.78rem;}
   .menu-toggle{display:block;}
   .nav .btn-gold{display:none;}
   .hero{padding:130px 0 70px;}
@@ -385,6 +422,7 @@ img{display:block;max-width:100%;}
   .step .arrow{display:none;}
   .footer-grid{grid-template-columns:1fr;}
   .join-left,.join-right,.net-left,.net-right{padding:32px 26px;}
+  .sponsor-cta{padding:32px 26px;}
   .si-tile{left:18px;top:18px;width:74px;}
   .si-tile .sym{font-size:1.7rem;}
 }
@@ -443,6 +481,7 @@ html.anim-off .nav.scrolled{
       <a href="#flow">The Flow</a>
       <a href="#ways">Ways In</a>
       <a href="#network">Network</a>
+      <a href="#sponsor">Sponsor</a>
       <a href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101 ↗</a>
       <a class="btn btn-gold" href="#join">Join →</a>
     </div>
@@ -609,6 +648,74 @@ html.anim-off .nav.scrolled{
   </div>
 </section>
 
+<!-- SPONSOR -->
+<!-- NOTE: no tier ladder here on purpose. Under UMN policy the perks you promise
+     ARE the tax classification (logo + homepage link = gift eligible, deposits at
+     UMF; recruiting access, booths, speaking slots, use of U marks = non-gift
+     eligible, deposits at the U and may be UBI). One non-gift perk anywhere in a
+     package pushes ALL the revenue to the U. Don't publish tiers until the
+     department and CSE External Relations have signed off on which side each
+     one lands. Policy: https://policy.umn.edu/finance/sponsorships -->
+<section class="section" id="sponsor" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// Sponsor</div>
+      <h2>Silicon is expensive. Undergrads are not.</h2>
+      <p>Shuttle slots, tool licenses, cluster hardware, and getting members to conferences all cost real money. If your company hires people who can take a design from RTL to GDSII, this is where some of them come from.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal">
+        <div class="ico" aria-hidden="true">▦</div>
+        <h3>Tapeouts</h3>
+        <p>Shuttle slots and mask costs. The difference between a design that passes signoff and a design that exists.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico" aria-hidden="true">⬡</div>
+        <h3>Tools &amp; compute</h3>
+        <p>Licenses and cluster hardware. We maintain our own 20 nodes, and nodes get old.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico" aria-hidden="true">≡</div>
+        <h3>ASIC 101</h3>
+        <p>Our free curriculum, open to anyone. Keeping it written and current takes member hours we'd like to pay for.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico" aria-hidden="true">◇</div>
+        <h3>Getting out there</h3>
+        <p>Conference travel, competitions, cleanroom training, and speakers worth flying in.</p>
+      </div>
+    </div>
+
+    <div class="sponsor-cta reveal">
+      <div>
+        <h3>How it works</h3>
+        <p>Tell us what you'd like to support and what kind of relationship you're after. We'll come back with a proposal, and the College of Science &amp; Engineering handles the paperwork from there.</p>
+        <p>In-kind counts too. Tool licenses, PDK access, wafer or shuttle slots, and hardware are often more useful to us than cash.</p>
+        <div class="sponsor-actions">
+          <!-- TODO: once the sponsor intake Google Form is published, swap this href
+               for the /viewform URL and relabel to "Sponsor SASi →". Left as email
+               for now so the button is never dead. -->
+          <a class="btn btn-gold" href="mailto:umnasicgroup@gmail.com?subject=Sponsorship%20inquiry%3A%20Stone%20Arch%20Silicon">Talk to us about sponsoring →</a>
+          <a class="btn btn-ghost" href="https://asicnetwork.net/#sponsors" target="_blank" rel="noopener">Sponsor the whole network</a>
+        </div>
+      </div>
+      <div class="sponsor-aside">
+        <div><b>Who you'll talk to</b><span>Our officer board, plus CSE External Relations.</span></div>
+        <div><b>Typical turnaround</b><span>We reply within a week.</span></div>
+        <div><b>Also welcome</b><span>Mentors, speakers, design reviewers, and site tours.</span></div>
+      </div>
+    </div>
+
+    <p class="sponsor-fine reveal">
+      <span class="sasi">SA<span class="el">Si</span></span> is a <b>CSE Campus Life Program</b> at the University of Minnesota.
+      Charitable gifts are processed through the <b>University of Minnesota Foundation</b> and are tax-deductible.
+      Recruiting and partnership arrangements are processed through the University directly.
+      We'll tell you which one applies before you commit to anything.
+    </p>
+  </div>
+</section>
+
 <!-- JOIN -->
 <section class="section" id="join" style="padding-top:0;">
   <div class="wrap">
@@ -625,9 +732,11 @@ html.anim-off .nav.scrolled{
           <li><span class="dot">»</span><span><a class="inline-gold" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101</a> is online and free — start it before you show up if you want a head start.</span></li>
         </ul>
         <div class="hero-cta" style="margin-top:30px;">
-          <!-- TODO: this is the Google Forms EDITOR link (/edit) — only you can open it.
-               Replace with the published link (File → Share → the /viewform URL). -->
-          <a class="btn btn-gold" href="https://docs.google.com/forms/d/1xaHkQvA6xl_dgYuFVjtVT4Lh0T8sVOwujI3mkYbJoNQ/edit">Join →</a>
+          <!-- Was the Google Forms EDITOR link (/edit), which only the form owner can
+               open. Swapped to /viewform. VERIFY THIS OPENS IN A PRIVATE WINDOW —
+               if it doesn't, grab the real published link from File → Share and
+               paste it here (it usually looks like /forms/d/e/1FAIpQL.../viewform). -->
+          <a class="btn btn-gold" href="https://docs.google.com/forms/d/1xaHkQvA6xl_dgYuFVjtVT4Lh0T8sVOwujI3mkYbJoNQ/viewform">Join →</a>
           <a class="btn btn-ghost" href="mailto:umnasicgroup@gmail.com">Get in touch</a>
         </div>
       </div>
@@ -658,6 +767,7 @@ html.anim-off .nav.scrolled{
         <a href="#flow">The Flow</a>
         <a href="#ways">Ways In</a>
         <a href="#network">Network</a>
+        <a href="#sponsor">Sponsor</a>
         <a href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101</a>
         <a href="#join">Join</a>
       </div>
