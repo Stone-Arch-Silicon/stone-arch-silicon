@@ -150,6 +150,28 @@ img{display:block;max-width:100%;}
 .nav-links a:hover::after{width:100%;}
 .nav-links a.btn::after{display:none;}
 
+.nav-item{position:relative;}
+.nav-drop-toggle{
+  display:inline-flex;align-items:center;gap:5px;background:none;border:none;padding:0;cursor:pointer;
+  font-family:"JetBrains Mono",monospace;
+  font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);transition:color .2s ease;white-space:nowrap;
+}
+.nav-drop-toggle:hover{color:var(--cream);}
+.nav-drop-toggle .caret{font-size:.65em;transition:transform .2s ease;}
+.nav-item.open .nav-drop-toggle .caret{transform:rotate(180deg);}
+.nav-dropdown{
+  display:none;flex-direction:column;position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);
+  min-width:210px;background:rgba(20,9,15,.97);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:12px;padding:8px;gap:2px;z-index:60;
+}
+.nav-item.open .nav-dropdown{display:flex;}
+.nav-dropdown a{
+  font-size:.74rem !important;padding:9px 12px;border-radius:8px;white-space:nowrap;
+}
+.nav-dropdown a::after{display:none;}
+.nav-dropdown a:hover{background:rgba(233,185,73,.1);color:var(--gold-2);}
+
 .btn{
   display:inline-flex;align-items:center;gap:9px;
   font-family:"JetBrains Mono",monospace;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500;
@@ -413,6 +435,13 @@ img{display:block;max-width:100%;}
   .nav-links a{font-size:.78rem;}
   .menu-toggle{display:block;}
   .nav .btn-gold{display:none;}
+  .nav-item{width:100%;}
+  .nav-dropdown{
+    position:static;transform:none;display:none;width:100%;min-width:0;
+    background:none;border:none;backdrop-filter:none;padding:10px 0 0 14px;margin-top:6px;
+    border-left:1px solid var(--line);
+  }
+  .nav-item.open .nav-dropdown{display:flex;}
   .hero{padding:130px 0 70px;}
   .cards{grid-template-columns:1fr;}
   .ways{grid-template-columns:1fr;}
@@ -482,7 +511,13 @@ html.anim-off .nav.scrolled{
       <a href="#ways">Ways In</a>
       <a href="#network">Network</a>
       <a href="#sponsor">Sponsor</a>
-      <a href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101 ↗</a>
+      <div class="nav-item" id="docsNavItem">
+        <button class="nav-drop-toggle" id="docsDropToggle" aria-haspopup="true" aria-expanded="false">Docs <span class="caret">▾</span></button>
+        <div class="nav-dropdown">
+          <a href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101 — Quickstart ↗</a>
+          <a href="https://stone-arch-silicon.github.io/ASIC-docs/" target="_blank" rel="noopener">Full Documentation ↗</a>
+        </div>
+      </div>
       <a class="btn btn-gold" href="#join">Join →</a>
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
@@ -809,6 +844,27 @@ toggle.addEventListener('click', () => {
 links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   links.classList.remove('open'); toggle.setAttribute('aria-expanded', false);
 }));
+
+/* Docs nav dropdown */
+const docsNavItem = document.getElementById('docsNavItem');
+const docsDropToggle = document.getElementById('docsDropToggle');
+docsDropToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const open = docsNavItem.classList.toggle('open');
+  docsDropToggle.setAttribute('aria-expanded', open);
+});
+document.addEventListener('click', (e) => {
+  if (!docsNavItem.contains(e.target)){
+    docsNavItem.classList.remove('open');
+    docsDropToggle.setAttribute('aria-expanded', false);
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape'){
+    docsNavItem.classList.remove('open');
+    docsDropToggle.setAttribute('aria-expanded', false);
+  }
+});
 
 /* scroll reveal */
 const io = new IntersectionObserver((entries) => {
