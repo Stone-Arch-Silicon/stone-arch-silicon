@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SASi — Stone Arch Silicon · University of Minnesota</title>
 <meta name="description" content="SASi is the University of Minnesota chip design club. We teach undergrads the full ASIC flow — RTL to GDSII — on industry EDA tools and open-source PDKs, and we're a founding chapter of the ASIC Network." />
-<meta name="theme-color" content="#160710" />
+<meta name="theme-color" content="#ffffff" />
+<meta name="color-scheme" content="light" />
 
 <!-- Favicon (your logo) -->
 <link rel="icon" type="image/png" href="assets/logo.png" />
@@ -23,38 +24,71 @@
 
 <style>
 :root{
-  --bg:#160710;
-  --bg-2:#241019;
-  --panel:#1d0c15;
-  --panel-2:#260f1a;
-  --line:#3a2230;
-  --line-strong:#5c2438;
+  color-scheme:light;
+
+  /* ---- edge blend ----
+     Every background layer fades to exactly this color at the viewport edges,
+     so the page sits flush against white bands above and below it.
+     If the host page's white is not pure #fff, change these three numbers. */
+  --edge-rgb:255,255,255;
+  --edge:rgb(var(--edge-rgb));
+  --fade-y:clamp(72px,16vh,180px);   /* depth of the top and bottom fade */
+  --fade-x:clamp(16px,4vw,72px);     /* depth of the left and right fade */
+  --scrim-h:40px;                    /* content dissolves into white over this much of the bottom edge */
+
+  /* ---- surfaces ---- */
+  --bg:#f6f5f3;          /* interior base, only visible away from the edges */
+  --panel:#ffffff;
+  --panel-2:#fbfaf8;
+  --line:#ebe5e2;
+  --line-strong:#dbcfca;
+
+  /* ---- text ---- */
+  --ink:#2b1a17;
+  --muted:#5b4a45;
+  --muted-2:#786762;
+
+  /* ---- brand ---- */
   --maroon:#7a0019;
-  --gold:#e9b949;
-  --gold-2:#f6d27a;
-  --gold-deep:#c0892c;
-  --cream:#f1e6d6;
-  --muted:#b69a92;
-  --muted-2:#8b746f;
+  --maroon-2:#a0192f;
+  --gold:#e9b949;        /* fills and glows only, too light to read as text on white */
+  --gold-deep:#b8841f;   /* strokes, ticks, decorative glyphs */
+  --gold-ink:#8a5a0b;    /* gold that still passes contrast as small text on white */
+  --gold-grad:linear-gradient(135deg,#f8d987 0%,#e9b949 42%,#bd842a 100%);
+  --gold-ink-grad:linear-gradient(135deg,#b3801c 0%,#946311 50%,#6e4606 100%);
+  --accent-grad:linear-gradient(120deg,#7a0019 0%,#9b1733 38%,#b3801c 100%);
+
+  --shadow:0 1px 2px rgba(43,26,23,.05), 0 10px 26px -18px rgba(43,26,23,.30);
+  --shadow-lg:0 2px 4px rgba(43,26,23,.05), 0 22px 44px -26px rgba(43,26,23,.40);
+
   --radius:16px;
   --maxw:1200px;
-  --gold-grad:linear-gradient(135deg,#f8d987 0%,#e9b949 42%,#bd842a 100%);
 }
 
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;background:var(--edge);}
 body{
   margin:0;
-  background:var(--bg);
-  color:var(--cream);
+  background:var(--edge);
+  color:var(--ink);
   font-family:"Inter",system-ui,sans-serif;
   font-size:17px;
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
+::selection{background:rgba(233,185,73,.38);color:var(--ink);}
 
-/* ambient gradient wash */
+/* ---------------- BACKGROUND STACK ----------------
+   Bottom to top, all fixed to the viewport:
+     body::before   neutral base with a gold wash (upper right) and a faint maroon one (lower left)
+     #atom-field    drifting silicon atoms (canvas)
+     .bg-grid       faint engineering-paper grid
+     body::after    edge fade: solid --edge at all four viewport edges, eased to clear
+   Page content (.wrap, z-index 1) sits above all of it, and .edge-scrim
+   dissolves content into --edge along the bottom edge. Because the stack is
+   pinned to the viewport, the edges stay white at every scroll position,
+   which is what keeps an internally scrolling embed seamless. */
 body::before{
   content:"";
   position:fixed;
@@ -62,23 +96,9 @@ body::before{
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(1100px 700px at 78% -8%, rgba(233,185,73,.10), transparent 60%),
-    radial-gradient(900px 600px at 0% 100%, rgba(122,0,25,.32), transparent 55%),
-    linear-gradient(180deg, #1a0812 0%, var(--bg) 38%, #120610 100%);
-}
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  opacity:.35;
-  background-image:
-    linear-gradient(rgba(233,185,73,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(233,185,73,.05) 1px, transparent 1px);
-  background-size:48px 48px;
-  -webkit-mask-image:radial-gradient(120% 90% at 70% 0%, #000 30%, transparent 78%);
-          mask-image:radial-gradient(120% 90% at 70% 0%, #000 30%, transparent 78%);
+    radial-gradient(1000px 680px at 80% 24%, rgba(233,185,73,.20), transparent 62%),
+    radial-gradient(900px 620px at 6% 76%, rgba(122,0,25,.035), transparent 60%),
+    linear-gradient(180deg, #faf9f7 0%, var(--bg) 42%, #f8f7f5 100%);
 }
 
 /* drifting silicon atoms, behind everything */
@@ -88,6 +108,69 @@ body::after{
   z-index:0;
   pointer-events:none;
   display:block;
+}
+
+.bg-grid{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.6;
+  background-image:
+    linear-gradient(rgba(43,26,23,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43,26,23,.05) 1px, transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(110% 85% at 72% 30%, #000 25%, transparent 76%);
+          mask-image:radial-gradient(110% 85% at 72% 30%, #000 25%, transparent 76%);
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:var(--edge);
+  /* opaque at each edge, eased (roughly smoothstep) to clear so no band edge shows.
+     Two layers, one per axis; the default mask compositing unions them. */
+  --edge-mask:
+    linear-gradient(to bottom,
+      #000 0,
+      rgba(0,0,0,.84) calc(var(--fade-y) * .25),
+      rgba(0,0,0,.50) calc(var(--fade-y) * .5),
+      rgba(0,0,0,.16) calc(var(--fade-y) * .75),
+      transparent     var(--fade-y),
+      transparent     calc(100% - var(--fade-y)),
+      rgba(0,0,0,.16) calc(100% - var(--fade-y) * .75),
+      rgba(0,0,0,.50) calc(100% - var(--fade-y) * .5),
+      rgba(0,0,0,.84) calc(100% - var(--fade-y) * .25),
+      #000 100%),
+    linear-gradient(to right,
+      #000 0,
+      rgba(0,0,0,.84) calc(var(--fade-x) * .25),
+      rgba(0,0,0,.50) calc(var(--fade-x) * .5),
+      rgba(0,0,0,.16) calc(var(--fade-x) * .75),
+      transparent     var(--fade-x),
+      transparent     calc(100% - var(--fade-x)),
+      rgba(0,0,0,.16) calc(100% - var(--fade-x) * .75),
+      rgba(0,0,0,.50) calc(100% - var(--fade-x) * .5),
+      rgba(0,0,0,.84) calc(100% - var(--fade-x) * .25),
+      #000 100%);
+  -webkit-mask-image:var(--edge-mask);
+          mask-image:var(--edge-mask);
+}
+
+/* content that scrolls off the bottom of an embed melts into the white band
+   below it instead of being sliced by the iframe edge */
+.edge-scrim{
+  position:fixed;
+  left:0;right:0;bottom:0;
+  height:var(--scrim-h);
+  z-index:40;
+  pointer-events:none;
+  background:var(--edge);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, rgba(0,0,0,.16) 19%, rgba(0,0,0,.5) 38%, rgba(0,0,0,.84) 56%, #000 75%);
+          mask-image:linear-gradient(to bottom, transparent 0, rgba(0,0,0,.16) 19%, rgba(0,0,0,.5) 38%, rgba(0,0,0,.84) 56%, #000 75%);
 }
 
 a{color:inherit;text-decoration:none;}
@@ -101,40 +184,45 @@ img{display:block;max-width:100%;}
   font-size:.74rem;
   letter-spacing:.22em;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--maroon);
 }
 .gold-text{
-  background:var(--gold-grad);
+  background:var(--accent-grad);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
 /* the SA·Si wordmark: last two letters are the element symbol, so they get the gold */
 .sasi{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.02em;}
 .sasi .el{
-  background:var(--gold-grad);
+  background:var(--gold-ink-grad);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
 /* ---------------- NAV ---------------- */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:50;
-  border-bottom:1px solid transparent;
-  transition:background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
+  transition:background .25s ease;
 }
-.nav.scrolled{
-  background:rgba(18,7,14,.72);
-  backdrop-filter:blur(14px) saturate(140%);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);
-  border-bottom:1px solid var(--line);
+/* Solid white once scrolled, with a soft white fade under it instead of a
+   frosted bar and hairline. A translucent bar let blurred content show at the
+   very top edge, which is exactly where the embed meets the white band above. */
+.nav.scrolled{background:var(--edge);}
+.nav::after{
+  content:"";position:absolute;left:0;right:0;top:100%;height:var(--scrim-h);
+  z-index:-1;pointer-events:none;background:var(--edge);
+  -webkit-mask-image:linear-gradient(to top, transparent 0, rgba(0,0,0,.16) 25%, rgba(0,0,0,.5) 50%, rgba(0,0,0,.84) 75%, #000 100%);
+          mask-image:linear-gradient(to top, transparent 0, rgba(0,0,0,.16) 25%, rgba(0,0,0,.5) 50%, rgba(0,0,0,.84) 75%, #000 100%);
+  opacity:0;transition:opacity .25s ease;
 }
+.nav.scrolled::after{opacity:1;}
 .nav-inner{
   max-width:var(--maxw);margin:0 auto;padding:14px 28px;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
 }
 .brand{display:flex;align-items:center;gap:12px;}
 .brand img{width:36px;height:36px;border-radius:8px;}
-.brand .name{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.04em;line-height:1;font-size:1.05rem;}
-.brand .name small{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;font-size:.6rem;letter-spacing:.24em;color:var(--gold-deep);margin-top:3px;}
+.brand .name{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.04em;line-height:1;font-size:1.05rem;color:var(--ink);}
+.brand .name small{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;font-size:.6rem;letter-spacing:.24em;color:var(--gold-ink);margin-top:3px;}
 
 .nav-links{display:flex;align-items:center;gap:30px;}
 .nav-links a{
@@ -143,12 +231,14 @@ img{display:block;max-width:100%;}
   color:var(--muted);transition:color .2s ease;position:relative;
   white-space:nowrap;
 }
-.nav-links a:hover{color:var(--cream);}
+.nav-links a:hover{color:var(--ink);}
 .nav-links a::after{
-  content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--gold);transition:width .25s ease;
+  content:"";position:absolute;left:0;bottom:-7px;height:2px;width:0;background:var(--gold);transition:width .25s ease;
 }
 .nav-links a:hover::after{width:100%;}
 .nav-links a.btn::after{display:none;}
+/* .nav-links a out-specifies .btn-gold, which left the nav Join button in grey text */
+.nav-links a.btn-gold{color:#2a1004;}
 
 .nav-item{position:relative;}
 .nav-drop-toggle{
@@ -157,33 +247,38 @@ img{display:block;max-width:100%;}
   font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);transition:color .2s ease;white-space:nowrap;
 }
-.nav-drop-toggle:hover{color:var(--cream);}
+.nav-drop-toggle:hover{color:var(--ink);}
 .nav-drop-toggle .caret{font-size:.65em;transition:transform .2s ease;}
 .nav-item.open .nav-drop-toggle .caret{transform:rotate(180deg);}
 .nav-dropdown{
   display:none;flex-direction:column;position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);
-  min-width:210px;background:rgba(20,9,15,.97);backdrop-filter:blur(14px);
+  min-width:210px;background:var(--edge);
   border:1px solid var(--line);border-radius:12px;padding:8px;gap:2px;z-index:60;
+  box-shadow:var(--shadow-lg);
 }
 .nav-item.open .nav-dropdown{display:flex;}
 .nav-dropdown a{
   font-size:.74rem !important;padding:9px 12px;border-radius:8px;white-space:nowrap;
 }
 .nav-dropdown a::after{display:none;}
-.nav-dropdown a:hover{background:rgba(233,185,73,.1);color:var(--gold-2);}
+.nav-dropdown a:hover{background:rgba(122,0,25,.06);color:var(--maroon);}
 
 .btn{
   display:inline-flex;align-items:center;gap:9px;
   font-family:"JetBrains Mono",monospace;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500;
   padding:11px 20px;border-radius:999px;cursor:pointer;border:1px solid transparent;transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
 }
-.btn-gold{background:var(--gold-grad);color:#2a1004;font-weight:700;box-shadow:0 6px 22px -8px rgba(233,185,73,.6);}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px rgba(233,185,73,.75);}
-.btn-ghost{border-color:var(--line-strong);color:var(--cream);background:transparent;}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold-2);transform:translateY(-2px);}
+.btn-gold{
+  background:var(--gold-grad);color:#2a1004;font-weight:700;
+  border-color:rgba(176,122,26,.45);
+  box-shadow:0 6px 18px -8px rgba(184,132,31,.55);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(184,132,31,.65);}
+.btn-ghost{border-color:var(--line-strong);color:var(--ink);background:rgba(var(--edge-rgb),.6);}
+.btn-ghost:hover{border-color:var(--maroon);color:var(--maroon);transform:translateY(-2px);}
 
-.menu-toggle{display:none;background:none;border:1px solid var(--line-strong);border-radius:10px;padding:9px 11px;cursor:pointer;}
-.menu-toggle span{display:block;width:20px;height:2px;background:var(--cream);margin:4px 0;transition:.25s;}
+.menu-toggle{display:none;background:rgba(var(--edge-rgb),.7);border:1px solid var(--line-strong);border-radius:10px;padding:9px 11px;cursor:pointer;}
+.menu-toggle span{display:block;width:20px;height:2px;background:var(--ink);margin:4px 0;transition:.25s;}
 
 /* ---------------- HERO ---------------- */
 .hero{padding:160px 0 90px;position:relative;}
@@ -198,10 +293,11 @@ img{display:block;max-width:100%;}
 
 .stats{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;}
 .stat{
-  border:1px solid var(--line);border-radius:12px;padding:13px 16px;background:rgba(255,255,255,.012);
+  border:1px solid var(--line);border-radius:12px;padding:13px 16px;background:rgba(var(--edge-rgb),.72);
+  box-shadow:0 1px 2px rgba(43,26,23,.04);
   min-width:0;
 }
-.stat b{font-family:"JetBrains Mono",monospace;color:var(--gold-2);font-size:1.02rem;letter-spacing:.02em;display:block;}
+.stat b{font-family:"JetBrains Mono",monospace;color:var(--maroon);font-size:1.02rem;letter-spacing:.02em;display:block;}
 .stat span{font-size:.78rem;color:var(--muted-2);}
 
 /* ---------------- CHIP PANEL ---------------- */
@@ -210,23 +306,23 @@ img{display:block;max-width:100%;}
   position:relative;aspect-ratio:1/1;width:100%;border-radius:24px;overflow:hidden;
   border:1px solid var(--line-strong);
   background:
-    radial-gradient(120% 120% at 50% 30%, rgba(233,185,73,.10), transparent 55%),
-    radial-gradient(80% 80% at 50% 110%, rgba(122,0,25,.5), transparent 60%),
-    linear-gradient(160deg,#220e19,#160710);
-  box-shadow:inset 0 0 0 1px rgba(233,185,73,.06), 0 40px 80px -40px rgba(0,0,0,.8);
+    radial-gradient(120% 120% at 50% 30%, rgba(233,185,73,.22), transparent 55%),
+    radial-gradient(80% 80% at 50% 110%, rgba(122,0,25,.08), transparent 60%),
+    linear-gradient(160deg,#ffffff,#f2f0ed);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7), 0 40px 80px -48px rgba(43,26,23,.45);
 }
-.chip-panel::before{ /* corner registration ticks, datasheet feel */
-  content:"";position:absolute;inset:14px;border-radius:18px;
+.chip-panel::before{ /* corner registration ticks, datasheet feel. No border-radius here: it clipped the L-marks to specks */
+  content:"";position:absolute;inset:14px;
   background:
-    linear-gradient(var(--gold) 0 0) left 0 top 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) left 0 top 0/1px 16px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 top 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 top 0/1px 16px no-repeat,
-    linear-gradient(var(--gold) 0 0) left 0 bottom 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) left 0 bottom 0/1px 16px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 bottom 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 bottom 0/1px 16px no-repeat;
-  opacity:.5;pointer-events:none;
+    linear-gradient(var(--gold-deep) 0 0) left 0 top 0/16px 1px no-repeat,
+    linear-gradient(var(--gold-deep) 0 0) left 0 top 0/1px 16px no-repeat,
+    linear-gradient(var(--gold-deep) 0 0) right 0 top 0/16px 1px no-repeat,
+    linear-gradient(var(--gold-deep) 0 0) right 0 top 0/1px 16px no-repeat,
+    linear-gradient(var(--gold-deep) 0 0) left 0 bottom 0/16px 1px no-repeat,
+    linear-gradient(var(--gold-deep) 0 0) left 0 bottom 0/1px 16px no-repeat,
+    linear-gradient(var(--gold-deep) 0 0) right 0 bottom 0/16px 1px no-repeat,
+    linear-gradient(var(--gold-deep) 0 0) right 0 bottom 0/1px 16px no-repeat;
+  opacity:.7;pointer-events:none;
 }
 #chip-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab;}
 #chip-canvas:active{cursor:grabbing;}
@@ -235,23 +331,24 @@ img{display:block;max-width:100%;}
 .si-tile{
   position:absolute;left:26px;top:26px;z-index:3;pointer-events:none;
   width:88px;padding:9px 10px 8px;border:1px solid var(--line-strong);border-radius:12px;
-  background:rgba(20,9,15,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  background:rgba(var(--edge-rgb),.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  box-shadow:0 6px 16px -10px rgba(43,26,23,.3);
   font-family:"JetBrains Mono",monospace;
 }
-.si-tile .z{display:block;font-size:.62rem;letter-spacing:.1em;color:var(--gold-deep);}
+.si-tile .z{display:block;font-size:.62rem;letter-spacing:.1em;color:var(--gold-ink);}
 .si-tile .sym{display:block;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:2.1rem;line-height:1;margin:2px 0 4px;
-  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  background:var(--gold-ink-grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .si-tile .mass{display:block;font-size:.58rem;letter-spacing:.08em;color:var(--muted-2);}
 
 .chip-tag{
   position:absolute;left:18px;bottom:16px;z-index:2;
-  font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;color:var(--gold-deep);
+  font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;color:var(--gold-ink);
   text-transform:uppercase;pointer-events:none;
 }
 .chip-hint{
   position:absolute;right:18px;bottom:16px;z-index:2;
   font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.1em;color:var(--muted-2);
-  text-transform:uppercase;pointer-events:none;opacity:.8;
+  text-transform:uppercase;pointer-events:none;
 }
 
 /* ---------------- SECTIONS ---------------- */
@@ -268,36 +365,38 @@ img{display:block;max-width:100%;}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;}
 .card{
   border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;background:var(--panel);
-  transition:border-color .25s ease, transform .25s ease, background .25s ease;
+  box-shadow:var(--shadow);
+  transition:border-color .25s ease, transform .25s ease, background .25s ease, box-shadow .25s ease;
 }
-.card:hover{border-color:var(--line-strong);transform:translateY(-4px);background:var(--panel-2);}
+.card:hover{border-color:var(--line-strong);transform:translateY(-4px);background:var(--panel-2);box-shadow:var(--shadow-lg);}
 .card .ico{
   width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px;
-  border:1px solid var(--line-strong);color:var(--gold);background:rgba(233,185,73,.06);
+  border:1px solid rgba(184,132,31,.35);color:var(--maroon);background:rgba(233,185,73,.16);
 }
 .card h3{font-family:"Space Grotesk",sans-serif;font-size:1.12rem;font-weight:600;margin:0 0 8px;}
 .card p{color:var(--muted);font-size:.94rem;margin:0;}
 
 /* pipeline */
-.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .step{padding:26px 22px;border-right:1px solid var(--line);position:relative;background:var(--panel);transition:background .25s ease;}
 .step:last-child{border-right:none;}
 .step:hover{background:var(--panel-2);}
-.step .num{font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--gold-deep);letter-spacing:.1em;}
+.step .num{font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--gold-ink);letter-spacing:.1em;}
 .step h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.04rem;margin:10px 0 6px;}
 .step p{color:var(--muted-2);font-size:.84rem;margin:0;}
-.step .arrow{position:absolute;right:-8px;top:50%;transform:translateY(-50%);z-index:2;color:var(--gold);font-size:.9rem;background:var(--bg);padding:2px;}
+.step .arrow{position:absolute;right:-8px;top:50%;transform:translateY(-50%);z-index:2;color:var(--gold-deep);font-size:.9rem;background:var(--panel);padding:2px;}
 .step:last-child .arrow{display:none;}
 
 /* ways in */
 .ways{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;}
 .way{
   border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;background:var(--panel);
-  position:relative;transition:border-color .25s ease, transform .25s ease, background .25s ease;
+  box-shadow:var(--shadow);
+  position:relative;transition:border-color .25s ease, transform .25s ease, background .25s ease, box-shadow .25s ease;
 }
-.way:hover{border-color:var(--line-strong);transform:translateY(-4px);background:var(--panel-2);}
+.way:hover{border-color:var(--line-strong);transform:translateY(-4px);background:var(--panel-2);box-shadow:var(--shadow-lg);}
 .way .e{
-  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;color:var(--gold-deep);
+  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;color:var(--gold-ink);
   text-transform:uppercase;display:block;margin-bottom:12px;
 }
 .way h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.06rem;margin:0 0 8px;}
@@ -306,27 +405,28 @@ img{display:block;max-width:100%;}
   margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.04em;
   color:var(--muted-2);
 }
-.ways-note b{color:var(--gold-2);font-weight:500;}
+.ways-note b{color:var(--maroon);font-weight:500;}
 
 /* links out to the ASIC 101 course site */
 .stat-link{display:block;transition:border-color .2s ease, transform .2s ease;}
-.stat-link:hover{border-color:var(--gold);transform:translateY(-2px);}
+.stat-link:hover{border-color:var(--maroon);transform:translateY(-2px);}
 .way-link{
   display:inline-flex;align-items:center;gap:6px;margin-top:16px;
   font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--gold);border-bottom:1px solid transparent;
+  color:var(--maroon);border-bottom:1px solid transparent;
   transition:color .2s ease, border-color .2s ease;
 }
-.way-link:hover{color:var(--gold-2);border-bottom-color:var(--gold-2);}
-.inline-gold{color:var(--gold);border-bottom:1px solid var(--line-strong);transition:border-color .2s ease;}
-.inline-gold:hover{border-bottom-color:var(--gold);}
+.way-link:hover{color:var(--maroon-2);border-bottom-color:var(--maroon-2);}
+.inline-gold{color:var(--maroon);border-bottom:1px solid var(--gold);transition:border-color .2s ease;}
+.inline-gold:hover{border-bottom-color:var(--maroon);}
 
 /* network */
 .net-wrap{
   margin-top:48px;border:1px solid var(--line-strong);border-radius:22px;overflow:hidden;
   background:
-    radial-gradient(90% 120% at 0% 0%, rgba(233,185,73,.11), transparent 55%),
-    linear-gradient(200deg,#250f1b,#160710);
+    radial-gradient(90% 120% at 0% 0%, rgba(233,185,73,.18), transparent 55%),
+    linear-gradient(200deg,#ffffff,#f9f8f6);
+  box-shadow:var(--shadow);
   display:grid;grid-template-columns:1.15fr .85fr;
 }
 .net-left{padding:44px 42px;}
@@ -337,9 +437,9 @@ img{display:block;max-width:100%;}
 .net-right{border-left:1px solid var(--line);padding:44px 38px;display:flex;flex-direction:column;justify-content:center;gap:20px;}
 .net-fact b{
   display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px;
+  text-transform:uppercase;color:var(--gold-ink);margin-bottom:5px;
 }
-.net-fact span{color:var(--cream);font-size:.95rem;}
+.net-fact span{color:var(--ink);font-size:.95rem;}
 
 /* ---------------- SPONSOR ---------------- */
 /* Reuses .cards/.card for the "where it goes" grid, then one CTA strip.
@@ -349,8 +449,9 @@ img{display:block;max-width:100%;}
   margin-top:34px;border:1px solid var(--line-strong);border-radius:22px;
   padding:40px 42px;
   background:
-    radial-gradient(90% 130% at 100% 0%, rgba(233,185,73,.10), transparent 58%),
-    linear-gradient(200deg,#250f1b,#160710);
+    radial-gradient(90% 130% at 100% 0%, rgba(233,185,73,.16), transparent 58%),
+    linear-gradient(200deg,#ffffff,#f9f8f6);
+  box-shadow:var(--shadow);
   display:grid;grid-template-columns:1.25fr .75fr;gap:38px;align-items:center;
 }
 .sponsor-cta h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.5rem;margin:0 0 14px;}
@@ -360,41 +461,42 @@ img{display:block;max-width:100%;}
 .sponsor-aside{display:grid;gap:18px;}
 .sponsor-aside b{
   display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px;
+  text-transform:uppercase;color:var(--gold-ink);margin-bottom:5px;
 }
-.sponsor-aside span{color:var(--cream);font-size:.94rem;}
+.sponsor-aside span{color:var(--ink);font-size:.94rem;}
 .sponsor-fine{
   margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.04em;
   color:var(--muted-2);line-height:1.7;
 }
-.sponsor-fine b{color:var(--gold-2);font-weight:500;}
+.sponsor-fine b{color:var(--maroon);font-weight:500;}
 
 /* join */
 .join-wrap{
   margin-top:14px;border:1px solid var(--line-strong);border-radius:22px;overflow:hidden;
   background:
-    radial-gradient(90% 120% at 100% 0%, rgba(233,185,73,.12), transparent 55%),
-    linear-gradient(160deg,#250f1b,#160710);
+    radial-gradient(90% 120% at 100% 0%, rgba(233,185,73,.20), transparent 55%),
+    linear-gradient(160deg,#ffffff,#f9f8f6);
+  box-shadow:var(--shadow);
   display:grid;grid-template-columns:1.2fr .8fr;
 }
 .join-left{padding:46px 44px;}
 .join-left h2{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(1.9rem,3.4vw,2.7rem);margin:14px 0 0;line-height:1.08;}
 .join-left p{color:var(--muted);margin:16px 0 0;max-width:46ch;}
 .join-list{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px;}
-.join-list li{display:flex;gap:12px;align-items:flex-start;font-size:.98rem;color:var(--cream);}
-.join-list li .dot{color:var(--gold);font-family:"JetBrains Mono",monospace;flex:0 0 auto;}
+.join-list li{display:flex;gap:12px;align-items:flex-start;font-size:.98rem;color:var(--ink);}
+.join-list li .dot{color:var(--gold-deep);font-family:"JetBrains Mono",monospace;flex:0 0 auto;}
 .join-right{border-left:1px solid var(--line);padding:46px 40px;display:flex;flex-direction:column;justify-content:center;gap:18px;}
 .join-right .meta{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--muted);}
-.join-right .meta b{color:var(--gold-2);display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+.join-right .meta b{color:var(--maroon);display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
 
 /* footer */
-.footer{border-top:1px solid var(--line);padding:54px 0 40px;margin-top:30px;}
+.footer{border-top:1px solid var(--line);padding:54px 0 56px;margin-top:30px;}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px;align-items:start;}
 .footer .brand img{width:40px;height:40px;}
 .footer p.blurb{color:var(--muted-2);font-size:.9rem;margin:16px 0 0;max-width:34ch;}
-.fcol h5{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 14px;}
+.fcol h5{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 14px;}
 .fcol a{display:block;color:var(--muted);font-size:.94rem;margin-bottom:10px;transition:color .2s ease;}
-.fcol a:hover{color:var(--gold-2);}
+.fcol a:hover{color:var(--maroon);}
 .footer-bottom{margin-top:42px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--muted-2);letter-spacing:.04em;}
 
 /* scroll reveal */
@@ -428,7 +530,8 @@ img{display:block;max-width:100%;}
   .nav-inner{padding:12px 20px;}
   .nav-links{
     position:absolute;top:100%;right:14px;left:14px;flex-direction:column;align-items:flex-start;gap:18px;
-    background:rgba(20,9,15,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;padding:22px;
+    background:var(--edge);border:1px solid var(--line);border-radius:14px;padding:22px;
+    box-shadow:var(--shadow-lg);
     display:none;
   }
   .nav-links.open{display:flex;}
@@ -438,7 +541,7 @@ img{display:block;max-width:100%;}
   .nav-item{width:100%;}
   .nav-dropdown{
     position:static;transform:none;display:none;width:100%;min-width:0;
-    background:none;border:none;backdrop-filter:none;padding:10px 0 0 14px;margin-top:6px;
+    background:none;border:none;box-shadow:none;padding:10px 0 0 14px;margin-top:6px;
     border-left:1px solid var(--line);
   }
   .nav-item.open .nav-dropdown{display:flex;}
@@ -461,7 +564,7 @@ img{display:block;max-width:100%;}
   .reveal{opacity:1;transform:none;transition:none;}
 }
 
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+:focus-visible{outline:2px solid var(--maroon);outline-offset:3px;border-radius:4px;}
 
 /* ---------------- ANIMATION TOGGLE ---------------- */
 .anim-toggle{
@@ -469,17 +572,18 @@ img{display:block;max-width:100%;}
   display:flex;align-items:center;gap:9px;
   font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
   padding:10px 16px;border-radius:999px;cursor:pointer;
-  border:1px solid var(--line-strong);background:rgba(20,9,15,.85);
+  border:1px solid var(--line-strong);background:rgba(var(--edge-rgb),.9);
+  box-shadow:var(--shadow);
   color:var(--muted);transition:border-color .2s ease,color .2s ease;
 }
-.anim-toggle:hover{border-color:var(--gold);color:var(--gold-2);}
-.anim-toggle .anim-toggle-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);}
+.anim-toggle:hover{border-color:var(--maroon);color:var(--maroon);}
+.anim-toggle .anim-toggle-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(233,185,73,.22), 0 0 8px rgba(233,185,73,.9);}
 html.anim-off .anim-toggle .anim-toggle-dot{background:var(--muted-2);box-shadow:none;}
 @media (max-width:640px){
   .anim-toggle{right:14px;bottom:14px;padding:9px 12px;}
 }
 
-/* animations disabled: kill all CSS transitions/animations + smooth scroll + nav blur */
+/* animations disabled: kill all CSS transitions/animations + smooth scroll */
 html.anim-off, html.anim-off *{
   transition-duration:0s !important;
   transition-delay:0s !important;
@@ -487,16 +591,14 @@ html.anim-off, html.anim-off *{
   animation-delay:0s !important;
   scroll-behavior:auto !important;
 }
-html.anim-off .nav.scrolled{
-  backdrop-filter:none;-webkit-backdrop-filter:none;
-  background:rgba(18,7,14,.94);
-}
 </style>
 </head>
 <body>
 
-<!-- ambient silicon-atom field -->
+<!-- ambient background: atoms, grid, and the bottom content scrim (see BACKGROUND STACK in the CSS) -->
 <canvas id="atom-field" aria-hidden="true"></canvas>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="edge-scrim" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -902,6 +1004,8 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
    elliptical shells carrying 2, 8, and 4 electrons. Nobody is going to
    count them, but they're correct.
    Exposes window.__atomField so the animation toggle can park it.
+   Atoms that drift toward an edge disappear under the CSS edge fade
+   (body::after), so nothing gets sliced by the viewport boundary.
    ================================================================ */
 (function(){
   const cv = document.getElementById('atom-field');
@@ -913,6 +1017,17 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   let enabled = true;
   let looping = false, rafId = null;
 
+  // Light-theme inks: graphite inner shells (silicon grey), gold valence shell.
+  // Maroon was tried here but reads as pink at these alphas on white. Thin
+  // strokes on a pale page also read fainter than the same alpha did on the
+  // dark theme, so the alphas below run a little higher than before.
+  const INK = {
+    shell:   '#3b2a26',
+    valence: '#b8841f',
+    eInner:  '#3b2a26',
+    eVal:    '#c08a22'
+  };
+
   // One pre-rendered nucleus glow, scaled per atom at draw time. Building a
   // radial gradient per atom per frame is the thing that actually costs money.
   const GLOW = (function(){
@@ -920,8 +1035,8 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
     c.width = c.height = S;
     const g = c.getContext('2d');
     const grd = g.createRadialGradient(S/2, S/2, 1, S/2, S/2, S/2);
-    grd.addColorStop(0,    'rgba(255,222,150,1)');
-    grd.addColorStop(0.28, 'rgba(233,185,73,.42)');
+    grd.addColorStop(0,    'rgba(176,122,26,.95)');
+    grd.addColorStop(0.26, 'rgba(233,185,73,.5)');
     grd.addColorStop(1,    'rgba(233,185,73,0)');
     g.fillStyle = grd; g.fillRect(0, 0, S, S);
     return c;
@@ -942,7 +1057,7 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
       vx: (Math.random() - 0.5) * (0.05 + depth * 0.13),
       vy: (Math.random() - 0.5) * (0.05 + depth * 0.13),
       s: 15 + depth * 30,                      // outer shell radius, px
-      a: 0.07 + depth * 0.13,                  // base alpha
+      a: 0.08 + depth * 0.14,                  // base alpha
       tilt: Math.random() * Math.PI,
       dir: Math.random() < 0.5 ? -1 : 1,
       phase: Math.random() * Math.PI * 2
@@ -977,7 +1092,7 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
       // nucleus
       const gr = a.s * 0.58;
-      ctx.globalAlpha = a.a * 1.15;
+      ctx.globalAlpha = Math.min(1, a.a * 1.5);
       ctx.drawImage(GLOW, -gr, -gr, gr * 2, gr * 2);
 
       for (let i = 0; i < SHELLS.length; i++){
@@ -987,8 +1102,8 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
         ctx.save();
         ctx.rotate(a.tilt + i * (Math.PI / 3)); // shells cross each other
 
-        ctx.globalAlpha = a.a * (sh.valence ? 0.6 : 0.34);
-        ctx.strokeStyle = sh.valence ? '#f6d27a' : '#c0892c';
+        ctx.globalAlpha = a.a * (sh.valence ? 0.8 : 0.42);
+        ctx.strokeStyle = sh.valence ? INK.valence : INK.shell;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
@@ -1000,8 +1115,8 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
                     + t * 0.00035 * sh.sp * a.dir;
           // electrons on the far side of the ellipse dim out: cheap depth cue
           const far = Math.sin(ang) < 0 ? 0.4 : 1;
-          ctx.globalAlpha = a.a * 1.7 * far * (sh.valence ? 1.25 : 1);
-          ctx.fillStyle = sh.valence ? '#fff0cf' : '#f6d27a';
+          ctx.globalAlpha = Math.min(1, a.a * far * (sh.valence ? 2.4 : 1.6));
+          ctx.fillStyle = sh.valence ? INK.eVal : INK.eInner;
           ctx.beginPath();
           ctx.arc(Math.cos(ang) * rx, Math.sin(ang) * ry, er, 0, Math.PI * 2);
           ctx.fill();
@@ -1105,7 +1220,10 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   chip.add(top);
 
   // ---- gold leads ----
-  const pinMat = new THREE.MeshStandardMaterial({color:0xe7c46a, metalness:1.0, roughness:0.32});
+  // Fully metallic with no environment map means the leads only catch direct
+  // highlights, which read as dark bronze against the light panel. Backing the
+  // metalness off lets some diffuse gold through.
+  const pinMat = new THREE.MeshStandardMaterial({color:0xc9952f, metalness:0.7, roughness:0.38});
   const L = 0.34, PW = 0.12, PT = 0.055, count = 9, yPin = -0.04;
   const half = W/2, reach = half + L/2 - 0.03;
   const start = -0.84, end = 0.84, step = (end-start)/(count-1);
@@ -1122,11 +1240,13 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   }
 
   // ---- soft contact shadow ----
+  // On the light panel this reads as a real shadow (on the dark theme it was
+  // nearly invisible), so it's lighter than before and tinted warm, not pure black.
   (function(){
     const S=256, cv=document.createElement('canvas'); cv.width=cv.height=S;
     const c=cv.getContext('2d');
     const grd=c.createRadialGradient(S/2,S/2,10,S/2,S/2,S/2);
-    grd.addColorStop(0,'rgba(0,0,0,.55)'); grd.addColorStop(1,'rgba(0,0,0,0)');
+    grd.addColorStop(0,'rgba(43,26,23,.36)'); grd.addColorStop(1,'rgba(43,26,23,0)');
     c.fillStyle=grd; c.fillRect(0,0,S,S);
     const tex=new THREE.CanvasTexture(cv);
     const sh=new THREE.Mesh(new THREE.PlaneGeometry(4.6,4.6),
@@ -1135,8 +1255,9 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   })();
 
   // ---- lights ----
-  scene.add(new THREE.AmbientLight(0x5a3540, 0.55));
-  const hemi = new THREE.HemisphereLight(0xffe9c2, 0x2a0d16, 0.55); scene.add(hemi);
+  // ambient and hemisphere ground lifted a little: the chip now sits in a bright room
+  scene.add(new THREE.AmbientLight(0x6a5550, 0.6));
+  const hemi = new THREE.HemisphereLight(0xfff1dc, 0x5e4a44, 0.6); scene.add(hemi);
   const key = new THREE.DirectionalLight(0xffffff, 1.7); key.position.set(4,6,4); scene.add(key);
   const gold = new THREE.PointLight(0xffcf6e, 1.3, 30); gold.position.set(-3,2,4); scene.add(gold);
   const rimL = new THREE.DirectionalLight(0xff9a64, 0.8); rimL.position.set(-4,3,-5); scene.add(rimL);
