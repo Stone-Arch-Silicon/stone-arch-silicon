@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SASi — Stone Arch Silicon · University of Minnesota</title>
 <meta name="description" content="SASi is the University of Minnesota chip design club. We teach undergrads the full ASIC flow — RTL to GDSII — on industry EDA tools and open-source PDKs, and we're a founding chapter of the ASIC Network." />
-<meta name="theme-color" content="#160710" />
+<meta name="theme-color" content="#0f0e11" />
 
 <!-- Favicon (your logo) -->
 <link rel="icon" type="image/png" href="assets/logo.png" />
@@ -13,7 +13,7 @@
 <!-- Open Graph (set og:url + an absolute og:image URL once your Pages domain is live) -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="SASi — Stone Arch Silicon" />
-<meta property="og:description" content="Element 14 and a room full of undergrads. Chip design at the University of Minnesota." />
+<meta property="og:description" content="The chip design club at the University of Minnesota." />
 <meta property="og:image" content="assets/logo.png" />
 
 <!-- Fonts -->
@@ -22,63 +22,95 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
 <style>
+/* ========================================================================
+   PALETTE — quieter dark theme.
+
+   The old scheme ran a saturated plum background under a bright #e9b949
+   gold that appeared on nearly every element, plus two large radial washes,
+   a grid overlay, glow shadows, and a lift-on-hover on every card. Any one
+   of those is fine; all of them at once is what made the page loud.
+
+   Same structure and the same maroon-and-gold identity here, but: the
+   background is a near-neutral warm charcoal instead of plum, the gold is
+   pulled back to a matte brass that reads as a metal rather than a
+   highlighter, and the accent lands on fewer things. The bright gradient is
+   now reserved for two places only — the Si in the wordmark and the primary
+   button — so it still means something when you see it.
+   ======================================================================== */
 :root{
-  --bg:#160710;
-  --bg-2:#241019;
-  --panel:#1d0c15;
-  --panel-2:#260f1a;
-  --line:#3a2230;
-  --line-strong:#5c2438;
-  --maroon:#7a0019;
-  --gold:#e9b949;
-  --gold-2:#f6d27a;
-  --gold-deep:#c0892c;
-  --cream:#f1e6d6;
-  --muted:#b69a92;
-  --muted-2:#8b746f;
-  --radius:16px;
+  /* how deep the flat base colour runs at the very top and bottom of the
+     page, so a band added at either edge blends in */
+  --edge:200px;
+
+  --bg:#0f0e11;
+  --bg-2:#141217;
+  --panel:#16141a;
+  --panel-2:#1b181f;
+  --line:#272329;
+  --line-strong:#38313a;
+
+  --maroon:#5e0a1d;
+  --maroon-soft:#7a0019;
+
+  --brass:#c2a068;        /* the accent. matte, not glowing */
+  --brass-2:#dcc08d;      /* hover only */
+  --brass-deep:#95794a;   /* small labels */
+
+  --text:#e4dee2;
+  --muted:#9a9099;
+  --muted-2:#736a73;
+
+  --radius:14px;
   --maxw:1200px;
-  --gold-grad:linear-gradient(135deg,#f8d987 0%,#e9b949 42%,#bd842a 100%);
+  --gold-grad:linear-gradient(135deg,#e6cc95 0%,#c2a068 46%,#8f7340 100%);
 }
 
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;background:var(--bg);}
 body{
   margin:0;
+  position:relative;
   background:var(--bg);
-  color:var(--cream);
+  color:var(--text);
   font-family:"Inter",system-ui,sans-serif;
   font-size:17px;
-  line-height:1.65;
+  line-height:1.68;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
 
-/* ambient gradient wash */
+/* Page wash. One soft warm rise near the top and one deep maroon pool at
+   the bottom left, both much weaker than before, over a flat base. Absolute
+   rather than fixed so the flat run at each end is pinned to the document,
+   not the viewport. */
 body::before{
   content:"";
-  position:fixed;
+  position:absolute;
   inset:0;
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(1100px 700px at 78% -8%, rgba(233,185,73,.10), transparent 60%),
-    radial-gradient(900px 600px at 0% 100%, rgba(122,0,25,.32), transparent 55%),
-    linear-gradient(180deg, #1a0812 0%, var(--bg) 38%, #120610 100%);
+    linear-gradient(180deg,var(--bg) 0, rgba(15,14,17,0) var(--edge), rgba(15,14,17,0) calc(100% - var(--edge)), var(--bg) 100%),
+    radial-gradient(1200px 780px at 80% 420px, rgba(194,160,104,.055), transparent 62%),
+    radial-gradient(1000px 680px at -5% 82%, rgba(94,10,29,.16), transparent 60%),
+    linear-gradient(180deg,var(--bg) 0, var(--bg-2) 30%, var(--bg-2) 72%, var(--bg) 100%);
 }
+/* Reticle grid. Was a 48px gold lattice at .35 opacity across the top half,
+   which is the single busiest thing on the page. Now a 72px lattice at a
+   third of the contrast, fading out at both edges. */
 body::after{
   content:"";
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
-  opacity:.35;
+  opacity:.5;
   background-image:
-    linear-gradient(rgba(233,185,73,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(233,185,73,.05) 1px, transparent 1px);
-  background-size:48px 48px;
-  -webkit-mask-image:radial-gradient(120% 90% at 70% 0%, #000 30%, transparent 78%);
-          mask-image:radial-gradient(120% 90% at 70% 0%, #000 30%, transparent 78%);
+    linear-gradient(rgba(194,160,104,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(194,160,104,.028) 1px, transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+          mask-image:linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
 }
 
 /* drifting silicon atoms, behind everything */
@@ -88,6 +120,8 @@ body::after{
   z-index:0;
   pointer-events:none;
   display:block;
+  -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 15%, #000 85%, transparent 100%);
+          mask-image:linear-gradient(180deg, transparent 0, #000 15%, #000 85%, transparent 100%);
 }
 
 a{color:inherit;text-decoration:none;}
@@ -99,10 +133,11 @@ img{display:block;max-width:100%;}
 .eyebrow{
   font-family:"JetBrains Mono",monospace;
   font-size:.74rem;
-  letter-spacing:.22em;
+  letter-spacing:.2em;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--brass-deep);
 }
+/* the one place other than the button where the bright gradient is allowed */
 .gold-text{
   background:var(--gold-grad);
   -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -119,12 +154,12 @@ img{display:block;max-width:100%;}
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:50;
   border-bottom:1px solid transparent;
-  transition:background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
+  transition:background .25s ease, border-color .25s ease;
 }
 .nav.scrolled{
-  background:rgba(18,7,14,.72);
-  backdrop-filter:blur(14px) saturate(140%);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  background:rgba(15,14,17,.8);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line);
 }
 .nav-inner{
@@ -134,18 +169,18 @@ img{display:block;max-width:100%;}
 .brand{display:flex;align-items:center;gap:12px;}
 .brand img{width:36px;height:36px;border-radius:8px;}
 .brand .name{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.04em;line-height:1;font-size:1.05rem;}
-.brand .name small{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;font-size:.6rem;letter-spacing:.24em;color:var(--gold-deep);margin-top:3px;}
+.brand .name small{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;font-size:.6rem;letter-spacing:.24em;color:var(--brass-deep);margin-top:3px;}
 
-.nav-links{display:flex;align-items:center;gap:30px;}
+.nav-links{display:flex;align-items:center;gap:26px;}
 .nav-links a{
   font-family:"JetBrains Mono",monospace;
   font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);transition:color .2s ease;position:relative;
   white-space:nowrap;
 }
-.nav-links a:hover{color:var(--cream);}
+.nav-links a:hover{color:var(--text);}
 .nav-links a::after{
-  content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--gold);transition:width .25s ease;
+  content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--brass);transition:width .25s ease;
 }
 .nav-links a:hover::after{width:100%;}
 .nav-links a.btn::after{display:none;}
@@ -157,125 +192,97 @@ img{display:block;max-width:100%;}
   font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);transition:color .2s ease;white-space:nowrap;
 }
-.nav-drop-toggle:hover{color:var(--cream);}
+.nav-drop-toggle:hover{color:var(--text);}
 .nav-drop-toggle .caret{font-size:.65em;transition:transform .2s ease;}
 .nav-item.open .nav-drop-toggle .caret{transform:rotate(180deg);}
 .nav-dropdown{
   display:none;flex-direction:column;position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);
-  min-width:210px;background:rgba(20,9,15,.97);backdrop-filter:blur(14px);
-  border:1px solid var(--line);border-radius:12px;padding:8px;gap:2px;z-index:60;
+  min-width:210px;background:#17151b;
+  border:1px solid var(--line-strong);border-radius:12px;padding:8px;gap:2px;z-index:60;
+  box-shadow:0 20px 44px -30px #000;
 }
 .nav-item.open .nav-dropdown{display:flex;}
 .nav-dropdown a{
   font-size:.74rem !important;padding:9px 12px;border-radius:8px;white-space:nowrap;
 }
 .nav-dropdown a::after{display:none;}
-.nav-dropdown a:hover{background:rgba(233,185,73,.1);color:var(--gold-2);}
+.nav-dropdown a:hover{background:rgba(194,160,104,.09);color:var(--brass-2);}
 
 .btn{
   display:inline-flex;align-items:center;gap:9px;
   font-family:"JetBrains Mono",monospace;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500;
-  padding:11px 20px;border-radius:999px;cursor:pointer;border:1px solid transparent;transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  padding:11px 20px;border-radius:999px;cursor:pointer;border:1px solid transparent;
+  transition:background .2s ease, color .2s ease, border-color .2s ease;
 }
-.btn-gold{background:var(--gold-grad);color:#2a1004;font-weight:700;box-shadow:0 6px 22px -8px rgba(233,185,73,.6);}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px rgba(233,185,73,.75);}
-.btn-ghost{border-color:var(--line-strong);color:var(--cream);background:transparent;}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold-2);transform:translateY(-2px);}
+/* no glow, no lift: the gradient alone is enough to mark the primary action */
+.btn-gold{background:var(--gold-grad);color:#1e1608;font-weight:700;}
+.btn-gold:hover{filter:brightness(1.06);}
+.btn-ghost{border-color:var(--line-strong);color:var(--text);background:transparent;}
+.btn-ghost:hover{border-color:var(--brass);color:var(--brass-2);}
 
 .menu-toggle{display:none;background:none;border:1px solid var(--line-strong);border-radius:10px;padding:9px 11px;cursor:pointer;}
-.menu-toggle span{display:block;width:20px;height:2px;background:var(--cream);margin:4px 0;transition:.25s;}
+.menu-toggle span{display:block;width:20px;height:2px;background:var(--text);margin:4px 0;transition:.25s;}
 
 /* ---------------- HERO ---------------- */
-.hero{padding:160px 0 90px;position:relative;}
+.hero{padding:160px 0 90px;position:relative;z-index:1;}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;}
 .hero h1{
   font-family:"Space Grotesk",sans-serif;font-weight:700;
-  font-size:clamp(2.7rem,6.4vw,5.1rem);line-height:1.0;letter-spacing:-.02em;margin:18px 0 0;
+  font-size:clamp(2.7rem,6.4vw,5.1rem);line-height:1.02;letter-spacing:-.02em;margin:18px 0 0;
 }
 .hero h1 .glow{display:inline-block;}
-.hero p.lead{color:var(--muted);font-size:clamp(1.02rem,1.6vw,1.22rem);margin:22px 0 0;max-width:44ch;}
+.hero p.lead{color:var(--muted);font-size:clamp(1.02rem,1.6vw,1.2rem);margin:22px 0 0;max-width:44ch;}
 .hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
 
 .stats{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;}
 .stat{
-  border:1px solid var(--line);border-radius:12px;padding:13px 16px;background:rgba(255,255,255,.012);
+  border:1px solid var(--line);border-radius:12px;padding:13px 16px;background:var(--panel);
   min-width:0;
 }
-.stat b{font-family:"JetBrains Mono",monospace;color:var(--gold-2);font-size:1.02rem;letter-spacing:.02em;display:block;}
+.stat b{font-family:"JetBrains Mono",monospace;color:var(--brass);font-size:1rem;letter-spacing:.02em;display:block;font-weight:500;}
 .stat span{font-size:.78rem;color:var(--muted-2);}
 
-/* ---------------- CHIP PANEL ---------------- */
+/* ---------------- CHIP ---------------- */
+/* No frame. The chip sits directly on the page, and a soft pool of light
+   behind it (no edges) ties it into the background instead of a box. */
 .hero-visual{position:relative;}
-.chip-panel{
-  position:relative;aspect-ratio:1/1;width:100%;border-radius:24px;overflow:hidden;
-  border:1px solid var(--line-strong);
-  background:
-    radial-gradient(120% 120% at 50% 30%, rgba(233,185,73,.10), transparent 55%),
-    radial-gradient(80% 80% at 50% 110%, rgba(122,0,25,.5), transparent 60%),
-    linear-gradient(160deg,#220e19,#160710);
-  box-shadow:inset 0 0 0 1px rgba(233,185,73,.06), 0 40px 80px -40px rgba(0,0,0,.8);
+.hero-visual::before{
+  content:"";position:absolute;inset:-14%;z-index:0;pointer-events:none;
+  background:radial-gradient(closest-side, rgba(194,160,104,.07), rgba(94,10,29,.12) 55%, transparent 100%);
 }
-.chip-panel::before{ /* corner registration ticks, datasheet feel */
-  content:"";position:absolute;inset:14px;border-radius:18px;
-  background:
-    linear-gradient(var(--gold) 0 0) left 0 top 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) left 0 top 0/1px 16px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 top 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 top 0/1px 16px no-repeat,
-    linear-gradient(var(--gold) 0 0) left 0 bottom 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) left 0 bottom 0/1px 16px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 bottom 0/16px 1px no-repeat,
-    linear-gradient(var(--gold) 0 0) right 0 bottom 0/1px 16px no-repeat;
-  opacity:.5;pointer-events:none;
-}
+.chip-panel{position:relative;aspect-ratio:1/1;width:100%;z-index:1;}
 #chip-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab;}
 #chip-canvas:active{cursor:grabbing;}
 
-/* periodic-table tile, floated over the panel */
-.si-tile{
-  position:absolute;left:26px;top:26px;z-index:3;pointer-events:none;
-  width:88px;padding:9px 10px 8px;border:1px solid var(--line-strong);border-radius:12px;
-  background:rgba(20,9,15,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  font-family:"JetBrains Mono",monospace;
-}
-.si-tile .z{display:block;font-size:.62rem;letter-spacing:.1em;color:var(--gold-deep);}
-.si-tile .sym{display:block;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:2.1rem;line-height:1;margin:2px 0 4px;
-  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.si-tile .mass{display:block;font-size:.58rem;letter-spacing:.08em;color:var(--muted-2);}
-
-.chip-tag{
-  position:absolute;left:18px;bottom:16px;z-index:2;
-  font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;color:var(--gold-deep);
-  text-transform:uppercase;pointer-events:none;
-}
 .chip-hint{
-  position:absolute;right:18px;bottom:16px;z-index:2;
-  font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.1em;color:var(--muted-2);
-  text-transform:uppercase;pointer-events:none;opacity:.8;
+  position:absolute;left:50%;bottom:2%;transform:translateX(-50%);z-index:2;
+  font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.12em;color:var(--muted-2);
+  text-transform:uppercase;pointer-events:none;opacity:.6;
 }
 
 /* ---------------- SECTIONS ---------------- */
-.section{padding:96px 0;position:relative;}
+.section{padding:96px 0;position:relative;z-index:1;}
 .section-head{max-width:700px;}
 .section-head h2{
   font-family:"Space Grotesk",sans-serif;font-weight:700;
-  font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.01em;margin:14px 0 0;
+  font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.12;letter-spacing:-.01em;margin:14px 0 0;
 }
-.section-head p{color:var(--muted);margin:16px 0 0;font-size:1.05rem;}
+.section-head p{color:var(--muted);margin:16px 0 0;font-size:1.04rem;}
 .divider{height:1px;background:linear-gradient(90deg,var(--line-strong),transparent);margin:0;}
 
-/* feature cards */
+/* feature cards. Hover is now a quiet border and background change: the old
+   4px lift on every card meant the whole grid moved when the cursor crossed it. */
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;}
 .card{
   border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;background:var(--panel);
-  transition:border-color .25s ease, transform .25s ease, background .25s ease;
+  transition:border-color .25s ease, background .25s ease;
 }
-.card:hover{border-color:var(--line-strong);transform:translateY(-4px);background:var(--panel-2);}
+.card:hover{border-color:var(--line-strong);background:var(--panel-2);}
 .card .ico{
-  width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px;
-  border:1px solid var(--line-strong);color:var(--gold);background:rgba(233,185,73,.06);
+  width:40px;height:40px;border-radius:10px;display:grid;place-items:center;margin-bottom:16px;
+  border:1px solid var(--line-strong);color:var(--brass);background:rgba(194,160,104,.05);
 }
-.card h3{font-family:"Space Grotesk",sans-serif;font-size:1.12rem;font-weight:600;margin:0 0 8px;}
+.card h3{font-family:"Space Grotesk",sans-serif;font-size:1.1rem;font-weight:600;margin:0 0 8px;}
 .card p{color:var(--muted);font-size:.94rem;margin:0;}
 
 /* pipeline */
@@ -283,130 +290,171 @@ img{display:block;max-width:100%;}
 .step{padding:26px 22px;border-right:1px solid var(--line);position:relative;background:var(--panel);transition:background .25s ease;}
 .step:last-child{border-right:none;}
 .step:hover{background:var(--panel-2);}
-.step .num{font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--gold-deep);letter-spacing:.1em;}
-.step h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.04rem;margin:10px 0 6px;}
+.step .num{font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--brass-deep);letter-spacing:.1em;}
+.step h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.02rem;margin:10px 0 6px;}
 .step p{color:var(--muted-2);font-size:.84rem;margin:0;}
-.step .arrow{position:absolute;right:-8px;top:50%;transform:translateY(-50%);z-index:2;color:var(--gold);font-size:.9rem;background:var(--bg);padding:2px;}
+.step .arrow{position:absolute;right:-8px;top:50%;transform:translateY(-50%);z-index:2;color:var(--brass-deep);font-size:.9rem;background:var(--bg-2);padding:2px;}
 .step:last-child .arrow{display:none;}
 
 /* ways in */
 .ways{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;}
 .way{
   border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;background:var(--panel);
-  position:relative;transition:border-color .25s ease, transform .25s ease, background .25s ease;
+  position:relative;transition:border-color .25s ease, background .25s ease;
 }
-.way:hover{border-color:var(--line-strong);transform:translateY(-4px);background:var(--panel-2);}
+.way:hover{border-color:var(--line-strong);background:var(--panel-2);}
 .way .e{
-  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;color:var(--gold-deep);
+  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;color:var(--brass-deep);
   text-transform:uppercase;display:block;margin-bottom:12px;
 }
-.way h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.06rem;margin:0 0 8px;}
+.way h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.04rem;margin:0 0 8px;}
 .way p{color:var(--muted);font-size:.92rem;margin:0;}
 .ways-note{
   margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.04em;
   color:var(--muted-2);
 }
-.ways-note b{color:var(--gold-2);font-weight:500;}
+.ways-note b{color:var(--brass);font-weight:500;}
 
 /* links out to the ASIC 101 course site */
-.stat-link{display:block;transition:border-color .2s ease, transform .2s ease;}
-.stat-link:hover{border-color:var(--gold);transform:translateY(-2px);}
+.stat-link{display:block;transition:border-color .2s ease;}
+.stat-link:hover{border-color:var(--line-strong);}
 .way-link{
   display:inline-flex;align-items:center;gap:6px;margin-top:16px;
   font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--gold);border-bottom:1px solid transparent;
+  color:var(--brass);border-bottom:1px solid transparent;
   transition:color .2s ease, border-color .2s ease;
 }
-.way-link:hover{color:var(--gold-2);border-bottom-color:var(--gold-2);}
-.inline-gold{color:var(--gold);border-bottom:1px solid var(--line-strong);transition:border-color .2s ease;}
-.inline-gold:hover{border-bottom-color:var(--gold);}
+.way-link:hover{color:var(--brass-2);border-bottom-color:var(--brass-2);}
+.inline-gold{color:var(--brass);border-bottom:1px solid var(--line-strong);transition:border-color .2s ease;}
+.inline-gold:hover{border-bottom-color:var(--brass);}
+
+/* ---------------- CALENDAR ---------------- */
+.cal-wrap{
+  margin-top:44px;border:1px solid var(--line-strong);border-radius:18px;overflow:hidden;
+  background:var(--panel);
+}
+.cal-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:16px 22px;border-bottom:1px solid var(--line);background:var(--panel-2);
+}
+.cal-bar .cal-id{
+  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brass-deep);
+}
+.cal-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.cal-actions .btn{padding:9px 16px;font-size:.74rem;}
+.cal-frame{position:relative;width:100%;height:700px;background:#121115;}
+.cal-frame iframe{width:100%;height:100%;border:0;display:block;}
+/* Google's embed has no dark mode and no theming hooks, so a stock embed is a
+   1100px white slab in the middle of a dark page. Inverting and rotating the
+   hue turns it dark without touching the layout; the numbers are pulled back
+   from a full invert so text lands at a soft grey rather than pure white.
+   Delete this one rule if you'd rather have the stock white calendar. */
+.cal-frame iframe{
+  filter:invert(.9) hue-rotate(180deg) saturate(.78) contrast(.92) brightness(1.02);
+}
+.cal-fallback{
+  position:absolute;inset:0;display:none;place-items:center;text-align:center;padding:30px;
+  color:var(--muted);font-size:.95rem;
+}
+.cal-note{
+  margin-top:20px;font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.04em;
+  color:var(--muted-2);line-height:1.7;
+}
+.cal-note b{color:var(--brass);font-weight:500;}
 
 /* network */
 .net-wrap{
-  margin-top:48px;border:1px solid var(--line-strong);border-radius:22px;overflow:hidden;
+  margin-top:48px;border:1px solid var(--line-strong);border-radius:18px;overflow:hidden;
   background:
-    radial-gradient(90% 120% at 0% 0%, rgba(233,185,73,.11), transparent 55%),
-    linear-gradient(200deg,#250f1b,#160710);
+    radial-gradient(90% 130% at 0% 0%, rgba(194,160,104,.05), transparent 58%),
+    linear-gradient(200deg,#1a171d,#131116);
   display:grid;grid-template-columns:1.15fr .85fr;
 }
 .net-left{padding:44px 42px;}
-.net-left h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.6rem;margin:0 0 14px;}
-.net-left p{color:var(--muted);margin:0 0 16px;max-width:50ch;font-size:.99rem;}
+.net-left h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.55rem;margin:0 0 14px;}
+.net-left p{color:var(--muted);margin:0 0 16px;max-width:50ch;font-size:.98rem;}
 .net-left p:last-of-type{margin-bottom:26px;}
 .net-links{display:flex;gap:12px;flex-wrap:wrap;}
 .net-right{border-left:1px solid var(--line);padding:44px 38px;display:flex;flex-direction:column;justify-content:center;gap:20px;}
 .net-fact b{
   display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px;
+  text-transform:uppercase;color:var(--brass-deep);margin-bottom:5px;
 }
-.net-fact span{color:var(--cream);font-size:.95rem;}
+.net-fact span{color:var(--text);font-size:.94rem;}
 
 /* ---------------- SPONSOR ---------------- */
-/* Reuses .cards/.card for the "where it goes" grid, then one CTA strip.
-   Deliberately NOT another .net-wrap panel — that block sits directly above
-   and two identical panels back to back read as filler. */
+/* NOTE: no tier ladder here on purpose. Under UMN policy the perks you promise
+   ARE the tax classification (logo + homepage link = gift eligible, deposits at
+   UMF; recruiting access, booths, speaking slots, use of U marks = non-gift
+   eligible, deposits at the U and may be UBI). One non-gift perk anywhere in a
+   package pushes ALL the revenue to the U. Don't publish tiers until the
+   department and CSE External Relations have signed off on which side each
+   one lands. Policy: https://policy.umn.edu/finance/sponsorships */
 .sponsor-cta{
-  margin-top:34px;border:1px solid var(--line-strong);border-radius:22px;
+  margin-top:34px;border:1px solid var(--line-strong);border-radius:18px;
   padding:40px 42px;
   background:
-    radial-gradient(90% 130% at 100% 0%, rgba(233,185,73,.10), transparent 58%),
-    linear-gradient(200deg,#250f1b,#160710);
+    radial-gradient(90% 130% at 100% 0%, rgba(194,160,104,.05), transparent 60%),
+    linear-gradient(200deg,#1a171d,#131116);
   display:grid;grid-template-columns:1.25fr .75fr;gap:38px;align-items:center;
 }
-.sponsor-cta h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.5rem;margin:0 0 14px;}
-.sponsor-cta p{color:var(--muted);margin:0 0 14px;font-size:.99rem;max-width:54ch;}
+.sponsor-cta h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.45rem;margin:0 0 14px;}
+.sponsor-cta p{color:var(--muted);margin:0 0 14px;font-size:.98rem;max-width:54ch;}
 .sponsor-cta p:last-of-type{margin-bottom:26px;}
 .sponsor-actions{display:flex;gap:12px;flex-wrap:wrap;}
 .sponsor-aside{display:grid;gap:18px;}
 .sponsor-aside b{
   display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold-deep);margin-bottom:5px;
+  text-transform:uppercase;color:var(--brass-deep);margin-bottom:5px;
 }
-.sponsor-aside span{color:var(--cream);font-size:.94rem;}
+.sponsor-aside span{color:var(--text);font-size:.93rem;}
 .sponsor-fine{
   margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.04em;
   color:var(--muted-2);line-height:1.7;
 }
-.sponsor-fine b{color:var(--gold-2);font-weight:500;}
+.sponsor-fine b{color:var(--brass);font-weight:500;}
 
 /* join */
 .join-wrap{
-  margin-top:14px;border:1px solid var(--line-strong);border-radius:22px;overflow:hidden;
+  margin-top:14px;border:1px solid var(--line-strong);border-radius:18px;overflow:hidden;
   background:
-    radial-gradient(90% 120% at 100% 0%, rgba(233,185,73,.12), transparent 55%),
-    linear-gradient(160deg,#250f1b,#160710);
+    radial-gradient(90% 130% at 100% 0%, rgba(194,160,104,.06), transparent 58%),
+    linear-gradient(160deg,#1a171d,#131116);
   display:grid;grid-template-columns:1.2fr .8fr;
 }
 .join-left{padding:46px 44px;}
-.join-left h2{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(1.9rem,3.4vw,2.7rem);margin:14px 0 0;line-height:1.08;}
+.join-left h2{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);margin:14px 0 0;line-height:1.12;}
 .join-left p{color:var(--muted);margin:16px 0 0;max-width:46ch;}
 .join-list{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px;}
-.join-list li{display:flex;gap:12px;align-items:flex-start;font-size:.98rem;color:var(--cream);}
-.join-list li .dot{color:var(--gold);font-family:"JetBrains Mono",monospace;flex:0 0 auto;}
+.join-list li{display:flex;gap:12px;align-items:flex-start;font-size:.97rem;color:var(--text);}
+.join-list li .dot{color:var(--brass-deep);font-family:"JetBrains Mono",monospace;flex:0 0 auto;}
 .join-right{border-left:1px solid var(--line);padding:46px 40px;display:flex;flex-direction:column;justify-content:center;gap:18px;}
 .join-right .meta{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--muted);}
-.join-right .meta b{color:var(--gold-2);display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+.join-right .meta b{color:var(--brass);display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:500;}
 
 /* footer */
-.footer{border-top:1px solid var(--line);padding:54px 0 40px;margin-top:30px;}
+.footer{border-top:1px solid var(--line);padding:54px 0 40px;margin-top:30px;position:relative;z-index:1;}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px;align-items:start;}
 .footer .brand img{width:40px;height:40px;}
 .footer p.blurb{color:var(--muted-2);font-size:.9rem;margin:16px 0 0;max-width:34ch;}
-.fcol h5{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 14px;}
-.fcol a{display:block;color:var(--muted);font-size:.94rem;margin-bottom:10px;transition:color .2s ease;}
-.fcol a:hover{color:var(--gold-2);}
+.fcol h5{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-deep);margin:0 0 14px;}
+.fcol a{display:block;color:var(--muted);font-size:.93rem;margin-bottom:10px;transition:color .2s ease;}
+.fcol a:hover{color:var(--text);}
 .footer-bottom{margin-top:42px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--muted-2);letter-spacing:.04em;}
 
-/* scroll reveal */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+/* Scroll reveal. Shorter distance and duration than before, and no stagger:
+   the old 22px slide on every element meant the page was always moving
+   slightly while you scrolled. */
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .45s ease, transform .45s ease;}
 .reveal.in{opacity:1;transform:none;}
 
 /* ---------------- RESPONSIVE ---------------- */
-/* nav gained a sixth link, so tighten it before the mobile breakpoint
-   rather than letting it collide with the brand mark */
-@media (max-width:1080px){
-  .nav-links{gap:20px;}
-  .nav-links a{font-size:.73rem;}
+/* the nav carries seven items plus the Join button, so it tightens in two
+   stages and collapses to the hamburger at 980px */
+@media (max-width:1180px){
+  .nav-links{gap:18px;}
+  .nav-links a,.nav-drop-toggle{font-size:.72rem;}
 }
 @media (max-width:1000px){
   .hero-grid{grid-template-columns:1fr;gap:40px;}
@@ -422,26 +470,29 @@ img{display:block;max-width:100%;}
   .join-right{border-left:none;border-top:1px solid var(--line);}
   .footer-grid{grid-template-columns:1fr 1fr;}
 }
-@media (max-width:640px){
-  body{font-size:16px;}
-  .wrap{padding:0 20px;}
-  .nav-inner{padding:12px 20px;}
+@media (max-width:980px){
   .nav-links{
     position:absolute;top:100%;right:14px;left:14px;flex-direction:column;align-items:flex-start;gap:18px;
-    background:rgba(20,9,15,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;padding:22px;
+    background:#17151b;backdrop-filter:blur(12px);border:1px solid var(--line-strong);border-radius:14px;padding:22px;
     display:none;
   }
   .nav-links.open{display:flex;}
-  .nav-links a{font-size:.78rem;}
+  .nav-links a,.nav-drop-toggle{font-size:.78rem;}
   .menu-toggle{display:block;}
   .nav .btn-gold{display:none;}
   .nav-item{width:100%;}
   .nav-dropdown{
     position:static;transform:none;display:none;width:100%;min-width:0;
-    background:none;border:none;backdrop-filter:none;padding:10px 0 0 14px;margin-top:6px;
+    background:none;border:none;box-shadow:none;padding:10px 0 0 14px;margin-top:6px;
     border-left:1px solid var(--line);
   }
   .nav-item.open .nav-dropdown{display:flex;}
+  .cal-frame{height:620px;}
+}
+@media (max-width:640px){
+  body{font-size:16px;}
+  .wrap{padding:0 20px;}
+  .nav-inner{padding:12px 20px;}
   .hero{padding:130px 0 70px;}
   .cards{grid-template-columns:1fr;}
   .ways{grid-template-columns:1fr;}
@@ -452,8 +503,8 @@ img{display:block;max-width:100%;}
   .footer-grid{grid-template-columns:1fr;}
   .join-left,.join-right,.net-left,.net-right{padding:32px 26px;}
   .sponsor-cta{padding:32px 26px;}
-  .si-tile{left:18px;top:18px;width:74px;}
-  .si-tile .sym{font-size:1.7rem;}
+  .cal-frame{height:560px;}
+  .cal-bar{padding:14px 18px;}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -461,7 +512,7 @@ img{display:block;max-width:100%;}
   .reveal{opacity:1;transform:none;transition:none;}
 }
 
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px;}
 
 /* ---------------- ANIMATION TOGGLE ---------------- */
 .anim-toggle{
@@ -469,12 +520,12 @@ img{display:block;max-width:100%;}
   display:flex;align-items:center;gap:9px;
   font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
   padding:10px 16px;border-radius:999px;cursor:pointer;
-  border:1px solid var(--line-strong);background:rgba(20,9,15,.85);
-  color:var(--muted);transition:border-color .2s ease,color .2s ease;
+  border:1px solid var(--line-strong);background:rgba(15,14,17,.88);
+  color:var(--muted-2);transition:border-color .2s ease,color .2s ease;
 }
-.anim-toggle:hover{border-color:var(--gold);color:var(--gold-2);}
-.anim-toggle .anim-toggle-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);}
-html.anim-off .anim-toggle .anim-toggle-dot{background:var(--muted-2);box-shadow:none;}
+.anim-toggle:hover{border-color:var(--brass);color:var(--brass);}
+.anim-toggle .anim-toggle-dot{width:7px;height:7px;border-radius:50%;background:var(--brass-deep);}
+html.anim-off .anim-toggle .anim-toggle-dot{background:var(--muted-2);opacity:.5;}
 @media (max-width:640px){
   .anim-toggle{right:14px;bottom:14px;padding:9px 12px;}
 }
@@ -489,7 +540,7 @@ html.anim-off, html.anim-off *{
 }
 html.anim-off .nav.scrolled{
   backdrop-filter:none;-webkit-backdrop-filter:none;
-  background:rgba(18,7,14,.94);
+  background:rgba(15,14,17,.96);
 }
 </style>
 </head>
@@ -509,6 +560,7 @@ html.anim-off .nav.scrolled{
       <a href="#about">About</a>
       <a href="#flow">The Flow</a>
       <a href="#ways">Ways In</a>
+      <a href="#calendar">Calendar</a>
       <a href="#network">Network</a>
       <a href="#sponsor">Sponsor</a>
       <div class="nav-item" id="docsNavItem">
@@ -533,7 +585,7 @@ html.anim-off .nav.scrolled{
       <div>
         <div class="eyebrow">// <span class="sasi">SA<span class="el">Si</span></span> · College of Science &amp; Engineering · UMN</div>
         <h1>Undergrads who make <span class="glow gold-text">real silicon.</span></h1>
-        <p class="lead">Stone Arch Silicon is the University of Minnesota's chip design club. We take students from their first line of Verilog to a layout that could go to a fab — on the same tools industry runs, on a cluster we maintain ourselves.</p>
+        <p class="lead">UMN's chip design club. From your first line of Verilog to a layout ready for fab, on industry tools.</p>
         <div class="hero-cta">
           <a class="btn btn-gold" href="#join">Join the club</a>
           <a class="btn btn-ghost" href="#flow">See how it works</a>
@@ -541,19 +593,13 @@ html.anim-off .nav.scrolled{
         <div class="stats">
           <a class="stat stat-link" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener"><b>ASIC 101 ↗</b><span>Our own curriculum, from zero</span></a>
           <div class="stat"><b>20 nodes</b><span>Cadence &amp; Synopsys cluster</span></div>
-          <div class="stat"><b>Element 14</b><span>Four valence electrons</span></div>
+          <a class="stat stat-link" href="#ways"><b>Any major</b><span>Four ways to join</span></a>
         </div>
       </div>
 
       <div class="hero-visual">
         <div class="chip-panel">
           <canvas id="chip-canvas"></canvas>
-          <div class="si-tile" aria-hidden="true">
-            <span class="z">14</span>
-            <span class="sym">Si</span>
-            <span class="mass">28.085</span>
-          </div>
-          <div class="chip-tag">STONE ARCH · 2026 · rev_a</div>
           <div class="chip-hint">drag to rotate</div>
         </div>
       </div>
@@ -568,30 +614,30 @@ html.anim-off .nav.scrolled{
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">// About</div>
-      <h2>Four electrons in the outer shell. That's the whole reason any of this works.</h2>
-      <p>Silicon sits exactly halfway between conductor and insulator, which is why you can talk it into being either one. Learning to do that on purpose, at scale, is chip design — and almost nobody gets to try it as an undergrad. <span class="sasi">SA<span class="el">Si</span></span> exists so that you can.</p>
+      <h2>We design chips, start to finish.</h2>
+      <p>Almost nobody gets to design a chip as an undergrad. <span class="sasi">SA<span class="el">Si</span></span> exists so you can.</p>
     </div>
 
     <div class="cards">
       <div class="card reveal">
         <div class="ico" aria-hidden="true">⌁</div>
         <h3>The whole flow</h3>
-        <p>RTL through synthesis, place-and-route, and signoff — taught hands-on, in order, with nothing skipped because it's hard.</p>
+        <p>RTL to signoff, hands-on, nothing skipped.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">⚙</div>
         <h3>Tools you'll use again</h3>
-        <p>Cadence, Synopsys, and Siemens flows on our own 20-node cluster. Not a browser demo — the real thing, with real licenses.</p>
+        <p>Cadence, Synopsys, and Siemens on our own 20-node cluster.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">▣</div>
         <h3>A path to the fab</h3>
-        <p>We work on open PDKs and shuttle programs, so a design that clears signoff has somewhere real to go.</p>
+        <p>Open PDKs and shuttle programs, so clean designs can actually ship.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">◈</div>
         <h3>People who review your work</h3>
-        <p>Design reviews, verification reviews, and teammates who will tell you your timing doesn't close. That's the part you can't self-teach.</p>
+        <p>Teammates who will tell you your timing doesn't close.</p>
       </div>
     </div>
   </div>
@@ -603,7 +649,7 @@ html.anim-off .nav.scrolled{
     <div class="section-head reveal">
       <div class="eyebrow">// The Flow</div>
       <h2>Five stages. Plug in wherever you're curious.</h2>
-      <p>You don't have to want to do all of it. Some members live in verification and never open a layout tool; some only care about the back end. Every stage needs people.</p>
+      <p>Every stage needs people. Pick the one you like.</p>
     </div>
 
     <div class="pipeline">
@@ -622,34 +668,80 @@ html.anim-off .nav.scrolled{
     <div class="section-head reveal">
       <div class="eyebrow">// Ways In</div>
       <h2>You do not need to have taken the class.</h2>
-      <p>Our constitution lists four ways to qualify as an active member, and they're deliberately equivalent. We care whether you can do the work, not which course number you have on a transcript.</p>
+      <p>Four equivalent ways to qualify. We care whether you can do the work.</p>
     </div>
 
     <div class="ways">
       <div class="way reveal">
         <span class="e">Path 01</span>
         <h4>Coursework</h4>
-        <p>EE 2301, or an equivalent digital logic, computer engineering, or HDL course from anywhere.</p>
+        <p>EE 2301 or any equivalent digital logic or HDL course.</p>
       </div>
       <div class="way reveal">
         <span class="e">Path 02</span>
         <h4>ASIC 101</h4>
-        <p>Our own curriculum. Start at zero, finish the assessment, you're in. Built for people with no background.</p>
+        <p>Our own curriculum. Start from zero, pass the assessment.</p>
         <a class="way-link" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">Start lesson 01 →</a>
       </div>
       <div class="way reveal">
         <span class="e">Path 03</span>
         <h4>Portfolio</h4>
-        <p>Synthesizable HDL, a testbench, an FPGA build, an open-source hardware contribution, relevant work or research.</p>
+        <p>HDL, testbenches, FPGA builds, open-source hardware, or research.</p>
       </div>
       <div class="way reveal">
         <span class="e">Path 04</span>
         <h4>A conversation</h4>
-        <p>A short competency review with someone on the board. If you know the material, we'd rather just talk to you.</p>
+        <p>A short review with someone on the board.</p>
       </div>
     </div>
 
-    <p class="ways-note reveal">Open to <b>every</b> UMN student — undergraduate, graduate, and professional. EE, CompE, CS, Physics, Math, and anyone else who wants in.</p>
+    <p class="ways-note reveal">Open to <b>every</b> UMN student, any major.</p>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<!-- IMPORTANT, read before you push this live:
+     The embed below pulls straight from the Google Calendar of SASI@umn.edu.
+     Google only renders it for visitors who are allowed to see that calendar,
+     so until the calendar is shared publicly everyone except you will get a
+     "you do not have permission to view this calendar" panel.
+
+     To make it public, sign in as SASI@umn.edu and go to:
+       Settings  ->  Settings for my calendars  ->  (the SASi calendar)
+         -> Access permissions for events
+            [x] Make available to public   +   "See all event details"
+
+     UMN Workspace accounts sometimes have external sharing restricted by
+     policy. If the public checkbox is greyed out, open a ticket with OIT or
+     ask CSE-IT, or move club events onto a separate calendar you own that is
+     allowed to be public and change CAL_ID in the script at the bottom.
+
+     View mode, timezone and chrome are all configured in that script, not
+     here, so there's only one place to edit. The dark look comes from a CSS
+     filter on the iframe in the stylesheet above. -->
+<section class="section" id="calendar" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// Calendar</div>
+      <h2>What's coming up.</h2>
+      <p>Live from our calendar. Subscribe and it shows up next to your classes.</p>
+    </div>
+
+    <div class="cal-wrap reveal">
+      <div class="cal-bar">
+        <span class="cal-id">SASI@umn.edu · America/Chicago</span>
+        <div class="cal-actions">
+          <a class="btn btn-gold" id="calSubscribe" href="https://calendar.google.com/calendar/u/0/r?cid=SASI@umn.edu" target="_blank" rel="noopener">Add to Google Calendar</a>
+          <a class="btn btn-ghost" id="calIcs" href="https://calendar.google.com/calendar/ical/SASI%40umn.edu/public/basic.ics">Subscribe by iCal</a>
+        </div>
+      </div>
+      <div class="cal-frame">
+        <!-- src is set in JS so the view mode can follow the screen size -->
+        <iframe id="calFrame" title="Stone Arch Silicon event calendar" loading="lazy" frameborder="0" scrolling="no"></iframe>
+        <div class="cal-fallback" id="calFallback">Calendar could not load. Open it directly at <a class="inline-gold" href="https://calendar.google.com/calendar/embed?src=SASI%40umn.edu&amp;ctz=America%2FChicago" target="_blank" rel="noopener">calendar.google.com</a>.</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -659,14 +751,13 @@ html.anim-off .nav.scrolled{
     <div class="section-head reveal">
       <div class="eyebrow">// The ASIC Network</div>
       <h2>We're not doing this alone.</h2>
-      <p>Chip design is hard to break into and much harder to figure out by yourself. So we helped start a network of university ASIC and VLSI clubs that work in the open and share what they learn.</p>
+      <p>University ASIC and VLSI clubs working in the open and sharing what they learn.</p>
     </div>
 
     <div class="net-wrap reveal">
       <div class="net-left">
         <h3>What membership actually gets you</h3>
-        <p>Shared documentation and tooling notes, so nobody re-derives the same install headache from scratch at six different schools. Biweekly calls where clubs trade progress, flows, and the gotchas that cost them a week.</p>
-        <p>Open tutorial tracks for both analog and digital design, written by students at member chapters and free for anyone to work through. Plus a Discord where the whole network talks day to day, and the ASIC Network Hackathon.</p>
+        <p>Shared docs and tooling notes, open analog and digital tutorials, a network-wide Discord, and the ASIC Network Hackathon.</p>
         <div class="net-links">
           <a class="btn btn-gold" href="https://asicnetwork.net" target="_blank" rel="noopener">Visit the network →</a>
           <a class="btn btn-ghost" href="https://asic-network.github.io/analog-tutorials/" target="_blank" rel="noopener">Analog tutorials</a>
@@ -674,9 +765,9 @@ html.anim-off .nav.scrolled{
         </div>
       </div>
       <div class="net-right">
-        <div class="net-fact"><b>What it is</b><span>A collective of university ASIC and VLSI clubs, working in the open.</span></div>
-        <div class="net-fact"><b>Cadence</b><span>Biweekly updates between chapters.</span></div>
-        <div class="net-fact"><b>Everything public</b><span>Docs, flows, and tutorials on GitHub. Fork it, file issues, send PRs.</span></div>
+        <div class="net-fact"><b>What it is</b><span>A collective of university chip design clubs.</span></div>
+        <div class="net-fact"><b>Cadence</b><span>Biweekly calls.</span></div>
+        <div class="net-fact"><b>Everything public</b><span>Everything on GitHub.</span></div>
         <div class="net-fact"><b>SASi's role</b><span>Founding chapter.</span></div>
       </div>
     </div>
@@ -684,49 +775,41 @@ html.anim-off .nav.scrolled{
 </section>
 
 <!-- SPONSOR -->
-<!-- NOTE: no tier ladder here on purpose. Under UMN policy the perks you promise
-     ARE the tax classification (logo + homepage link = gift eligible, deposits at
-     UMF; recruiting access, booths, speaking slots, use of U marks = non-gift
-     eligible, deposits at the U and may be UBI). One non-gift perk anywhere in a
-     package pushes ALL the revenue to the U. Don't publish tiers until the
-     department and CSE External Relations have signed off on which side each
-     one lands. Policy: https://policy.umn.edu/finance/sponsorships -->
 <section class="section" id="sponsor" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">// Sponsor</div>
       <h2>Silicon is expensive. Undergrads are not.</h2>
-      <p>Shuttle slots, tool licenses, cluster hardware, and getting members to conferences all cost real money. If your company hires people who can take a design from RTL to GDSII, this is where some of them come from.</p>
+      <p>If you hire people who can take a design from RTL to GDSII, this is where they come from.</p>
     </div>
 
     <div class="cards">
       <div class="card reveal">
         <div class="ico" aria-hidden="true">▦</div>
         <h3>Tapeouts</h3>
-        <p>Shuttle slots and mask costs. The difference between a design that passes signoff and a design that exists.</p>
+        <p>Shuttle slots and mask costs.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">⬡</div>
         <h3>Tools &amp; compute</h3>
-        <p>Licenses and cluster hardware. We maintain our own 20 nodes, and nodes get old.</p>
+        <p>Licenses and cluster hardware.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">≡</div>
         <h3>ASIC 101</h3>
-        <p>Our free curriculum, open to anyone. Keeping it written and current takes member hours we'd like to pay for.</p>
+        <p>Keeping our free curriculum current.</p>
       </div>
       <div class="card reveal">
         <div class="ico" aria-hidden="true">◇</div>
         <h3>Getting out there</h3>
-        <p>Conference travel, competitions, cleanroom training, and speakers worth flying in.</p>
+        <p>Conferences, competitions, and speakers.</p>
       </div>
     </div>
 
     <div class="sponsor-cta reveal">
       <div>
         <h3>How it works</h3>
-        <p>Tell us what you'd like to support and what kind of relationship you're after. We'll come back with a proposal, and the College of Science &amp; Engineering handles the paperwork from there.</p>
-        <p>In-kind counts too. Tool licenses, PDK access, wafer or shuttle slots, and hardware are often more useful to us than cash.</p>
+        <p>Tell us what you'd like to support and we'll send a proposal. In-kind counts too: licenses, PDK access, shuttle slots, hardware.</p>
         <div class="sponsor-actions">
           <!-- TODO: once the sponsor intake Google Form is published, swap this href
                for the /viewform URL and relabel to "Sponsor SASi →". Left as email
@@ -736,17 +819,14 @@ html.anim-off .nav.scrolled{
         </div>
       </div>
       <div class="sponsor-aside">
-        <div><b>Who you'll talk to</b><span>Our officer board, plus CSE External Relations.</span></div>
-        <div><b>Typical turnaround</b><span>We reply within a week.</span></div>
-        <div><b>Also welcome</b><span>Mentors, speakers, design reviewers, and site tours.</span></div>
+        <div><b>Who you'll talk to</b><span>Our board and CSE External Relations.</span></div>
+        <div><b>Turnaround</b><span>Within a week.</span></div>
+        <div><b>Also welcome</b><span>Mentors, speakers, reviewers.</span></div>
       </div>
     </div>
 
     <p class="sponsor-fine reveal">
-      <span class="sasi">SA<span class="el">Si</span></span> is a <b>CSE Campus Life Program</b> at the University of Minnesota.
-      Charitable gifts are processed through the <b>University of Minnesota Foundation</b> and are tax-deductible.
-      Recruiting and partnership arrangements are processed through the University directly.
-      We'll tell you which one applies before you commit to anything.
+      A <b>CSE Campus Life Program</b>. Gifts go through the UMN Foundation and are tax-deductible; partnerships go through the University.
     </p>
   </div>
 </section>
@@ -758,13 +838,13 @@ html.anim-off .nav.scrolled{
     <div class="join-wrap reveal">
       <div class="join-left">
         <h2>Show up curious. We'll handle the rest.</h2>
-        <p>If you can write a little code and you want to know how a chip actually gets built, you belong here. Nobody arrives already knowing this.</p>
+        <p>If you can write a little code and want to know how chips get built, you belong here.</p>
         <ul class="join-list">
-          <li><span class="dot">»</span><span>Weekly sessions, project teams, and design reviews.</span></li>
-          <li><span class="dot">»</span><span>Access to industry EDA tools and our compute cluster.</span></li>
-          <li><span class="dot">»</span><span>Cleanroom and fabrication training opportunities.</span></li>
-          <li><span class="dot">»</span><span>Speakers, technical tours, hackathons, and competitions.</span></li>
-          <li><span class="dot">»</span><span><a class="inline-gold" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101</a> is online and free — start it before you show up if you want a head start.</span></li>
+          <li><span class="dot">»</span><span>Weekly sessions, project teams, design reviews</span></li>
+          <li><span class="dot">»</span><span>Industry EDA tools and our cluster</span></li>
+          <li><span class="dot">»</span><span>Cleanroom and fab training</span></li>
+          <li><span class="dot">»</span><span>Speakers, tours, hackathons</span></li>
+          <li><span class="dot">»</span><span><a class="inline-gold" href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101</a> for a head start</span></li>
         </ul>
         <div class="hero-cta" style="margin-top:30px;">
           <!-- Was the Google Forms EDITOR link (/edit), which only the form owner can
@@ -776,7 +856,7 @@ html.anim-off .nav.scrolled{
         </div>
       </div>
       <div class="join-right">
-        <div class="meta"><b>Meetings</b>TBD</div>
+        <div class="meta"><b>Meetings</b>See the <a class="inline-gold" href="#calendar">calendar</a></div>
         <div class="meta"><b>Where</b>University of Minnesota, building TBD</div>
         <div class="meta"><b>Advisors</b>Prof. Yu “Kevin” Cao<br />Claire Dietz</div>
         <div class="meta"><b>Affiliation</b>CSE Campus Life Program</div>
@@ -794,13 +874,14 @@ html.anim-off .nav.scrolled{
           <img src="assets/logo.png" alt="Stone Arch Silicon logo" />
           <span class="name">STONE ARCH<small>S I L I C O N</small></span>
         </a>
-        <p class="blurb">Undergraduate semiconductor design at the University of Minnesota — Twin Cities. Element 14, mostly.</p>
+        <p class="blurb">The chip design club at the University of Minnesota.</p>
       </div>
       <div class="fcol">
         <h5>Explore</h5>
         <a href="#about">About</a>
         <a href="#flow">The Flow</a>
         <a href="#ways">Ways In</a>
+        <a href="#calendar">Calendar</a>
         <a href="#network">Network</a>
         <a href="#sponsor">Sponsor</a>
         <a href="https://stone-arch-silicon.github.io/ASIC_101/#page_1" target="_blank" rel="noopener">ASIC 101</a>
@@ -869,7 +950,7 @@ document.addEventListener('keydown', (e) => {
 /* scroll reveal */
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-}, {threshold:.14});
+}, {threshold:.12});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ---------- animation toggle ---------- */
@@ -895,12 +976,82 @@ function readPref(k){ try{ return localStorage.getItem(k); }catch(e){ return nul
 function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
 /* ================================================================
+   GOOGLE CALENDAR EMBED
+   One place to configure the whole thing. CAL_ID is the calendar's
+   address, exactly as it appears in Google Calendar settings under
+   "Integrate calendar" -> "Calendar ID".
+
+   Month grid is unreadable on a phone, so narrow screens get the
+   agenda (schedule) view instead. The src is only rewritten when the
+   mode actually changes, because reassigning iframe.src reloads the
+   whole embed and that looks broken mid-resize.
+
+   bgcolor is sent as white on purpose: the iframe is inverted in CSS,
+   so white here is what produces the dark panel you actually see.
+   ================================================================ */
+(function(){
+  const frame = document.getElementById('calFrame');
+  if (!frame) return;
+
+  const CAL_ID = 'SASI@umn.edu';
+  const TZ = 'America/Chicago';
+  const NARROW = matchMedia('(max-width: 820px)');
+
+  let currentMode = null;
+
+  function srcFor(mode){
+    const p = new URLSearchParams({
+      src: CAL_ID,
+      ctz: TZ,
+      mode: mode,          // MONTH | WEEK | AGENDA
+      wkst: '1',           // weeks start Sunday
+      bgcolor: '#ffffff',
+      showTitle: '0',
+      showPrint: '0',
+      showTabs: '1',
+      showCalendars: '0',
+      showTz: '0',
+      showNav: '1',
+      showDate: '1'
+    });
+    return 'https://calendar.google.com/calendar/embed?' + p.toString();
+  }
+
+  function apply(){
+    const mode = NARROW.matches ? 'AGENDA' : 'MONTH';
+    if (mode === currentMode) return;
+    currentMode = mode;
+    frame.src = srcFor(mode);
+  }
+
+  // addEventListener on MediaQueryList is the modern API; addListener is the
+  // Safari <14 fallback. Both are guarded so neither one throws.
+  if (NARROW.addEventListener) NARROW.addEventListener('change', apply);
+  else if (NARROW.addListener) NARROW.addListener(apply);
+
+  apply();
+
+  // If the calendar is not shared publicly, Google still returns a page (an
+  // error page), so there's no load failure to catch cross-origin. This only
+  // catches a hard network failure.
+  frame.addEventListener('error', () => {
+    const fb = document.getElementById('calFallback');
+    if (fb) fb.style.display = 'grid';
+  });
+})();
+
+/* ================================================================
    AMBIENT SILICON-ATOM FIELD
    Plain 2D canvas, not a second WebGL context — the chip already owns
    one, and two contexts on a laptop GPU is a bad trade for background
    decoration. Each atom is a Bohr silicon: nucleus glow plus three
    elliptical shells carrying 2, 8, and 4 electrons. Nobody is going to
    count them, but they're correct.
+
+   Toned down from the first version: about a third fewer atoms, half
+   the drift speed, slower orbits and lower alpha. It should read as
+   texture you notice on the second look, not as something moving in
+   your peripheral vision while you're trying to read.
    Exposes window.__atomField so the animation toggle can park it.
    ================================================================ */
 (function(){
@@ -920,9 +1071,9 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
     c.width = c.height = S;
     const g = c.getContext('2d');
     const grd = g.createRadialGradient(S/2, S/2, 1, S/2, S/2, S/2);
-    grd.addColorStop(0,    'rgba(255,222,150,1)');
-    grd.addColorStop(0.28, 'rgba(233,185,73,.42)');
-    grd.addColorStop(1,    'rgba(233,185,73,0)');
+    grd.addColorStop(0,    'rgba(226,204,155,.9)');
+    grd.addColorStop(0.28, 'rgba(194,160,104,.3)');
+    grd.addColorStop(1,    'rgba(194,160,104,0)');
     g.fillStyle = grd; g.fillRect(0, 0, S, S);
     return c;
   })();
@@ -939,10 +1090,10 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
     return {
       x: Math.random() * W,
       y: Math.random() * H,
-      vx: (Math.random() - 0.5) * (0.05 + depth * 0.13),
-      vy: (Math.random() - 0.5) * (0.05 + depth * 0.13),
-      s: 15 + depth * 30,                      // outer shell radius, px
-      a: 0.07 + depth * 0.13,                  // base alpha
+      vx: (Math.random() - 0.5) * (0.025 + depth * 0.065),
+      vy: (Math.random() - 0.5) * (0.025 + depth * 0.065),
+      s: 15 + depth * 28,                      // outer shell radius, px
+      a: 0.05 + depth * 0.085,                 // base alpha
       tilt: Math.random() * Math.PI,
       dir: Math.random() < 0.5 ? -1 : 1,
       phase: Math.random() * Math.PI * 2
@@ -950,8 +1101,8 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   }
 
   function build(){
-    // roughly one atom per 62k css px², clamped so phones aren't drawing 40
-    const n = Math.round(Math.min(24, Math.max(7, (W * H) / 62000)));
+    // roughly one atom per 105k css px², clamped so phones aren't drawing 20
+    const n = Math.round(Math.min(15, Math.max(5, (W * H) / 105000)));
     atoms = [];
     for (let i = 0; i < n; i++) atoms.push(makeAtom());
   }
@@ -977,7 +1128,7 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
       // nucleus
       const gr = a.s * 0.58;
-      ctx.globalAlpha = a.a * 1.15;
+      ctx.globalAlpha = a.a;
       ctx.drawImage(GLOW, -gr, -gr, gr * 2, gr * 2);
 
       for (let i = 0; i < SHELLS.length; i++){
@@ -987,21 +1138,22 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
         ctx.save();
         ctx.rotate(a.tilt + i * (Math.PI / 3)); // shells cross each other
 
-        ctx.globalAlpha = a.a * (sh.valence ? 0.6 : 0.34);
-        ctx.strokeStyle = sh.valence ? '#f6d27a' : '#c0892c';
+        ctx.globalAlpha = a.a * (sh.valence ? 0.55 : 0.32);
+        ctx.strokeStyle = sh.valence ? '#c2a068' : '#8d7647';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
         ctx.stroke();
 
-        const er = Math.max(1, a.s * (sh.valence ? 0.055 : 0.042));
+        const er = Math.max(1, a.s * (sh.valence ? 0.05 : 0.04));
         for (let k = 0; k < sh.n; k++){
+          // orbit rate roughly halved from the first version
           const ang = a.phase + (k / sh.n) * Math.PI * 2
-                    + t * 0.00035 * sh.sp * a.dir;
+                    + t * 0.00018 * sh.sp * a.dir;
           // electrons on the far side of the ellipse dim out: cheap depth cue
           const far = Math.sin(ang) < 0 ? 0.4 : 1;
-          ctx.globalAlpha = a.a * 1.7 * far * (sh.valence ? 1.25 : 1);
-          ctx.fillStyle = sh.valence ? '#fff0cf' : '#f6d27a';
+          ctx.globalAlpha = a.a * 1.35 * far * (sh.valence ? 1.2 : 1);
+          ctx.fillStyle = sh.valence ? '#e6cc95' : '#b79b6b';
           ctx.beginPath();
           ctx.arc(Math.cos(ang) * rx, Math.sin(ang) * ry, er, 0, Math.PI * 2);
           ctx.fill();
@@ -1057,11 +1209,11 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.12;
+  renderer.toneMappingExposure = 1.0;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-  camera.position.set(0, 3.0, 6.4);
+  camera.position.set(0, 3.2, 7.0);
   camera.lookAt(0, -0.1, 0);
 
   const chip = new THREE.Group();
@@ -1095,9 +1247,11 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   ttex.generateMipmaps = false;
   ttex.minFilter = THREE.LinearFilter;
   ttex.magFilter = THREE.LinearFilter;
+  // emissive pulled down from .28: the lid was self-lit enough to look like a
+  // backlit sign rather than a printed package.
   const topMat = new THREE.MeshStandardMaterial({
-    map:ttex, emissive:0xffffff, emissiveMap:ttex, emissiveIntensity:0.28,
-    metalness:0.25, roughness:0.6
+    map:ttex, emissive:0xffffff, emissiveMap:ttex, emissiveIntensity:0.16,
+    metalness:0.25, roughness:0.62
   });
   const top = new THREE.Mesh(new THREE.PlaneGeometry(W*0.995, D*0.995), topMat);
   top.rotation.x = -Math.PI/2;
@@ -1105,7 +1259,7 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   chip.add(top);
 
   // ---- gold leads ----
-  const pinMat = new THREE.MeshStandardMaterial({color:0xe7c46a, metalness:1.0, roughness:0.32});
+  const pinMat = new THREE.MeshStandardMaterial({color:0xcdae74, metalness:1.0, roughness:0.36});
   const L = 0.34, PW = 0.12, PT = 0.055, count = 9, yPin = -0.04;
   const half = W/2, reach = half + L/2 - 0.03;
   const start = -0.84, end = 0.84, step = (end-start)/(count-1);
@@ -1126,20 +1280,23 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
     const S=256, cv=document.createElement('canvas'); cv.width=cv.height=S;
     const c=cv.getContext('2d');
     const grd=c.createRadialGradient(S/2,S/2,10,S/2,S/2,S/2);
-    grd.addColorStop(0,'rgba(0,0,0,.55)'); grd.addColorStop(1,'rgba(0,0,0,0)');
+    grd.addColorStop(0,'rgba(0,0,0,.42)'); grd.addColorStop(1,'rgba(0,0,0,0)');
     c.fillStyle=grd; c.fillRect(0,0,S,S);
     const tex=new THREE.CanvasTexture(cv);
-    const sh=new THREE.Mesh(new THREE.PlaneGeometry(4.6,4.6),
+    const sh=new THREE.Mesh(new THREE.PlaneGeometry(3.8,3.8),
       new THREE.MeshBasicMaterial({map:tex, transparent:true, depthWrite:false}));
     sh.rotation.x=-Math.PI/2; sh.position.y=-0.95; chip.add(sh);
   })();
 
   // ---- lights ----
-  scene.add(new THREE.AmbientLight(0x5a3540, 0.55));
-  const hemi = new THREE.HemisphereLight(0xffe9c2, 0x2a0d16, 0.55); scene.add(hemi);
-  const key = new THREE.DirectionalLight(0xffffff, 1.7); key.position.set(4,6,4); scene.add(key);
-  const gold = new THREE.PointLight(0xffcf6e, 1.3, 30); gold.position.set(-3,2,4); scene.add(gold);
-  const rimL = new THREE.DirectionalLight(0xff9a64, 0.8); rimL.position.set(-4,3,-5); scene.add(rimL);
+  // Same rig, lower intensities and less colour temperature spread. The old
+  // one had a hot white key, a gold point light and an orange rim all firing
+  // at once, which is where the "lit up like a jewel" look came from.
+  scene.add(new THREE.AmbientLight(0x3e3640, 0.6));
+  const hemi = new THREE.HemisphereLight(0xf3e2c6, 0x1a1218, 0.45); scene.add(hemi);
+  const key = new THREE.DirectionalLight(0xffffff, 1.15); key.position.set(4,6,4); scene.add(key);
+  const gold = new THREE.PointLight(0xe8c88a, 0.75, 30); gold.position.set(-3,2,4); scene.add(gold);
+  const rimL = new THREE.DirectionalLight(0xc98a6a, 0.45); rimL.position.set(-4,3,-5); scene.add(rimL);
 
   // ---- interaction / animation ----
   let rotY = 0.7, rotX = 0.1, velY = 0, velX = 0;
@@ -1187,14 +1344,16 @@ function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
     const settled = !dragging && Math.abs(velX) < 0.0001 && Math.abs(velY) < 0.0001;
 
     if (!dragging){
-      if (animEnabled) rotY += 0.0032;
+      // idle spin and bob both roughly halved: still clearly alive, but it no
+      // longer pulls the eye away from the headline next to it
+      if (animEnabled) rotY += 0.0016;
       rotY += velY; rotX += velX;
       velY *= 0.93; velX *= 0.93;
     }
     rotX = Math.max(-1.15, Math.min(0.25, rotX));
     chip.rotation.y = rotY;
     chip.rotation.x = rotX;
-    chip.position.y = animEnabled ? Math.sin(t*0.0011)*0.06 : 0;
+    chip.position.y = animEnabled ? Math.sin(t*0.0008)*0.035 : 0;
     renderer.render(scene, camera);
 
     // One-time live performance probe. There's no reliable, non-fingerprinty way
