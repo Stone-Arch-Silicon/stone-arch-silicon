@@ -335,33 +335,98 @@ img{display:block;max-width:100%;}
 }
 .cal-bar{
   display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  padding:16px 22px;border-bottom:1px solid var(--line);background:var(--panel-2);
+  padding:14px 18px;border-bottom:1px solid var(--line);
 }
-.cal-bar .cal-id{
-  font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--brass-deep);
+.cal-nav{display:flex;align-items:center;gap:10px;}
+.cal-month{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.12rem;margin:0;min-width:9.5em;text-align:center;}
+.cal-arrow{
+  width:32px;height:32px;display:grid;place-items:center;border-radius:50%;
+  border:1px solid var(--line-strong);background:none;color:var(--text);cursor:pointer;font-size:1.05rem;line-height:1;
+  transition:border-color .2s ease,color .2s ease;
 }
+.cal-arrow:hover{border-color:var(--brass);color:var(--brass-2);}
+.cal-today{
+  margin-left:4px;background:none;border:1px solid var(--line-strong);border-radius:999px;padding:6px 12px;cursor:pointer;
+  font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  transition:border-color .2s ease,color .2s ease;
+}
+.cal-today:hover{border-color:var(--brass);color:var(--brass-2);}
 .cal-actions{display:flex;gap:10px;flex-wrap:wrap;}
-.cal-actions .btn{padding:9px 16px;font-size:.74rem;}
-.cal-frame{position:relative;width:100%;height:700px;background:#121115;}
-.cal-frame iframe{width:100%;height:100%;border:0;display:block;}
-/* Google's embed has no dark mode and no theming hooks, so a stock embed is a
-   1100px white slab in the middle of a dark page. Inverting and rotating the
-   hue turns it dark without touching the layout; the numbers are pulled back
-   from a full invert so text lands at a soft grey rather than pure white.
-   Delete this one rule if you'd rather have the stock white calendar. */
-.cal-frame iframe{
-  filter:invert(.9) hue-rotate(180deg) saturate(.78) contrast(.92) brightness(1.02);
+.cal-actions .btn{padding:8px 15px;font-size:.72rem;}
+
+.cal-body{display:grid;grid-template-columns:minmax(0,1fr) 320px;}
+
+/* month grid */
+.cal-grid-wrap{padding:14px 14px 16px;min-width:0;}
+.cal-dow,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
+.cal-dow span{
+  font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted-2);padding:0 8px 8px;
 }
-.cal-fallback{
-  position:absolute;inset:0;display:none;place-items:center;text-align:center;padding:30px;
-  color:var(--muted);font-size:.95rem;
+.cal-cell{
+  min-width:0;min-height:88px;display:flex;flex-direction:column;align-items:stretch;gap:3px;padding:6px;
+  text-align:left;background:none;border:1px solid transparent;border-radius:10px;
+  color:var(--text);font:inherit;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;
 }
-.cal-note{
-  margin-top:20px;font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.04em;
-  color:var(--muted-2);line-height:1.7;
+.cal-cell:hover{background:var(--panel-2);}
+.cal-cell.out{opacity:.35;}
+.cal-cell.sel{background:var(--panel-2);border-color:var(--line-strong);}
+.cal-num{
+  font-family:"JetBrains Mono",monospace;font-size:.74rem;width:24px;height:24px;
+  display:grid;place-items:center;border-radius:50%;color:var(--muted);
 }
-.cal-note b{color:var(--brass);font-weight:500;}
+.cal-cell.has .cal-num{color:var(--text);}
+.cal-cell.today .cal-num{background:var(--brass);color:#1e1608;font-weight:700;}
+.cal-chip{
+  display:block;font-size:.7rem;line-height:1.35;padding:2px 6px;border-radius:5px;
+  background:rgba(194,160,104,.08);border-left:2px solid var(--brass-deep);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cal-chip .t{font-family:"JetBrains Mono",monospace;font-size:.62rem;color:var(--brass);margin-right:5px;}
+.cal-more{font-family:"JetBrains Mono",monospace;font-size:.62rem;color:var(--muted-2);padding-left:6px;}
+.cal-dots{display:none;justify-content:center;gap:3px;margin-top:1px;}
+.cal-dots i{width:4px;height:4px;border-radius:50%;background:var(--brass);}
+
+/* event list beside the grid */
+.cal-side{border-left:1px solid var(--line);padding:16px 14px 16px 16px;display:flex;flex-direction:column;min-width:0;}
+.cal-side-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:4px 6px 12px;}
+.cal-side-head{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem;margin:0;}
+.cal-reset{
+  background:none;border:0;padding:0;cursor:pointer;color:var(--brass);
+  font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.cal-reset:hover{color:var(--brass-2);}
+.cal-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;overflow:auto;max-height:540px;}
+.ev-head{
+  width:100%;display:flex;gap:12px;align-items:center;text-align:left;cursor:pointer;
+  background:none;border:1px solid transparent;border-radius:10px;padding:9px;color:var(--text);font:inherit;
+  transition:background .15s ease;
+}
+.ev-head:hover{background:var(--panel-2);}
+.ev-head[aria-expanded="true"]{background:var(--panel-2);border-color:var(--line);border-radius:10px 10px 0 0;}
+.ev-date{
+  flex:0 0 44px;height:44px;border:1px solid var(--line-strong);border-radius:9px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;
+}
+.ev-date b{font-family:"Space Grotesk",sans-serif;font-size:1.05rem;}
+.ev-date small{font-family:"JetBrains Mono",monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-deep);margin-top:3px;}
+.ev-main{min-width:0;display:flex;flex-direction:column;gap:1px;}
+.ev-title{font-size:.92rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ev-meta{font-size:.77rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ev-more{
+  background:var(--panel-2);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;
+  padding:2px 14px 14px 66px;
+}
+.ev-more p{margin:0 0 10px;font-size:.85rem;color:var(--muted);white-space:pre-line;}
+.ev-more .ev-loc{color:var(--text);}
+.ev-more .way-link{margin-top:2px;}
+.cal-empty{padding:16px 8px;color:var(--muted-2);font-size:.9rem;}
+.cal-status{
+  padding:10px 18px;border-top:1px solid var(--line);
+  font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.04em;color:var(--muted-2);
+}
+.cal-status:empty{display:none;}
 
 /* network */
 .net-wrap{
@@ -487,7 +552,9 @@ img{display:block;max-width:100%;}
     border-left:1px solid var(--line);
   }
   .nav-item.open .nav-dropdown{display:flex;}
-  .cal-frame{height:620px;}
+  .cal-body{grid-template-columns:1fr;}
+  .cal-side{border-left:none;border-top:1px solid var(--line);}
+  .cal-list{max-height:none;}
 }
 @media (max-width:640px){
   body{font-size:16px;}
@@ -503,8 +570,11 @@ img{display:block;max-width:100%;}
   .footer-grid{grid-template-columns:1fr;}
   .join-left,.join-right,.net-left,.net-right{padding:32px 26px;}
   .sponsor-cta{padding:32px 26px;}
-  .cal-frame{height:560px;}
-  .cal-bar{padding:14px 18px;}
+  .cal-cell{min-height:48px;align-items:center;padding:4px 2px;}
+  .cal-chip,.cal-more{display:none;}
+  .cal-dots{display:flex;}
+  .cal-dow span{text-align:center;padding:0 0 6px;letter-spacing:.06em;}
+  .cal-month{min-width:0;font-size:1.02rem;}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -700,48 +770,48 @@ html.anim-off .nav.scrolled{
 </section>
 
 <!-- CALENDAR -->
-<!-- IMPORTANT, read before you push this live:
-     The embed below pulls straight from the Google Calendar of SASI@umn.edu.
-     Google only renders it for visitors who are allowed to see that calendar,
-     so until the calendar is shared publicly everyone except you will get a
-     "you do not have permission to view this calendar" panel.
-
-     To make it public, sign in as SASI@umn.edu and go to:
-       Settings  ->  Settings for my calendars  ->  (the SASi calendar)
-         -> Access permissions for events
-            [x] Make available to public   +   "See all event details"
-
-     UMN Workspace accounts sometimes have external sharing restricted by
-     policy. If the public checkbox is greyed out, open a ticket with OIT or
-     ask CSE-IT, or move club events onto a separate calendar you own that is
-     allowed to be public and change CAL_ID in the script at the bottom.
-
-     View mode, timezone and chrome are all configured in that script, not
-     here, so there's only one place to edit. The dark look comes from a CSS
-     filter on the iframe in the stylesheet above. -->
+<!-- Events are pulled from the SASI@umn.edu Google Calendar and drawn with the
+     site's own styles. Until an API key is set in the calendar script at the
+     bottom of this file, the section shows sample events with a note saying so.
+     Setup steps are in the comment above that script. -->
 <section class="section" id="calendar" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">// Calendar</div>
       <h2>What's coming up.</h2>
-      <p>Live from our calendar. Subscribe and it shows up next to your classes.</p>
+      <p>Subscribe and it shows up next to your classes.</p>
     </div>
 
     <div class="cal-wrap reveal">
       <div class="cal-bar">
-        <span class="cal-id">SASI@umn.edu · America/Chicago</span>
+        <div class="cal-nav">
+          <button class="cal-arrow" id="calPrev" type="button" aria-label="Previous month">‹</button>
+          <h3 class="cal-month" id="calMonth" aria-live="polite"></h3>
+          <button class="cal-arrow" id="calNext" type="button" aria-label="Next month">›</button>
+          <button class="cal-today" id="calToday" type="button">Today</button>
+        </div>
         <div class="cal-actions">
-          <a class="btn btn-gold" id="calSubscribe" href="https://calendar.google.com/calendar/u/0/r?cid=SASI@umn.edu" target="_blank" rel="noopener">Add to Google Calendar</a>
-          <a class="btn btn-ghost" id="calIcs" href="https://calendar.google.com/calendar/ical/SASI%40umn.edu/public/basic.ics">Subscribe by iCal</a>
+          <a class="btn btn-gold" href="https://calendar.google.com/calendar/u/0/r?cid=SASI@umn.edu" target="_blank" rel="noopener">Add to Google Calendar</a>
+          <a class="btn btn-ghost" href="https://calendar.google.com/calendar/ical/SASI%40umn.edu/public/basic.ics">iCal</a>
         </div>
       </div>
-      <div class="cal-frame">
-        <!-- src is set in JS so the view mode can follow the screen size -->
-        <iframe id="calFrame" title="Stone Arch Silicon event calendar" loading="lazy" frameborder="0" scrolling="no"></iframe>
-        <div class="cal-fallback" id="calFallback">Calendar could not load. Open it directly at <a class="inline-gold" href="https://calendar.google.com/calendar/embed?src=SASI%40umn.edu&amp;ctz=America%2FChicago" target="_blank" rel="noopener">calendar.google.com</a>.</div>
-      </div>
-    </div>
 
+      <div class="cal-body">
+        <div class="cal-grid-wrap">
+          <div class="cal-dow" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+        <aside class="cal-side">
+          <div class="cal-side-top">
+            <h4 class="cal-side-head" id="calSideHead">Upcoming</h4>
+            <button class="cal-reset" id="calReset" type="button" hidden>Show upcoming</button>
+          </div>
+          <ol class="cal-list" id="calList"></ol>
+        </aside>
+      </div>
+
+      <div class="cal-status" id="calStatus" aria-live="polite"></div>
+    </div>
   </div>
 </section>
 
@@ -976,68 +1046,377 @@ function readPref(k){ try{ return localStorage.getItem(k); }catch(e){ return nul
 function writePref(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
 /* ================================================================
-   GOOGLE CALENDAR EMBED
-   One place to configure the whole thing. CAL_ID is the calendar's
-   address, exactly as it appears in Google Calendar settings under
-   "Integrate calendar" -> "Calendar ID".
+   CALENDAR
+   Reads events from the public SASI@umn.edu Google Calendar through the
+   Google Calendar API and draws them in the site's own month grid and
+   list. All dates are shown in Central time regardless of the visitor's
+   own timezone.
 
-   Month grid is unreadable on a phone, so narrow screens get the
-   agenda (schedule) view instead. The src is only rewritten when the
-   mode actually changes, because reassigning iframe.src reloads the
-   whole embed and that looks broken mid-resize.
+   SETUP (one time):
+   1. Make the calendar public. Signed in as SASI@umn.edu: Settings ->
+      Settings for my calendars -> the SASi calendar -> Access permissions
+      for events -> "Make available to public" + "See all event details".
+   2. In Google Cloud Console (any Google account works, since the
+      calendar is public): create a project, enable "Google Calendar API",
+      then Credentials -> Create credentials -> API key.
+   3. Restrict the key. Application restrictions -> Websites -> add your
+      site, e.g. https://stone-arch-silicon.github.io/* (and
+      http://localhost/* if you test locally). API restrictions -> Google
+      Calendar API only.
+   4. Paste the key into API_KEY below.
 
-   bgcolor is sent as white on purpose: the iframe is inverted in CSS,
-   so white here is what produces the dark panel you actually see.
+   The key is visible in the page source. That's normal for this setup:
+   it can only read public calendars and only works from your domain.
+
+   With API_KEY empty the section shows sample events and says so.
    ================================================================ */
 (function(){
-  const frame = document.getElementById('calFrame');
-  if (!frame) return;
+  const gridEl = document.getElementById('calGrid');
+  if (!gridEl) return;
 
-  const CAL_ID = 'SASI@umn.edu';
-  const TZ = 'America/Chicago';
-  const NARROW = matchMedia('(max-width: 820px)');
+  const CAL_ID   = 'SASI@umn.edu';
+  const API_KEY  = '';                 // <- paste the restricted key here
+  const TZ       = 'America/Chicago';
+  const UPCOMING = 8;                  // events in the default list
 
-  let currentMode = null;
+  const el = {
+    month: document.getElementById('calMonth'),
+    list:  document.getElementById('calList'),
+    head:  document.getElementById('calSideHead'),
+    reset: document.getElementById('calReset'),
+    status:document.getElementById('calStatus')
+  };
 
-  function srcFor(mode){
-    const p = new URLSearchParams({
-      src: CAL_ID,
-      ctz: TZ,
-      mode: mode,          // MONTH | WEEK | AGENDA
-      wkst: '1',           // weeks start Sunday
-      bgcolor: '#ffffff',
-      showTitle: '0',
-      showPrint: '0',
-      showTabs: '1',
-      showCalendars: '0',
-      showTz: '0',
-      showNav: '1',
-      showDate: '1'
+  /* ---- date helpers. Day keys are "YYYY-MM-DD" in Central time. ---- */
+  const keyFmt   = new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'});
+  const timeFmt  = new Intl.DateTimeFormat('en-US', {timeZone:TZ, hour:'numeric', minute:'2-digit'});
+  const monthFmt = new Intl.DateTimeFormat('en-US', {timeZone:'UTC', month:'long', year:'numeric'});
+  const dayFmt   = new Intl.DateTimeFormat('en-US', {timeZone:'UTC', weekday:'short', month:'short', day:'numeric'});
+  const monFmt   = new Intl.DateTimeFormat('en-US', {timeZone:'UTC', month:'short'});
+  const partsFmt = new Intl.DateTimeFormat('en-US', {timeZone:TZ, hourCycle:'h23', year:'numeric', month:'numeric', day:'numeric', hour:'numeric', minute:'numeric'});
+
+  const keyOf   = d => keyFmt.format(d);
+  const toUTC   = k => new Date(Date.UTC(+k.slice(0,4), +k.slice(5,7)-1, +k.slice(8,10)));
+  const addDays = (k, n) => { const t = toUTC(k); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0,10); };
+  const short   = d => timeFmt.format(d).replace(':00','').replace(' AM','a').replace(' PM','p');
+
+  // the instant whose Central wall-clock time is key h:m (used for sample data)
+  function atCentral(k, h, m){
+    const g = Date.UTC(+k.slice(0,4), +k.slice(5,7)-1, +k.slice(8,10), h, m);
+    const p = {}; partsFmt.formatToParts(new Date(g)).forEach(x => p[x.type] = x.value);
+    const wall = Date.UTC(+p.year, +p.month-1, +p.day, +p.hour % 24, +p.minute);
+    return new Date(g - (wall - g));
+  }
+
+  const todayKey = keyOf(new Date());
+  let viewY = +todayKey.slice(0,4), viewM = +todayKey.slice(5,7) - 1;
+  let selected = null;   // selected day key, or null for the upcoming list
+  let openId = null;     // expanded event in the list
+
+  const byId = new Map();
+  const loaded = new Set();
+  let upcoming = [];
+
+  /* ---- normalise a Google event ---- */
+  function norm(e){
+    const allDay = !!e.start.date;
+    let start, end, startKey, endKey;
+    if (allDay){
+      startKey = e.start.date;
+      endKey = addDays((e.end && e.end.date) || e.start.date, -1);   // Google's end date is exclusive
+      if (endKey < startKey) endKey = startKey;
+      start = toUTC(startKey); end = toUTC(endKey);
+    } else {
+      start = new Date(e.start.dateTime);
+      end = new Date((e.end && e.end.dateTime) || e.start.dateTime);
+      startKey = keyOf(start);
+      endKey = keyOf(new Date(Math.max(+start, +end - 1)));
+    }
+    return {
+      id:e.id, title:e.summary || 'Untitled event', desc:e.description || '',
+      loc:e.location || '', link:e.htmlLink || '',
+      allDay, start, end, startKey, endKey
+    };
+  }
+  const cmp = (a, b) =>
+    a.startKey !== b.startKey ? (a.startKey < b.startKey ? -1 : 1)
+    : a.allDay !== b.allDay ? (a.allDay ? -1 : 1)
+    : a.start - b.start;
+
+  function eventsOn(k){
+    const out = [];
+    byId.forEach(ev => { if (ev.startKey <= k && k <= ev.endKey) out.push(ev); });
+    return out.sort(cmp);
+  }
+
+  function timeLabel(ev){
+    if (ev.allDay) return ev.startKey === ev.endKey ? 'All day' : 'Until ' + dayFmt.format(toUTC(ev.endKey));
+    if (ev.startKey !== ev.endKey) return timeFmt.format(ev.start) + ' to ' + dayFmt.format(toUTC(ev.endKey));
+    return timeFmt.format(ev.start) + ' – ' + timeFmt.format(ev.end);
+  }
+
+  // Google descriptions can hold HTML. Parse it inert and keep only the text.
+  function plain(html){
+    const t = document.createElement('template');
+    t.innerHTML = html.replace(/<br\s*\/?>/gi, '\n').replace(/<\/p>/gi, '\n');
+    return t.content.textContent.trim();
+  }
+
+  /* ---- data source: the API, or sample events when there's no key ---- */
+  async function api(params){
+    const q = new URLSearchParams(Object.assign({
+      key:API_KEY, singleEvents:'true', orderBy:'startTime', maxResults:'250', timeZone:TZ
+    }, params));
+    const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(CAL_ID) + '/events?' + q);
+    if (!res.ok){
+      let msg = 'HTTP ' + res.status;
+      try { const j = await res.json(); if (j.error) msg += ': ' + j.error.message; } catch(_){}
+      throw new Error(msg);
+    }
+    const j = await res.json();
+    return (j.items || []).filter(e => e.status !== 'cancelled' && e.start).map(norm);
+  }
+
+  const SAMPLE = API_KEY ? [] : (function(){
+    const out = []; let n = 0;
+    const timed = (k, title, h1, m1, h2, m2, loc, desc) => out.push({
+      id:'sample' + (n++), summary:title, location:loc, description:desc,
+      start:{dateTime:atCentral(k, h1, m1).toISOString()}, end:{dateTime:atCentral(k, h2, m2).toISOString()}
     });
-    return 'https://calendar.google.com/calendar/embed?' + p.toString();
+    const allDay = (k, title, desc) => out.push({
+      id:'sample' + (n++), summary:title, description:desc, start:{date:k}, end:{date:addDays(k, 1)}
+    });
+    for (let i = -60; i <= 150; i++){
+      const k = addDays(todayKey, i), dow = toUTC(k).getUTCDay(), wk = Math.floor((i + 700) / 7);
+      if (dow === 2) timed(k, 'General meeting', 18, 0, 19, 30, 'Keller Hall', 'Weekly session. Bring a laptop.');
+      if (dow === 4 && wk % 2 === 0) timed(k, 'Design review', 17, 0, 18, 0, 'Keller Hall', 'Bring whatever block you are working on.');
+      if (dow === 5 && wk % 2 === 1) timed(k, 'ASIC Network call', 12, 0, 13, 0, 'Online', 'Biweekly call with the other chapters.');
+    }
+    timed(addDays(todayKey, 5), 'Place-and-route workshop', 13, 0, 16, 0, 'Keller Hall', 'Hands-on. You need a cluster account.');
+    timed(addDays(todayKey, 12), 'Industry speaker', 18, 0, 19, 0, 'Keller Hall', '');
+    allDay(addDays(todayKey, 26), 'Shuttle submission deadline', '');
+    return out.map(norm);
+  })();
+
+  async function source(params){
+    if (API_KEY) return api(params);
+    const min = +new Date(params.timeMin);
+    const max = params.timeMax ? +new Date(params.timeMax) : Infinity;
+    return SAMPLE.filter(ev => +ev.end >= min && +ev.start < max);
   }
 
-  function apply(){
-    const mode = NARROW.matches ? 'AGENDA' : 'MONTH';
-    if (mode === currentMode) return;
-    currentMode = mode;
-    frame.src = srcFor(mode);
+  async function loadMonth(y, m){
+    const tag = y + '-' + m;
+    if (loaded.has(tag)) return;
+    loaded.add(tag);
+    try {
+      const first = new Date(Date.UTC(y, m, 1));
+      const from = new Date(first); from.setUTCDate(1 - first.getUTCDay() - 1);
+      const to = new Date(from); to.setUTCDate(to.getUTCDate() + 45);
+      (await source({timeMin:from.toISOString(), timeMax:to.toISOString()})).forEach(ev => byId.set(ev.id, ev));
+    } catch (err){
+      loaded.delete(tag);   // let the next visit to this month retry
+      throw err;
+    }
   }
 
-  // addEventListener on MediaQueryList is the modern API; addListener is the
-  // Safari <14 fallback. Both are guarded so neither one throws.
-  if (NARROW.addEventListener) NARROW.addEventListener('change', apply);
-  else if (NARROW.addListener) NARROW.addListener(apply);
+  async function loadUpcoming(){
+    const evs = await source({timeMin:new Date().toISOString(), maxResults:String(UPCOMING)});
+    evs.forEach(ev => byId.set(ev.id, ev));
+    upcoming = evs.sort(cmp).slice(0, UPCOMING);
+  }
 
-  apply();
+  /* ---- rendering ---- */
+  const monthTag = () => viewY + '-' + String(viewM + 1).padStart(2, '0');
 
-  // If the calendar is not shared publicly, Google still returns a page (an
-  // error page), so there's no load failure to catch cross-origin. This only
-  // catches a hard network failure.
-  frame.addEventListener('error', () => {
-    const fb = document.getElementById('calFallback');
-    if (fb) fb.style.display = 'grid';
+  function renderGrid(){
+    const first = new Date(Date.UTC(viewY, viewM, 1));
+    el.month.textContent = monthFmt.format(first);
+    let k = addDays(first.toISOString().slice(0,10), -first.getUTCDay());
+    const frag = document.createDocumentFragment();
+
+    for (let i = 0; i < 42; i++){
+      const evs = eventsOn(k);
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cal-cell';
+      b.dataset.key = k;
+      if (k.slice(0,7) !== monthTag()) b.classList.add('out');
+      if (k === todayKey) b.classList.add('today');
+      if (k === selected) b.classList.add('sel');
+      if (evs.length) b.classList.add('has');
+      b.setAttribute('aria-pressed', String(k === selected));
+      b.setAttribute('aria-label', dayFmt.format(toUTC(k)) + (evs.length ? ', ' + evs.length + (evs.length > 1 ? ' events' : ' event') : ''));
+
+      const num = document.createElement('span');
+      num.className = 'cal-num';
+      num.textContent = +k.slice(8);
+      b.appendChild(num);
+
+      evs.slice(0, 2).forEach(ev => {
+        const c = document.createElement('span');
+        c.className = 'cal-chip';
+        if (!ev.allDay && ev.startKey === k){
+          const t = document.createElement('span');
+          t.className = 't';
+          t.textContent = short(ev.start);
+          c.appendChild(t);
+        }
+        c.appendChild(document.createTextNode(ev.title));
+        b.appendChild(c);
+      });
+      if (evs.length > 2){
+        const more = document.createElement('span');
+        more.className = 'cal-more';
+        more.textContent = '+' + (evs.length - 2) + ' more';
+        b.appendChild(more);
+      }
+      if (evs.length){
+        const dots = document.createElement('span');
+        dots.className = 'cal-dots';
+        for (let d = 0; d < Math.min(evs.length, 3); d++) dots.appendChild(document.createElement('i'));
+        b.appendChild(dots);
+      }
+
+      frag.appendChild(b);
+      k = addDays(k, 1);
+    }
+    gridEl.replaceChildren(frag);
+  }
+
+  function renderList(){
+    const evs = selected ? eventsOn(selected) : upcoming;
+    el.head.textContent = selected ? dayFmt.format(toUTC(selected)) : 'Upcoming';
+    el.reset.hidden = !selected;
+
+    const frag = document.createDocumentFragment();
+    if (!evs.length){
+      const li = document.createElement('li');
+      li.className = 'cal-empty';
+      li.textContent = selected ? 'Nothing on this day.' : 'Nothing scheduled yet.';
+      frag.appendChild(li);
+    }
+    evs.forEach(ev => frag.appendChild(listItem(ev)));
+    el.list.replaceChildren(frag);
+  }
+
+  function listItem(ev){
+    const open = ev.id === openId;
+    const li = document.createElement('li');
+
+    const head = document.createElement('button');
+    head.type = 'button';
+    head.className = 'ev-head';
+    head.dataset.id = ev.id;
+    head.setAttribute('aria-expanded', String(open));
+
+    const date = document.createElement('span'); date.className = 'ev-date';
+    const dNum = document.createElement('b');     dNum.textContent = toUTC(ev.startKey).getUTCDate();
+    const dMon = document.createElement('small'); dMon.textContent = monFmt.format(toUTC(ev.startKey));
+    date.append(dNum, dMon);
+
+    const main = document.createElement('span'); main.className = 'ev-main';
+    const title = document.createElement('span'); title.className = 'ev-title'; title.textContent = ev.title;
+    const meta = document.createElement('span');  meta.className = 'ev-meta';  meta.textContent = timeLabel(ev);
+    main.append(title, meta);
+
+    head.append(date, main);
+    head.addEventListener('click', () => {
+      openId = open ? null : ev.id;
+      renderList();
+      const again = el.list.querySelector('[data-id="' + CSS.escape(ev.id) + '"]');
+      if (again) again.focus({preventScroll:true});
+    });
+    li.appendChild(head);
+
+    if (open){
+      const more = document.createElement('div');
+      more.className = 'ev-more';
+      if (ev.loc){
+        const p = document.createElement('p'); p.className = 'ev-loc'; p.textContent = ev.loc; more.appendChild(p);
+      }
+      if (ev.desc){
+        const p = document.createElement('p'); p.textContent = plain(ev.desc); more.appendChild(p);
+      }
+      if (ev.link){
+        const a = document.createElement('a');
+        a.className = 'way-link'; a.href = ev.link; a.target = '_blank'; a.rel = 'noopener';
+        a.textContent = 'Open in Google Calendar ↗';
+        more.appendChild(a);
+      }
+      if (!more.childNodes.length){
+        const p = document.createElement('p'); p.textContent = 'No details yet.'; more.appendChild(p);
+      }
+      li.appendChild(more);
+    }
+    return li;
+  }
+
+  function render(){ renderGrid(); renderList(); }
+
+  function setStatus(msg){ el.status.textContent = msg; }
+  const idleStatus = () => API_KEY ? '' : 'Showing sample events. Add an API key in the calendar script to load the real calendar.';
+
+  async function showMonth(){
+    render();
+    if (!loaded.has(viewY + '-' + viewM)) setStatus('Loading…');
+    try {
+      await loadMonth(viewY, viewM);
+      setStatus(idleStatus());
+    } catch (err){
+      console.warn('[SASi calendar]', err.message);
+      setStatus('Couldn\u2019t load events. Use the Google Calendar link above.');
+    }
+    render();
+  }
+
+  /* ---- controls ---- */
+  function step(delta){
+    viewM += delta;
+    if (viewM < 0){ viewM = 11; viewY--; }
+    if (viewM > 11){ viewM = 0; viewY++; }
+    selected = null; openId = null;
+    showMonth();
+  }
+  document.getElementById('calPrev').addEventListener('click', () => step(-1));
+  document.getElementById('calNext').addEventListener('click', () => step(1));
+  document.getElementById('calToday').addEventListener('click', () => {
+    viewY = +todayKey.slice(0,4); viewM = +todayKey.slice(5,7) - 1;
+    selected = null; openId = null;
+    showMonth();
   });
+  el.reset.addEventListener('click', () => { selected = null; openId = null; renderGrid(); renderList(); });
+
+  gridEl.addEventListener('click', e => {
+    const b = e.target.closest('.cal-cell');
+    if (!b) return;
+    const k = b.dataset.key;
+    selected = selected === k ? null : k;
+    openId = null;
+    if (k.slice(0,7) !== monthTag()){
+      // clicked a spill-over day from the next or previous month: go there
+      viewY = +k.slice(0,4); viewM = +k.slice(5,7) - 1;
+      showMonth();
+    } else {
+      render();
+    }
+    const again = gridEl.querySelector('[data-key="' + k + '"]');
+    if (again) again.focus({preventScroll:true});
+  });
+
+  /* ---- first load ---- */
+  (async function(){
+    render();
+    setStatus('Loading…');
+    try {
+      await Promise.all([loadUpcoming(), loadMonth(viewY, viewM)]);
+      setStatus(idleStatus());
+    } catch (err){
+      console.warn('[SASi calendar]', err.message);
+      setStatus('Couldn\u2019t load events. Use the Google Calendar link above.');
+    }
+    render();
+  })();
 })();
 
 /* ================================================================
