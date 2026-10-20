@@ -489,6 +489,27 @@ img{display:block;max-width:100%;}
 }
 .net-fact span{color:var(--text);font-size:.94rem;}
 
+/* Sponsor recognition and industry updates */
+.partner-card{
+  display:flex;align-items:center;gap:32px;flex-wrap:wrap;
+  margin-top:34px;padding:30px;border:1px solid var(--line-strong);
+  border-radius:var(--radius);background:var(--panel);
+}
+.partner-logo{
+  display:flex;align-items:center;justify-content:center;flex:0 1 280px;
+  width:280px;max-width:100%;min-height:120px;padding:22px;
+  border-radius:10px;background:#fff;
+}
+.partner-logo img{width:100%;height:100px;object-fit:contain;}
+.partner-copy{flex:1 1 300px;min-width:0;}
+.partner-copy h3{font-family:"Space Grotesk",sans-serif;font-size:1.4rem;line-height:1.25;margin:10px 0;}
+.partner-copy p{color:var(--muted);font-size:.96rem;margin:0 0 12px;}
+.partner-copy .partner-status{font-family:"JetBrains Mono",monospace;font-size:.76rem;color:var(--brass);}
+.partner-link{display:inline-block;color:var(--brass);font-size:.9rem;}
+.partner-link:hover{color:var(--brass-2);text-decoration:underline;}
+.partner-logo:focus-visible,.partner-link:focus-visible{outline:2px solid var(--brass);outline-offset:5px;}
+@media(max-width:600px){.partner-card{padding:24px;gap:22px;}.partner-copy{flex-basis:100%;}}
+
 /* ---------------- SPONSOR ---------------- */
 /* NOTE: no tier ladder here on purpose. Under UMN policy the perks you promise
    ARE the tax classification (logo + homepage link = gift eligible, deposits at
@@ -810,6 +831,29 @@ html.anim-off .nav.scrolled{
   </div>
 </section>
 
+<!-- INDUSTRY UPDATE -->
+<section class="section" id="industry-updates" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// Industry updates</div>
+      <h2>Connecting students with industry.</h2>
+    </div>
+    <article class="partner-card reveal" aria-labelledby="scale-update-title">
+      <a class="partner-logo" href="https://www.natsecmn.org/mn-scale" target="_blank" rel="noopener">
+        <img src="https://images.squarespace-cdn.com/content/v1/6786b50718971d1dca3193a1/715e0470-3c86-4828-9b77-15aaf2347656/MN+SCALE+Logo+-+Website.png?format=2500w" alt="Minnesota SCALE" width="280" height="100" loading="lazy" decoding="async" />
+      </a>
+      <div class="partner-copy">
+        <div class="eyebrow">Fall 2026 · SCALE MN</div>
+        <h3 id="scale-update-title">SASi selected to host industry partner meetings</h3>
+        <p>Stone Arch Silicon and Microfab Club have been selected to host SCALE MN industry partner meetings at the University of Minnesota Twin Cities this fall.</p>
+        <p>Partner matching and scheduling are underway. We'll share meeting details once they are confirmed.</p>
+        <p class="partner-status">Meeting dates to be announced.</p>
+        <a class="partner-link" href="https://www.natsecmn.org/mn-scale" target="_blank" rel="noopener">Learn about Minnesota SCALE →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
 <!-- CALENDAR -->
 <!-- Events are pulled from the SASI@umn.edu Google Calendar and drawn with the
      site's own styles. Until an API key is set in the calendar script at the
@@ -893,6 +937,18 @@ html.anim-off .nav.scrolled{
       <h2>Silicon is expensive. Undergrads are not.</h2>
       <p>If you hire people who can take a design from RTL to GDSII, this is where they come from.</p>
     </div>
+
+    <article class="partner-card reveal" aria-labelledby="forwardedge-title">
+      <a class="partner-logo" href="https://forwardedgeasic.com/" target="_blank" rel="noopener">
+        <img src="https://forwardedgeasic.com/wp-content/themes/forwardedge/images/forwardedge-logo.svg" alt="ForwardEdge ASIC" width="280" height="100" loading="lazy" decoding="async" />
+      </a>
+      <div class="partner-copy">
+        <div class="eyebrow">// Our sponsor</div>
+        <h3 id="forwardedge-title">ForwardEdge ASIC</h3>
+        <p>Thank you to ForwardEdge ASIC for supporting Stone Arch Silicon and hands-on chip design at the University of Minnesota.</p>
+        <a class="partner-link" href="https://forwardedgeasic.com/" target="_blank" rel="noopener">Visit ForwardEdge ASIC →</a>
+      </div>
+    </article>
 
     <div class="cards">
       <div class="card reveal">
