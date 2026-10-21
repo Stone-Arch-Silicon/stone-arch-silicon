@@ -49,7 +49,7 @@ The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages ser
 | [assets/site.css](assets/site.css) | Styles shared by every page |
 | [assets/site.js](assets/site.js) | Header, menu, scroll effects, and motion controls shared by every page |
 | [assets/calendar.js](assets/calendar.js) | Calendar for events.html (API key and setup steps are at the top) |
-| [assets/team/](assets/team/) | Team headshots for about.html, one square JPG per person |
+| [assets/team/](assets/team/) | Team headshots for about.html and the home page, one square JPG per person (update the team list in both pages) |
 | [assets/sasi-sponsorship.pdf](assets/sasi-sponsorship.pdf) | The sponsorship one-pager linked from sponsor.html |
 | [assets/sasi-sponsorship.html](assets/sasi-sponsorship.html) | Source for the one-pager: edit it, open it in Chrome, and Print to PDF with no margins and background graphics on |
 | [assets/](assets/) | Fonts, images, and the hero video |
