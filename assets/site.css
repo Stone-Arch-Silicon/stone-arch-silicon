@@ -523,7 +523,7 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 .sponsor-mark--tsmc img{width:100px;}
 .sponsor-mark--ucla img{width:120px;}
 .sponsor-mark--scale img,.sponsor-mark--scale:hover img,.sponsor-mark--scale:focus-visible img{filter:brightness(0);}
-.sponsor-mark--umn-ece img{height:44px;}
+.sponsor-mark--umn-ece img,.sponsor-mark--umn-ece:hover img,.sponsor-mark--umn-ece:focus-visible img{height:44px;filter:brightness(0);}
 .sponsor-mark--umn-ece span{max-width:180px;text-align:center;font-size:11px;line-height:1.35;color:var(--muted);}
 .js .sponsor-belt.is-ready .sponsor-window{overflow:hidden;}
 .js .sponsor-belt.is-ready .sponsor-track{animation:sponsor-scroll 42s linear infinite;}
@@ -545,4 +545,34 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
   .sponsor-group li{flex-basis:150px;}
   .sponsor-mark img,.sponsor-mark svg{max-width:150px;}
   .sponsor-belt-head .eyebrow{font-size:10px;letter-spacing:.08em;}
+}
+
+/* Native page transitions keep ordinary links, browser history, and back navigation. */
+@view-transition{navigation:auto;}
+::view-transition-old(root){animation:page-leave .18s ease-out both;}
+::view-transition-new(root){animation:page-enter .32s var(--ease) both;}
+::view-transition-group(*){animation-duration:.4s;animation-timing-function:var(--ease);}
+@keyframes page-leave{to{opacity:0;}}
+@keyframes page-enter{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.person-link img{transition:transform .4s var(--ease);}
+.person-link .person-more span{transition:transform .3s var(--ease);}
+.person-link:hover img,.person-link:focus-visible img{transform:scale(1.045);}
+.person-link:hover .person-more span,.person-link:focus-visible .person-more span{transform:translate(3px,-3px);}
+.profile-links a{display:inline-block;transition:transform .25s var(--ease);}
+.profile-links a:hover,.profile-links a:focus-visible{transform:translateX(4px);}
+img[src="assets/team/avi-raghuvanshi.jpg"]{view-transition-name:portrait-avi-raghuvanshi;}
+img[src="assets/team/paulo-dietrich.jpg"]{view-transition-name:portrait-paulo-dietrich;}
+img[src="assets/team/alexander-weimer.jpg"]{view-transition-name:portrait-alexander-weimer;}
+img[src="assets/team/mohamed-elbahrawy.jpg"]{view-transition-name:portrait-mohamed-elbahrawy;}
+img[src="assets/team/leonard-jin.jpg"]{view-transition-name:portrait-leonard-jin;}
+img[src="assets/team/madeline-ngo.jpg"]{view-transition-name:portrait-madeline-ngo;}
+img[src="assets/team/bear-blinschauer.jpg"]{view-transition-name:portrait-bear-blinschauer;}
+img[src="assets/team/ethan-chung.jpg"]{view-transition-name:portrait-ethan-chung;}
+
+.motion-off::view-transition-group(*),.motion-off::view-transition-old(*),.motion-off::view-transition-new(*){animation:none!important;}
+.motion-off .person-link img,.motion-off .person-more span,.motion-off .profile-links a{transition:none;transform:none;}
+@media(prefers-reduced-motion:reduce){
+  @view-transition{navigation:none;}
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important;}
+  .person-link img,.person-link .person-more span,.profile-links a{transition:none;transform:none!important;}
 }
