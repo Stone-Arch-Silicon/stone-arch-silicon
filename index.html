@@ -164,7 +164,7 @@
       <div class="hero-cta">
         <a class="btn btn-solid" href="join.html">Join the club
           <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></a>
-        <a class="btn btn-line" href="about.html#flow">Explore the flow
+        <a class="btn btn-line" href="about.html#subteams">Meet the subteams
           <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></a>
       </div>
     </div>
@@ -203,31 +203,8 @@
   </div>
 </section>
 
-<!-- INSIDE THE CHIP -->
-<section class="sec theme-dark" id="chip" data-nav="dark">
-  <div class="wrap chip-grid">
-    <div class="chip-copy">
-      <p class="eyebrow reveal">Inside the chip</p>
-      <h2 class="h2 reveal">From a few hundred lines of RTL to layout.</h2>
-      <p class="lead reveal" data-d="1">Standard cells, metal routing, and a power grid: every layer of a design is something a member writes, checks, or signs off. Drag the package to look around.</p>
-      <dl class="chip-specs reveal" data-d="2">
-        <div><dt>First project</dt><dd>An 8-bit ALU in ASIC 101</dd></div>
-        <div><dt>Open flow</dt><dd>LibreLane on SKY130</dd></div>
-        <div><dt>Industry EDA</dt><dd>Cadence, Synopsys, Siemens</dd></div>
-        <div><dt>Compute</dt><dd>Our own 20-node cluster</dd></div>
-      </dl>
-    </div>
-    <div class="chip-stage reveal" data-d="1" id="chipStage">
-      <canvas id="chip-canvas" aria-label="Interactive 3D model of a Stone Arch Silicon chip package. Drag to rotate."></canvas>
-      <span class="chip-label tl">SASi / package</span>
-      <span class="chip-label bl">Drag to rotate</span>
-      <button class="chip-label br chip-motion" type="button" data-motion-toggle aria-pressed="false">Pause spin</button>
-    </div>
-  </div>
-</section>
-
 <!-- EXPLORE: one tile per inner page, numbered to match the menu -->
-<section class="sec theme-light" id="explore" data-nav="light">
+<section class="sec theme-paper" id="explore" data-nav="light">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow reveal">Explore</p>
@@ -235,16 +212,16 @@
       <p class="lead reveal" data-d="1">Everything SASi does, one page each.</p>
     </div>
     <div class="paths">
-      <a class="path reveal" href="about.html"><span class="idx"><span>Page</span><span>/02</span></span><h3>About</h3><p>The five-stage flow, the ASIC Network, and who runs the club.</p><span class="link">About SASi →</span></a>
-      <a class="path reveal" data-d="1" href="events.html"><span class="idx"><span>Page</span><span>/03</span></span><h3>Events</h3><p>Weekly sessions, design reviews, and network calls on one calendar.</p><span class="link">See the calendar →</span></a>
+      <a class="path reveal" href="about.html"><span class="idx"><span>Page</span><span>/02</span></span><h3>About</h3><p>Our four subteams, the people who run the club, and the ASIC Network.</p><span class="link">About SASi →</span></a>
+      <a class="path reveal" data-d="1" href="events.html"><span class="idx"><span>Page</span><span>/03</span></span><h3>Events</h3><p>Thursday meetings in Keller Hall 3-111, and everything else on one calendar.</p><span class="link">See the calendar →</span></a>
       <a class="path reveal" data-d="2" href="updates.html"><span class="idx"><span>Page</span><span>/04</span></span><h3>Updates</h3><p>SCALE MN industry meetings, our sponsor, and the ASIC 101 curriculum.</p><span class="link">Read the updates →</span></a>
-      <a class="path reveal" data-d="3" href="sponsor.html"><span class="idx"><span>Page</span><span>/05</span></span><h3>Sponsor</h3><p>Tapeouts, tools, and compute for undergrads who build chips.</p><span class="link">How sponsoring works →</span></a>
+      <a class="path reveal" data-d="3" href="sponsor.html"><span class="idx"><span>Page</span><span>/05</span></span><h3>Sponsor</h3><p>Fund hackathons, conferences, tapeouts, and the ASIC Network.</p><span class="link">How sponsoring works →</span></a>
     </div>
   </div>
 </section>
 
 <!-- LATEST UPDATES (the full cards live on updates.html) -->
-<section class="sec theme-paper" id="latest" data-nav="light">
+<section class="sec theme-light" id="latest" data-nav="light">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow reveal">Updates</p>
@@ -259,12 +236,8 @@
       <li><a href="updates.html#update-forwardedge"><span class="k">Sponsor</span><h3>ForwardEdge ASIC backs hands-on chip design at UMN</h3><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></a></li>
       <li><a href="updates.html#update-asic101"><span class="k">Curriculum</span><h3>ASIC 101: start from zero, finish with layout</h3><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></a></li>
     </ul>
-  </div>
-</section>
 
-<!-- JOIN -->
-<section class="sec sec-end theme-light" data-nav="light">
-  <div class="wrap">
+    <!-- JOIN -->
     <div class="ctas">
       <a class="cta-block cta-dark reveal" href="join.html">Join SASi
         <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M4 28h46M32 10l18 18-18 18" stroke="currentColor" stroke-width="2.5" fill="none"/></svg></a>
@@ -317,13 +290,12 @@
     <div class="wordmark" id="wordmark" aria-hidden="true"><span>Stone Arch Silicon</span></div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> Stone Arch Silicon · Founded 2025 by <a href="https://raghuavy.github.io/">Avyukt Raghuvanshi</a> and <a href="https://github.com/paulodietricheng">Paulo Dietrich</a> · Built by members</span>
-      <span>Advisors: Prof. Yu “Kevin” Cao · Claire Dietz</span>
+      <span>Advisors: Prof. Yu “Kevin” Cao · Claire Dietz · Marc Riedel</span>
     </div>
   </div>
 </footer>
 <!-- /shared:footer -->
 
 <script src="assets/site.js"></script>
-<script src="assets/chip.js"></script>
 </body>
 </html>

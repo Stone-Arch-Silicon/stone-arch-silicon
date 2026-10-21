@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>About · Stone Arch Silicon</title>
-<meta name="description" content="Stone Arch Silicon (SASi) is the University of Minnesota chip design club: five stages from RTL to signoff, a founding chapter of the ASIC Network, student-run and faculty-advised." />
+<meta name="description" content="Stone Arch Silicon (SASi) is the University of Minnesota chip design club: four subteams (RTL, verification, physical design, analog), the people who run it, and our place in the ASIC Network." />
 
 <link rel="canonical" href="https://stone-arch-silicon.github.io/stone-arch-silicon/about.html" />
 
@@ -109,28 +109,58 @@
     <h1 class="page-title">The chip design club at the University of Minnesota.</h1>
     <p class="page-lead">Undergraduates learning, building, and taking designs from RTL to fabrication-ready layouts. A CSE Campus Life Program and a founding chapter of the ASIC Network.</p>
     <nav class="hero-specs" aria-label="On this page">
-      <a class="spec" href="#flow"><b>The flow <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Five stages, RTL to signoff</span></a>
+      <a class="spec" href="#subteams"><b>Subteams <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>RTL, verification, PD, analog</span></a>
+      <a class="spec" href="#team"><b>Our team <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Board and advisors</span></a>
       <a class="spec" href="#network"><b>ASIC Network <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Clubs working in the open</span></a>
-      <a class="spec" href="#club"><b>The club <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Advisors and affiliation</span></a>
     </nav>
   </div>
 </section>
 
-<!-- FLOW -->
-<section class="sec theme-light" id="flow" data-nav="light">
+<!-- SUBTEAMS -->
+<section class="sec theme-light" id="subteams" data-nav="light">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow reveal">The flow</p>
-      <h2 class="h2 reveal">Five stages. Plug in wherever you're curious.</h2>
-      <p class="lead reveal" data-d="1">Every stage needs people. Pick the one you like.</p>
+      <p class="eyebrow reveal">Subteams</p>
+      <h2 class="h2 reveal">Four subteams. Plug in wherever you're curious.</h2>
+      <p class="lead reveal" data-d="1">Every subteam needs people. Pick the one you like.</p>
     </div>
-    <ol class="stages">
-      <li class="stage"><span class="idx">/0.1</span><h3 class="stage-name" data-scramble="RTL Design">RTL Design</h3><p>Describe the hardware in SystemVerilog.</p></li>
-      <li class="stage"><span class="idx">/0.2</span><h3 class="stage-name" data-scramble="Verification">Verification</h3><p>Prove it does what you claimed it does.</p></li>
-      <li class="stage"><span class="idx">/0.3</span><h3 class="stage-name" data-scramble="Synthesis">Synthesis</h3><p>Map that logic onto real standard cells.</p></li>
-      <li class="stage"><span class="idx">/0.4</span><h3 class="stage-name" data-scramble="Place &amp; Route">Place &amp; Route</h3><p>Floorplan, clock tree, and every wire.</p></li>
-      <li class="stage"><span class="idx">/0.5</span><h3 class="stage-name" data-scramble="Signoff">Signoff</h3><p>DRC and LVS clean, ready for a shuttle.</p></li>
-    </ol>
+    <div class="paths">
+      <div class="path reveal"><span class="idx"><span>Subteam</span><span>/01</span></span><h3>RTL</h3><p>Describe the hardware in SystemVerilog.</p><p class="path-lead">Lead · Paulo Dietrich</p></div>
+      <div class="path reveal" data-d="1"><span class="idx"><span>Subteam</span><span>/02</span></span><h3>Verification</h3><p>Prove it does what you claimed it does.</p><p class="path-lead">Lead · Alexander Weimer</p></div>
+      <div class="path reveal" data-d="2"><span class="idx"><span>Subteam</span><span>/03</span></span><h3>Physical Design</h3><p>Floorplan, clock tree, and every wire, signed off DRC and LVS clean.</p><p class="path-lead">Lead · Avi Raghuvanshi</p></div>
+      <div class="path reveal" data-d="3"><span class="idx"><span>Subteam</span><span>/04</span></span><h3>Analog</h3><p>Circuits at the transistor level, from schematic to layout.</p><p class="path-lead">Lead · Mohamed Elbahrawy</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR TEAM
+     Photos live in assets/team/ as square JPGs (256x256 or larger); the page
+     crops them to circles. To add someone, copy an <li> and point it at a new photo. -->
+<section class="sec theme-paper" id="team" data-nav="light">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow reveal">Our team</p>
+      <h2 class="h2 reveal">The people who run SASi.</h2>
+      <p class="lead reveal" data-d="1">Undergraduate officers, subteam leads, and the faculty who advise them.</p>
+    </div>
+
+    <h3 class="team-group reveal">Board</h3>
+    <ul class="team">
+      <li class="person reveal"><img src="assets/team/avi-raghuvanshi.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Avi Raghuvanshi</h4><p>President / PD lead</p></li>
+      <li class="person reveal" data-d="1"><img src="assets/team/paulo-dietrich.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Paulo Dietrich</h4><p>VP / RTL / Outreach</p></li>
+      <li class="person reveal" data-d="2"><img src="assets/team/alexander-weimer.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Alexander Weimer</h4><p>Verification lead</p></li>
+      <li class="person reveal" data-d="3"><img src="assets/team/mohamed-elbahrawy.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Mohamed Elbahrawy</h4><p>Analog lead</p></li>
+      <li class="person reveal"><img src="assets/team/leonard-jin.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Leonard Jin</h4><p>Documentation lead</p></li>
+      <li class="person reveal" data-d="1"><img src="assets/team/madeline-ngo.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Madeline Ngo</h4><p>Timeline / Funding</p></li>
+      <li class="person reveal" data-d="2"><img src="assets/team/bear-blinschauer.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Bear Blinschauer</h4><p>Events / Spaces</p></li>
+      <li class="person reveal" data-d="3"><img src="assets/team/ethan-chung.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Ethan Chung</h4><p>Promotion</p></li>
+    </ul>
+
+    <h3 class="team-group reveal">Advisors</h3>
+    <ul class="team">
+      <li class="person reveal"><img src="assets/team/kevin-cao.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Kevin Cao</h4><p>Faculty advisor</p></li>
+      <li class="person reveal" data-d="1"><img src="assets/team/marc-riedel.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Marc Riedel</h4><p>Synthesis / Verification advisor</p></li>
+    </ul>
   </div>
 </section>
 
@@ -174,7 +204,9 @@
       </div>
       <div class="join-meta reveal" data-d="1">
         <div><b>Founded</b>2025, by <a class="link" href="https://raghuavy.github.io/">Avyukt Raghuvanshi</a> and <a class="link" href="https://github.com/paulodietricheng">Paulo Dietrich</a></div>
-        <div><b>Advisors</b>Prof. Yu “Kevin” Cao<br />Claire Dietz</div>
+        <div><b>Advisors</b>Prof. Yu “Kevin” Cao<br />Claire Dietz<br />Marc Riedel</div>
+        <div><b>Meetings</b>Thursdays, Keller Hall 3-111</div>
+        <div><b>Our space</b>Keller Hall 2-113</div>
         <div><b>Affiliation</b>CSE Campus Life Program</div>
         <div><b>Network</b>Founding chapter of the <a class="link" href="https://asicnetwork.net" target="_blank" rel="noopener">ASIC Network</a></div>
         <div><b>Compute</b>Our own 20-node Cadence &amp; Synopsys cluster</div>
@@ -234,7 +266,7 @@
     <div class="wordmark" id="wordmark" aria-hidden="true"><span>Stone Arch Silicon</span></div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> Stone Arch Silicon · Founded 2025 by <a href="https://raghuavy.github.io/">Avyukt Raghuvanshi</a> and <a href="https://github.com/paulodietricheng">Paulo Dietrich</a> · Built by members</span>
-      <span>Advisors: Prof. Yu “Kevin” Cao · Claire Dietz</span>
+      <span>Advisors: Prof. Yu “Kevin” Cao · Claire Dietz · Marc Riedel</span>
     </div>
   </div>
 </footer>

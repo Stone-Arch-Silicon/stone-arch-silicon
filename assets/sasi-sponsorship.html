@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sponsor Stone Arch Silicon · One-pager</title>
+<meta name="robots" content="noindex" />
+<!-- Source for assets/sasi-sponsorship.pdf, the one-pager linked from sponsor.html.
+     To update it: edit this file, open it in Chrome, Print, choose "Save as PDF",
+     set Margins to None and turn on "Background graphics", then save over
+     assets/sasi-sponsorship.pdf. -->
+<style>
+@font-face{font-family:"Geist";src:url("Geist-Variable.woff2") format("woff2");font-weight:100 900;}
+@font-face{font-family:"Geist Mono";src:url("GeistMono-Variable.woff2") format("woff2");font-weight:100 900;}
+@page{size:Letter;margin:0;}
+:root{--gold:#e3a81b;--black:#060607;--ink:#0d0d0e;--muted:#56585c;--faint:#7c7e82;--line:rgba(13,13,14,.12);--line-2:rgba(13,13,14,.26);}
+*{box-sizing:border-box;}
+html,body{margin:0;background:#d9d9d6;}
+body{font-family:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,p,dl,dd{margin:0;}
+.page{position:relative;width:8.5in;height:11in;margin:24px auto;overflow:hidden;background:#fff;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.18);}
+@media print{html,body{background:#fff;}.page{margin:0;box-shadow:none;}}
+.mono{font-family:"Geist Mono",ui-monospace,Menlo,Consolas,monospace;}
+.eyebrow{display:flex;align-items:center;gap:8px;font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:8.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.eyebrow::before{content:"";width:6px;height:6px;background:var(--gold);flex:none;}
+
+/* dark header */
+.top{position:relative;padding:.42in .6in .34in;background:var(--black);color:#f4f4f2;}
+.top::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 90% at 92% 0%,rgba(227,168,27,.16),rgba(227,168,27,0) 62%),
+  linear-gradient(rgba(244,244,242,.05) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,rgba(244,244,242,.05) 1px,transparent 1px) 0 0/28px 28px;}
+.top > *{position:relative;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand img{width:26px;height:26px;object-fit:contain;}
+.brand b{font-size:11.5pt;font-weight:500;letter-spacing:-.02em;}
+.brand span{padding-left:10px;margin-left:2px;border-left:1px solid rgba(244,244,242,.4);font-family:"Geist Mono",monospace;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,244,242,.6);}
+.top .eyebrow{margin-top:.3in;color:rgba(244,244,242,.66);}
+h1{margin-top:10px;font-size:30pt;font-weight:400;line-height:1;letter-spacing:-.05em;}
+h1 span{display:block;}
+.lead{margin-top:14px;max-width:5.9in;font-size:10pt;line-height:1.5;color:rgba(244,244,242,.78);}
+
+/* body */
+.body{flex:1;padding:.3in .6in 0;}
+.sec + .sec{margin-top:.24in;}
+.sec h2{margin-top:8px;font-size:17pt;font-weight:400;letter-spacing:-.035em;}
+.uses{display:grid;grid-template-columns:repeat(3,1fr);margin-top:12px;border-top:1px solid var(--line-2);}
+.use{padding:10px 14px 12px 0;border-bottom:1px solid var(--line);}
+.use + .use{padding-left:14px;border-left:1px solid var(--line);}
+.use:nth-child(4){padding-left:0;border-left:0;}
+.use .n{font-family:"Geist Mono",monospace;font-size:7.5pt;color:var(--faint);}
+.use h3{margin-top:9px;font-size:12.5pt;font-weight:450;letter-spacing:-.02em;}
+.use p{margin-top:5px;font-size:9pt;line-height:1.45;color:var(--muted);}
+
+.facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:12px;border-top:1px solid var(--line-2);}
+.facts div{padding:11px 12px 12px 0;border-bottom:1px solid var(--line);}
+.facts div + div{padding-left:12px;border-left:1px solid var(--line);}
+.facts b{display:block;font-size:13.5pt;font-weight:400;letter-spacing:-.03em;line-height:1.1;}
+.facts span{display:block;margin-top:5px;font-family:"Geist Mono",monospace;font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.4;}
+
+.how{display:grid;grid-template-columns:1.25fr 1fr;gap:.36in;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-2);}
+.how p{font-size:9.5pt;line-height:1.5;color:var(--muted);}
+.how p + p{margin-top:8px;}
+.aside div{padding:7px 0;border-bottom:1px solid var(--line);}
+.aside div:first-child{padding-top:0;}
+.aside b{display:block;font-family:"Geist Mono",monospace;font-size:7pt;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+.aside span{display:block;margin-top:2px;font-size:9.5pt;}
+
+/* footer */
+.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:auto;padding:.2in .6in .3in;}
+.contact{font-size:15pt;letter-spacing:-.03em;}
+.contact small{display:block;margin-bottom:5px;font-family:"Geist Mono",monospace;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+.contact a{color:inherit;text-decoration:none;}
+.fine{max-width:3.3in;font-size:7.5pt;line-height:1.5;color:var(--faint);text-align:right;}
+.fine b{color:var(--muted);font-weight:500;}
+.fine .url{white-space:nowrap;}
+.bar{height:6px;background:var(--gold);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="top">
+    <div class="brand">
+      <img src="logo.png" alt="" />
+      <b>Stone Arch Silicon</b>
+      <span>University of Minnesota</span>
+    </div>
+    <p class="eyebrow">Sponsor SASi</p>
+    <h1><span>Silicon is expensive.</span> <span>Undergrads are not.</span></h1>
+    <p class="lead">SASi is the chip design club at the University of Minnesota, where undergraduates learn the full ASIC flow from RTL to GDSII on industry EDA tools and open-source PDKs. If you hire people who can do that, this is where they come from.</p>
+  </header>
+
+  <main class="body">
+    <section class="sec">
+      <p class="eyebrow">Where your sponsorship goes</p>
+      <div class="uses">
+        <div class="use"><span class="n">/01</span><h3>Hackathons</h3><p>Hands-on chip design hackathons for students at UMN and across the ASIC Network.</p></div>
+        <div class="use"><span class="n">/02</span><h3>The ASIC Network</h3><p>Shared docs, open analog and digital tutorials, and network-wide events for the university chip design clubs we helped found.</p></div>
+        <div class="use"><span class="n">/03</span><h3>Conferences</h3><p>Travel and registration so students can present their work at conferences and competitions.</p></div>
+        <div class="use"><span class="n">/04</span><h3>Tapeouts</h3><p>Shuttle slots and mask costs, so clean designs can actually ship.</p></div>
+        <div class="use"><span class="n">/05</span><h3>Tools &amp; compute</h3><p>Licenses and cluster hardware for the whole flow.</p></div>
+        <div class="use"><span class="n">/06</span><h3>ASIC 101</h3><p>Keeping our free curriculum current for every student who starts from zero.</p></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <p class="eyebrow">Who you're supporting</p>
+      <div class="facts">
+        <div><b>4 subteams</b><span>RTL, verification, physical design, analog</span></div>
+        <div><b>20 nodes</b><span>Our own Cadence &amp; Synopsys cluster</span></div>
+        <div><b>Any major</b><span>Open to every UMN student</span></div>
+        <div><b>Founding chapter</b><span>Of the ASIC Network</span></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <p class="eyebrow">How it works</p>
+      <div class="how">
+        <div>
+          <p>Tell us what you'd like to support and we'll send a proposal. In-kind counts too: licenses, PDK access, shuttle slots, hardware.</p>
+          <p>Gifts go through the UMN Foundation and are tax-deductible; partnerships go through the University.</p>
+        </div>
+        <div class="aside">
+          <div><b>Who you'll talk to</b><span>Our board and CSE External Relations.</span></div>
+          <div><b>Turnaround</b><span>Within a week.</span></div>
+          <div><b>Also welcome</b><span>Mentors, speakers, reviewers.</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="contact"><small>Get in touch</small><a href="mailto:SASI@umn.edu?subject=Sponsorship%20inquiry%3A%20Stone%20Arch%20Silicon">SASI@umn.edu</a></p>
+    <p class="fine">Thank you to <b>ForwardEdge ASIC</b> for supporting hands-on chip design at UMN. A <b>CSE Campus Life Program</b>.<br /><span class="url">stone-arch-silicon.github.io/stone-arch-silicon</span></p>
+  </footer>
+  <div class="bar"></div>
+
+</div>
+</body>
+</html>
