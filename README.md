@@ -41,15 +41,17 @@ The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages ser
 | Path | Purpose |
 | --- | --- |
 | [index.html](index.html) | Home page, and the master copy of the shared head, header, menu, and footer |
-| [about.html](about.html) | The five-stage flow, the ASIC Network, and the club's advisors and affiliation |
+| [about.html](about.html) | The four subteams, the team (board and advisors), the ASIC Network, and club facts |
 | [events.html](events.html) | The SASi Google Calendar |
 | [updates.html](updates.html) | News cards (the home page lists the latest headlines) |
-| [sponsor.html](sponsor.html) | Our sponsor, what sponsorship funds, and how to get in touch |
+| [sponsor.html](sponsor.html) | Our sponsor, the sponsorship one-pager, and how to get in touch |
 | [join.html](join.html) | Ways in, what members get, and the sign-up form |
 | [assets/site.css](assets/site.css) | Styles shared by every page |
 | [assets/site.js](assets/site.js) | Header, menu, scroll effects, and motion controls shared by every page |
 | [assets/calendar.js](assets/calendar.js) | Calendar for events.html (API key and setup steps are at the top) |
-| [assets/chip.js](assets/chip.js) | The 3D chip on the home page |
+| [assets/team/](assets/team/) | Team headshots for about.html, one square JPG per person |
+| [assets/sasi-sponsorship.pdf](assets/sasi-sponsorship.pdf) | The sponsorship one-pager linked from sponsor.html |
+| [assets/sasi-sponsorship.html](assets/sasi-sponsorship.html) | Source for the one-pager: edit it, open it in Chrome, and Print to PDF with no margins and background graphics on |
 | [assets/](assets/) | Fonts, images, and the hero video |
 | [scripts/sync_layout.py](scripts/sync_layout.py) | Copies the shared blocks from index.html into every page |
 | [sitemap.xml](sitemap.xml) | Page list for search engines |
