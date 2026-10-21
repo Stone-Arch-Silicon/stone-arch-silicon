@@ -42,6 +42,7 @@ The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages ser
 | --- | --- |
 | [index.html](index.html) | Home page, and the master copy of the shared head, header, menu, and footer |
 | [about.html](about.html) | The four subteams, the team (board and advisors), the ASIC Network, and club facts |
+| `team-*.html` | Individual profiles for the eight student leads and officers, linked from Home and About |
 | [events.html](events.html) | The SASi Google Calendar |
 | [updates.html](updates.html) | News cards (the home page lists the latest headlines) |
 | [sponsor.html](sponsor.html) | Our sponsor, the sponsorship one-pager, and how to get in touch |
@@ -95,3 +96,11 @@ Course lessons belong in ASIC 101 or the documentation book; shared documentatio
 **Contact:** umnasicclub@gmail.com
 
 Project authorship and review history are recorded in each repository's contributors and commits.
+
+### Updating a lead profile
+
+Edit the person’s `team-<name>.html` page for their role, focus, or links. Update the matching cards in `index.html` and `about.html` when names or roles change. Profiles use the existing photos in `assets/team/` and the same shared layout blocks as every other page; `python3 scripts/sync_layout.py` keeps their headers and footers current. Personal links should be verified before adding them; the club email is the default contact route.
+
+### Sponsor logo belt
+
+Home and Sponsor include a scrolling strip for TSMC, UCLA, Cadence, Synopsys, ForwardEdge ASIC, SCALE, and UMN ECE. The markup on both pages records the official logo source URLs; the Synopsys SVG is taken from its official homepage. Update both lists together. `assets/site.js` creates a non-interactive duplicate for the seamless loop. Hover pauses it, the button toggles pause, keyboard focus restores a static scrollable list, and the site motion preference and reduced-motion setting stop the animation.
