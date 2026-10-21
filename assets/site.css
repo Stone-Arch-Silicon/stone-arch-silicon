@@ -226,6 +226,7 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 .team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 var(--gut);margin-top:18px;}
 .person{min-width:0;padding:26px 0 40px;border-top:1px solid var(--line-2);}
 .person img{width:120px;height:120px;border-radius:50%;object-fit:cover;background:var(--paper-2);}
+.theme-dark .person img{background:var(--ink-3);}   /* home page team band: no light disc while a photo loads */
 .person h4{margin-top:22px;font-size:clamp(19px,1.5vw,23px);font-weight:450;line-height:1.2;letter-spacing:-.025em;}
 .person p{margin-top:8px;font-family:var(--mono);font-size:11px;line-height:1.5;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);}
 
@@ -359,7 +360,7 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 .cta-dark{background:#0d0d0e;color:#f4f4f2;}
 .cta-dark:hover{background:var(--gold);color:#000;}
 .cta-grey{background:#e4e4e1;color:#0d0d0e;}
-.cta-grey:hover{background:#0d0d0e;color:#f4f4f2;}
+.cta-grey:hover{background:var(--gold);color:#000;}   /* gold like every other CTA; black turned it into a copy of Join SASi */
 
 /* footer */
 .footer{padding:clamp(72px,11vh,128px) 0 26px;}
