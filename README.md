@@ -100,3 +100,7 @@ Project authorship and review history are recorded in each repository's contribu
 ### Updating a lead profile
 
 Edit the person’s `team-<name>.html` page for their role, focus, or links. Update the matching cards in `index.html` and `about.html` when names or roles change. Profiles use the existing photos in `assets/team/` and the same shared layout blocks as every other page; `python3 scripts/sync_layout.py` keeps their headers and footers current. Personal links should be verified before adding them; the club email is the default contact route.
+
+### Sponsor logo belt
+
+Home and Sponsor include a scrolling strip for TSMC, UCLA, Cadence, Synopsys, ForwardEdge ASIC, SCALE, and UMN ECE. The markup on both pages records the official logo source URLs; the Synopsys SVG is taken from its official homepage. Update both lists together. `assets/site.js` creates a non-interactive duplicate for the seamless loop. Hover pauses it, the button toggles pause, keyboard focus restores a static scrollable list, and the site motion preference and reduced-motion setting stop the animation.
