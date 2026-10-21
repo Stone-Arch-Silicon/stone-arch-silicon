@@ -1,8 +1,7 @@
 /* =====================================================================
    Small UI shared by every page: year, header, menu, progress, reveal,
    motion preference. Each feature checks that its elements exist, since
-   the hero film, rolling headline, and statement only live on index.html
-   and the decoding stage names only on about.html.
+   the hero film, rolling headline, and statement only live on index.html.
    ===================================================================== */
 (function(){
   'use strict';
@@ -32,7 +31,6 @@
       root.classList.toggle('motion-off', !v);
       if (motionBtn) motionBtn.setAttribute('aria-pressed', String(!v));
       if (motionLabel) motionLabel.textContent = v ? 'Pause motion' : 'Play motion';
-      $$('[data-motion-toggle]').forEach(b => { b.setAttribute('aria-pressed', String(!v)); b.textContent = v ? 'Pause spin' : 'Resume spin'; });
       if (persist) writePref(MOTION_KEY, v ? 'on' : 'off');
       listeners.forEach(fn => fn(v));
     },
@@ -40,7 +38,6 @@
   };
   window.SASi.Motion = Motion;
   if (motionBtn) motionBtn.addEventListener('click', () => Motion.set(!Motion.on, true));
-  $$('[data-motion-toggle]').forEach(b => b.addEventListener('click', () => Motion.set(!Motion.on, true)));
 
   /* ---------- hero film ---------- */
   const video = $('#heroVideo');
@@ -183,39 +180,6 @@
     entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
   $$('.reveal').forEach(el => io.observe(el));
-
-  /* ---------- stage names decode from mono glyphs into the sans ---------- */
-  const GLYPHS = '01<>/\\[]{}=+*#_-:';
-  function scramble(el){
-    const final = el.dataset.scramble;
-    const span = el.querySelector('.scr');
-    if (!Motion.on){ span.textContent = final; return; }
-    const dur = 750, t0 = performance.now();
-    span.classList.add('is-scrambling');
-    (function frame(t){
-      const k = Math.min(1, (t - t0) / dur);
-      const shown = Math.floor(k * final.length);
-      let out = '';
-      for (let j = 0; j < final.length; j++){
-        const ch = final[j];
-        out += (j < shown || ch === ' ') ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
-      }
-      span.textContent = out;
-      if (k < 1) requestAnimationFrame(frame);
-      else { span.textContent = final; span.classList.remove('is-scrambling'); }
-    })(t0);
-  }
-  $$('[data-scramble]').forEach(el => {
-    const label = el.dataset.scramble;
-    el.setAttribute('aria-label', label);
-    el.innerHTML = '';
-    const span = document.createElement('span'); span.className = 'scr'; span.setAttribute('aria-hidden', 'true'); span.textContent = label;
-    el.appendChild(span);
-  });
-  const sio = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting){ scramble(e.target); sio.unobserve(e.target); } });
-  }, { threshold: 0.6 });
-  $$('[data-scramble]').forEach(el => sio.observe(el));
 
   /* ---------- footer wordmark: fit to the container width ---------- */
   const wm = $('#wordmark');
