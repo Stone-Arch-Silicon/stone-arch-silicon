@@ -36,13 +36,41 @@ Each hardware project should state its current stage: concept, RTL, simulation, 
 
 ## Website repository guide
 
+The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages serves the files as they are, and every page opens straight from disk in a browser.
+
 | Path | Purpose |
 | --- | --- |
-| [index.html](index.html) | Main website entry point |
-| [pages/](pages/) | Additional site pages |
-| [assets/](assets/) | Site assets |
+| [index.html](index.html) | Home page, and the master copy of the shared head, header, menu, and footer |
+| [about.html](about.html) | The five-stage flow, the ASIC Network, and the club's advisors and affiliation |
+| [events.html](events.html) | The SASi Google Calendar |
+| [updates.html](updates.html) | News cards (the home page lists the latest headlines) |
+| [sponsor.html](sponsor.html) | Our sponsor, what sponsorship funds, and how to get in touch |
+| [join.html](join.html) | Ways in, what members get, and the sign-up form |
+| [assets/site.css](assets/site.css) | Styles shared by every page |
+| [assets/site.js](assets/site.js) | Header, menu, scroll effects, and motion controls shared by every page |
+| [assets/calendar.js](assets/calendar.js) | Calendar for events.html (API key and setup steps are at the top) |
+| [assets/chip.js](assets/chip.js) | The 3D chip on the home page |
+| [assets/](assets/) | Fonts, images, and the hero video |
+| [scripts/sync_layout.py](scripts/sync_layout.py) | Copies the shared blocks from index.html into every page |
+| [sitemap.xml](sitemap.xml) | Page list for search engines |
 | [.github/workflows/](.github/workflows/) | Automation and deployment |
 | [package.json](package.json) | Project configuration |
+
+### Changing the nav, menu, announcement, or footer
+
+These blocks repeat in every page between `<!-- shared:... -->` marker comments. Edit them in `index.html`, then run:
+
+```sh
+python3 scripts/sync_layout.py
+```
+
+The script copies the blocks into the other pages and marks each page's own links with `aria-current="page"`, which highlights the current page in the nav. Run it with `--check` to list pages that are out of date without changing anything.
+
+### Adding a page
+
+1. Copy an existing page, such as `sponsor.html`, and replace what's inside `<main>`. Keep the three marker pairs; the script fills them in.
+2. Add the page to the nav, menu, and footer in `index.html`, and to `sitemap.xml`.
+3. Run `python3 scripts/sync_layout.py`.
 
 Course lessons belong in ASIC 101 or the documentation book; shared documentation styling belongs in ASIC Docs Theme. Keeping these responsibilities separate makes updates easier to find and review.
 
