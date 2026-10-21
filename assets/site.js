@@ -39,6 +39,27 @@
   window.SASi.Motion = Motion;
   if (motionBtn) motionBtn.addEventListener('click', () => Motion.set(!Motion.on, true));
 
+  /* ---------- sponsor logo belt ---------- */
+  $$('.sponsor-belt').forEach(belt => {
+    const track = $('.sponsor-track', belt);
+    const group = $('.sponsor-group', belt);
+    const button = $('.sponsor-toggle', belt);
+    if (!track || !group || !button) return;
+    const copy = group.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    copy.removeAttribute('aria-label');
+    copy.setAttribute('inert', '');
+    $$('a', copy).forEach(link => link.setAttribute('tabindex', '-1'));
+    track.appendChild(copy);
+    belt.classList.add('is-ready');
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const paused = belt.classList.toggle('is-paused');
+      button.setAttribute('aria-pressed', String(paused));
+      button.textContent = paused ? 'Resume logos' : 'Pause logos';
+    });
+  });
+
   /* ---------- hero film ---------- */
   const video = $('#heroVideo');
   function syncVideo(on){
