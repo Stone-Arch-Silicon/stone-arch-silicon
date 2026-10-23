@@ -75,7 +75,7 @@ ul,ol{margin:0;padding:0;list-style:none;}
    Header: announcement + nav. The nav takes the colours of whatever
    section is underneath it.
    ===================================================================== */
-.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:80;transform-origin:0 50%;transform:scaleX(0);background:var(--gold);pointer-events:none;}
+.progress{display:none}
 .site-header{position:fixed;top:0;left:0;right:0;z-index:60;color:#fff;}
 .announce{position:relative;display:flex;align-items:center;justify-content:center;min-height:40px;padding:9px 52px;background:#111113;color:#e7e7e4;font-size:14px;line-height:1.35;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;transition:margin-top .45s var(--ease),opacity .3s;}
 .announce p{max-width:100%;}
@@ -576,3 +576,4 @@ img[src="assets/team/ethan-chung.jpg"]{view-transition-name:portrait-ethan-chung
   ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important;}
   .person-link img,.person-link .person-more span,.profile-links a{transition:none;transform:none!important;}
 }
+   
