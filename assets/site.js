@@ -17,34 +17,28 @@
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------- motion: OS setting by default, the hero toggle overrides ----------
-     The choice is saved, so pausing on the home page carries over to every page. */
+  /* ---------- motion preferences ---------- */
   const MOTION_KEY = 'sasi-motion';
   const reduceMQ = matchMedia('(prefers-reduced-motion: reduce)');
   const saved = readPref(MOTION_KEY);
   const listeners = [];
-  const motionBtn = $('#motionBtn'), motionLabel = $('#motionLabel');
   const Motion = {
     on: saved ? saved === 'on' : !reduceMQ.matches,
     set(v, persist){
       this.on = v;
       root.classList.toggle('motion-off', !v);
-      if (motionBtn) motionBtn.setAttribute('aria-pressed', String(!v));
-      if (motionLabel) motionLabel.textContent = v ? 'Pause motion' : 'Play motion';
       if (persist) writePref(MOTION_KEY, v ? 'on' : 'off');
       listeners.forEach(fn => fn(v));
     },
     subscribe(fn){ listeners.push(fn); }
   };
   window.SASi.Motion = Motion;
-  if (motionBtn) motionBtn.addEventListener('click', () => Motion.set(!Motion.on, true));
 
   /* ---------- sponsor logo belt ---------- */
   $$('.sponsor-belt').forEach(belt => {
     const track = $('.sponsor-track', belt);
     const group = $('.sponsor-group', belt);
-    const button = $('.sponsor-toggle', belt);
-    if (!track || !group || !button) return;
+    if (!track || !group) return;
     // Official Vulkos mark, shared by Home and Sponsor.
     if (!group.querySelector('[aria-label="Vulkos"]')) {
       const item = document.createElement('li');
@@ -58,12 +52,6 @@
     $$('a', copy).forEach(link => link.setAttribute('tabindex', '-1'));
     track.appendChild(copy);
     belt.classList.add('is-ready');
-    button.hidden = false;
-    button.addEventListener('click', () => {
-      const paused = belt.classList.toggle('is-paused');
-      button.setAttribute('aria-pressed', String(paused));
-      button.textContent = paused ? 'Resume logos' : 'Pause logos';
-    });
   });
 
   /* ---------- hero film ---------- */
