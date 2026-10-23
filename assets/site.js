@@ -1,5 +1,5 @@
 /* =====================================================================
-   Small UI shared by every page: year, header, menu, progress, reveal,
+   Small UI shared by every page: year, header, menu, reveal,
    motion preference. Each feature checks that its elements exist, since
    the hero film, rolling headline, and statement only live on index.html.
    ===================================================================== */
@@ -125,7 +125,8 @@
   /* ---------- nav takes the theme of the section under it ---------- */
   const nav = $('#nav');
   const themed = $$('[data-nav]');
-  const progress = $('#progress');
+  // Remove the retired progress bar from every shared page header.
+  $('#progress')?.remove();
   let ticking = false;
   function onScroll(){
     if (ticking) return; ticking = true;
@@ -141,8 +142,6 @@
       }
       nav.classList.toggle('on-dark', theme === 'dark' && !inHeroTop);
       nav.classList.toggle('on-light', theme === 'light');
-      const max = document.documentElement.scrollHeight - innerHeight;
-      progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
       statementTick();
     });
   }
@@ -224,3 +223,4 @@
   Motion.set(Motion.on, false);
   onScroll();
 })();
+   
