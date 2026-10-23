@@ -162,12 +162,6 @@ body.menu-open{overflow:hidden;}
 .spec b svg{width:11px;height:11px;opacity:.7;}
 .spec span{display:block;margin-top:7px;font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:rgba(244,244,242,.55);}
 a.spec:hover b{color:var(--gold);}
-.motion-btn{align-self:center;display:inline-flex;align-items:center;gap:10px;padding:12px 0 12px 24px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,244,242,.7);transition:color .2s;}
-.motion-btn:hover{color:#fff;}
-.motion-btn i{width:22px;height:22px;display:grid;place-items:center;border:1px solid currentColor;border-radius:50%;}
-.motion-btn svg{width:8px;height:8px;}
-.motion-btn .ic-play{display:none;}
-.motion-off .motion-btn .ic-play{display:block;} .motion-off .motion-btn .ic-pause{display:none;}
 
 /* =====================================================================
    Page hero: the dark title block at the top of every inner page.
@@ -422,7 +416,7 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
   :root{--nav-h:64px;}
   .hero-row{flex-direction:column;align-items:flex-start;gap:26px;}
   .hero-specs{grid-template-columns:repeat(3,minmax(0,1fr));}
-  .motion-btn{grid-column:1/-1;justify-self:start;padding:14px 0 0;border-top:1px solid rgba(244,244,242,.12);width:100%;}
+
   .sec-head{grid-template-columns:1fr;}
   .sec-head .lead,.sec-head .sec-aside{justify-self:start;}
   .pager{flex-direction:column;align-items:flex-start;}
@@ -448,7 +442,7 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
   .spec + .spec{border-top:1px solid rgba(244,244,242,.12);}
   .spec b{font-size:16px;}
   .spec span{margin-top:0;font-size:10px;text-align:right;}
-  .motion-btn{padding-top:12px;}
+
   .pillars,.paths{grid-template-columns:1fr;}
   .pillar{padding-left:0!important;border-left:0!important;}
   .pillar + .pillar{border-top:1px solid var(--line);}
@@ -511,8 +505,7 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 /* Sponsor belt: static and horizontally scrollable until JS creates the loop. */
 .sponsor-belt{padding:32px 0 36px;border-bottom:1px solid var(--line);}
 .sponsor-belt-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px;}
-.sponsor-toggle{font-family:var(--mono);font-size:11px;min-height:44px;padding:8px 12px;border:1px solid var(--line-2);white-space:nowrap;}
-.sponsor-toggle[hidden]{display:none;}
+
 .sponsor-window{overflow-x:auto;overflow-y:hidden;}
 .sponsor-track{display:flex;width:max-content;}
 .sponsor-group{display:flex;align-items:center;justify-content:flex-start;flex:none;gap:48px;padding:8px 48px 8px 0;margin:0;list-style:none;min-width:0;}
@@ -527,17 +520,17 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 .sponsor-mark--umn-ece span{max-width:180px;text-align:center;font-size:11px;line-height:1.35;color:var(--muted);}
 .js .sponsor-belt.is-ready .sponsor-window{overflow:hidden;}
 .js .sponsor-belt.is-ready .sponsor-track{animation:sponsor-scroll 42s linear infinite;}
-.sponsor-belt.is-paused .sponsor-track,.sponsor-belt:hover .sponsor-track{animation-play-state:paused!important;}
+.sponsor-belt:hover .sponsor-track{animation-play-state:paused!important;}
 /* Keyboard navigation gets a stable, scrollable list with one copy of every link. */
 .sponsor-belt:focus-within .sponsor-track,.motion-off .sponsor-belt .sponsor-track{animation:none!important;transform:none;}
 .sponsor-belt:focus-within .sponsor-window,.motion-off .sponsor-belt .sponsor-window{overflow-x:auto!important;}
 .sponsor-belt:focus-within .sponsor-group[aria-hidden="true"],.motion-off .sponsor-group[aria-hidden="true"]{display:none;}
-.motion-off .sponsor-toggle{display:none;}
+
 @keyframes sponsor-scroll{to{transform:translateX(-50%);}}
 @media(prefers-reduced-motion:reduce){
   .sponsor-belt .sponsor-track{animation:none!important;transform:none;}
   .sponsor-belt .sponsor-window{overflow-x:auto!important;}
-  .sponsor-group[aria-hidden="true"],.sponsor-toggle{display:none;}
+  .sponsor-group[aria-hidden="true"]{display:none;}
 }
 @media(max-width:600px){
   .sponsor-belt{padding:24px 0;}
@@ -576,4 +569,8 @@ img[src="assets/team/ethan-chung.jpg"]{view-transition-name:portrait-ethan-chung
   ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important;}
   .person-link img,.person-link .person-more span,.profile-links a{transition:none;transform:none!important;}
 }
+
+/* The home hero now has two information links. */
+.hero .hero-specs{grid-template-columns:repeat(2,minmax(0,1fr));}
+@media(max-width:600px){.hero .hero-specs{grid-template-columns:1fr;}}
    
