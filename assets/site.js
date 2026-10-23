@@ -45,6 +45,12 @@
     const group = $('.sponsor-group', belt);
     const button = $('.sponsor-toggle', belt);
     if (!track || !group || !button) return;
+    // Official Vulkos mark, shared by Home and Sponsor.
+    if (!group.querySelector('[aria-label="Vulkos"]')) {
+      const item = document.createElement('li');
+      item.innerHTML = '<a class="sponsor-mark sponsor-mark--vulkos" href="https://www.vulkos.co.uk/" target="_blank" rel="noopener" aria-label="Vulkos"><img src="https://www.vulkos.co.uk/logos/Vulkos_logo_transparent.webp" alt="" width="180" height="72" loading="lazy" decoding="async"></a>';
+      group.appendChild(item);
+    }
     const copy = group.cloneNode(true);
     copy.setAttribute('aria-hidden', 'true');
     copy.removeAttribute('aria-label');
