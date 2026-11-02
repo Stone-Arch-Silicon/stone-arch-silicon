@@ -158,13 +158,62 @@
   </div>
 </section>
 
-<!-- SIGN UP -->
-<section class="sec sec-end theme-light" data-nav="light">
+<!-- SIGN UP
+     The form posts to the club's Google backend (assets/backend.js, backend/).
+     Until BACKEND_URL is set in assets/backend.js the form stays hidden and the
+     Google Form link below shows instead. -->
+<section class="sec sec-end theme-light" id="signup" data-nav="light">
   <div class="wrap">
-    <div class="ctas" id="signup">
+    <div class="form-grid reveal" data-when-live="show" hidden>
+      <div class="form-intro">
+        <p class="eyebrow">Sign up</p>
+        <h2 class="h2">Join SASi.</h2>
+        <p class="lead">Two minutes. We add you to the mailing list and the Thursday invite.</p>
+      </div>
+      <form class="form" data-form="join" data-fallback="https://forms.gle/zYfch3biVbWX9z23A"
+            data-done-title="You’re on the list."
+            data-done-text="See you Thursday in Keller Hall 3-111. The next invite goes to your umn.edu inbox."
+            hidden novalidate>
+        <div class="field"><label for="j-name">Name</label><input id="j-name" name="name" type="text" autocomplete="name" maxlength="100" required /></div>
+        <div class="field"><label for="j-email">UMN email</label><input id="j-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="100" placeholder="x500@umn.edu" pattern="[^@\s]+@[Uu][Mm][Nn]\.[Ee][Dd][Uu]" data-pattern-message="Use your x500@umn.edu address." required /></div>
+        <div class="field wide"><label for="j-major">Major <span class="opt">Optional</span></label><input id="j-major" name="major" type="text" maxlength="100" autocomplete="off" /></div>
+        <fieldset class="field wide"><legend>Year</legend><div class="chips">
+          <label class="chip"><input type="radio" name="year" value="First year" /><span>First year</span></label>
+          <label class="chip"><input type="radio" name="year" value="Second year" /><span>Second year</span></label>
+          <label class="chip"><input type="radio" name="year" value="Third year" /><span>Third year</span></label>
+          <label class="chip"><input type="radio" name="year" value="Fourth year" /><span>Fourth year</span></label>
+          <label class="chip"><input type="radio" name="year" value="Fifth year or more" /><span>Fifth year or more</span></label>
+          <label class="chip"><input type="radio" name="year" value="Graduate student" /><span>Graduate student</span></label>
+        </div></fieldset>
+        <fieldset class="field wide"><legend>Subteams you’re curious about</legend><div class="chips">
+          <label class="chip"><input type="checkbox" name="subteams" value="Physical Design" /><span>Physical Design</span></label>
+          <label class="chip"><input type="checkbox" name="subteams" value="RTL" /><span>RTL</span></label>
+          <label class="chip"><input type="checkbox" name="subteams" value="Verification" /><span>Verification</span></label>
+          <label class="chip"><input type="checkbox" name="subteams" value="Analog" /><span>Analog</span></label>
+          <label class="chip"><input type="checkbox" name="subteams" value="Not sure yet" /><span>Not sure yet</span></label>
+        </div></fieldset>
+        <fieldset class="field wide"><legend>Your way in</legend><div class="chips">
+          <label class="chip"><input type="radio" name="path" value="Coursework" /><span>Coursework</span></label>
+          <label class="chip"><input type="radio" name="path" value="ASIC 101" /><span>ASIC 101</span></label>
+          <label class="chip"><input type="radio" name="path" value="Portfolio" /><span>Portfolio</span></label>
+          <label class="chip"><input type="radio" name="path" value="A conversation" /><span>A conversation</span></label>
+          <label class="chip"><input type="radio" name="path" value="Not sure yet" /><span>Not sure yet</span></label>
+        </div></fieldset>
+        <div class="field wide"><label for="j-note">Anything else <span class="opt">Optional</span></label><textarea id="j-note" name="note" rows="3" maxlength="2000"></textarea></div>
+        <div class="hp" aria-hidden="true"><label>Website <input class="hp-input" name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+        <div class="form-foot">
+          <p class="form-note">Saved to the club’s Google account. Only the SASi board can see it.</p>
+          <button class="btn btn-solid" type="submit">Join SASi
+            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+        </div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="ctas">
       <!-- Google Form /viewform link. If it ever asks for a sign-in, grab the
-           published link from File → Share (it looks like /forms/d/e/1FAIpQL.../viewform). -->
-      <a class="cta-block cta-dark reveal" href="https://forms.gle/zYfch3biVbWX9z23A">Join SASi
+           published link from File → Share (it looks like /forms/d/e/1FAIpQL.../viewform).
+           It hides itself once the form above is live, and stays the backup. -->
+      <a class="cta-block cta-dark reveal" data-when-live="hide" href="https://forms.gle/zYfch3biVbWX9z23A">Join SASi
         <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M4 28h46M32 10l18 18-18 18" stroke="currentColor" stroke-width="2.5" fill="none"/></svg></a>
       <a class="cta-block cta-grey reveal" data-d="1" href="mailto:SASI@umn.edu">Get in touch
         <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M4 28h46M32 10l18 18-18 18" stroke="currentColor" stroke-width="2.5" fill="none"/></svg></a>
@@ -223,6 +272,7 @@
 <!-- /shared:footer -->
 
 <script src="assets/site.js"></script>
+<script src="assets/backend.js"></script>
 </body>
 </html>
      

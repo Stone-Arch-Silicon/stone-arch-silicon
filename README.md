@@ -45,16 +45,19 @@ The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages ser
 | `team-*.html` | Individual profiles for the eight student leads and officers, linked from Home and About |
 | [events.html](events.html) | The SASi Google Calendar |
 | [updates.html](updates.html) | News cards (the home page lists the latest headlines) |
-| [sponsor.html](sponsor.html) | Our sponsor, the sponsorship one-pager, and how to get in touch |
+| [sponsor.html](sponsor.html) | Our sponsor, the sponsorship one-pager, and the sponsorship inquiry form |
 | [join.html](join.html) | Ways in, what members get, and the sign-up form |
 | [assets/site.css](assets/site.css) | Styles shared by every page |
 | [assets/site.js](assets/site.js) | Header, menu, scroll effects, and motion controls shared by every page |
 | [assets/calendar.js](assets/calendar.js) | Calendar for events.html (API key and setup steps are at the top) |
+| [assets/backend.js](assets/backend.js) | Sends the join and sponsor forms to the Google backend (its URL goes at the top) |
+| [backend/](backend/) | The Google Apps Script backend behind the forms, with setup and security notes |
 | [assets/team/](assets/team/) | Team headshots for about.html and the home page, one square JPG per person (update the team list in both pages) |
 | [assets/sasi-sponsorship.pdf](assets/sasi-sponsorship.pdf) | The sponsorship one-pager linked from sponsor.html |
 | [assets/sasi-sponsorship.html](assets/sasi-sponsorship.html) | Source for the one-pager: edit it, open it in Chrome, and Print to PDF with no margins and background graphics on |
-| [assets/](assets/) | Fonts, images, and the hero video |
+| [assets/](assets/) | Fonts, images, and the hero film (`hero-*`, credits in `hero-credits.txt`) |
 | [scripts/sync_layout.py](scripts/sync_layout.py) | Copies the shared blocks from index.html into every page |
+| [scripts/make_hero.py](scripts/make_hero.py) | Renders the home-page hero film from the shots in `scripts/hero_shots.json` |
 | [sitemap.xml](sitemap.xml) | Page list for search engines |
 | [.github/workflows/](.github/workflows/) | Automation and deployment |
 | [package.json](package.json) | Project configuration |
@@ -68,6 +71,10 @@ python3 scripts/sync_layout.py
 ```
 
 The script copies the blocks into the other pages and marks each page's own links with `aria-current="page"`, which highlights the current page in the nav. Run it with `--check` to list pages that are out of date without changing anything.
+
+### Changing the hero film
+
+The film on the home page is built from real photographs and footage, listed with their credits, licenses and camera moves in `scripts/hero_shots.json`. Edit that file, then in the Actions tab run "Build hero video". Leave the branch as `hero-preview` to check the result first, then run it again with `main` to publish. It writes the `assets/hero-*` files under the same names, so the HTML doesn't change.
 
 ### Adding a page
 
