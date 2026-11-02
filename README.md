@@ -93,7 +93,7 @@ Course lessons belong in ASIC 101 or the documentation book; shared documentatio
 **Treasurer:** Madeline Ngo  
 **Officers:** Ethan Chung, Talis Birmanis  
 **Open to:** All UMN ECE students, all experience levels  
-**Contact:** umnasicclub@gmail.com
+**Contact:** sasi@umn.edu
 
 Project authorship and review history are recorded in each repository's contributors and commits.
 
