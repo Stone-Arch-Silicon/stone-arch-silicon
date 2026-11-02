@@ -1,12 +1,19 @@
 # Builds the home-page hero film from the real photos and footage listed in
 # scripts/hero_shots.json, then commits the new assets/hero-* files.
 #
-# To change the film: edit scripts/hero_shots.json, then Actions ->
-# "Build hero video" -> Run workflow. Leave the branch as hero-preview to
-# check it first, or type main to publish it.
+# It runs by itself when the shot list, the renderer, or this file changes on
+# any branch except main, and commits the film back to that branch, so a pull
+# request shows the new film before anyone merges it. To rebuild by hand:
+# Actions -> "Build hero video" -> Run workflow, and name the branch to commit to.
 name: Build hero video
 
 on:
+  push:
+    branches-ignore: [main]
+    paths:
+      - scripts/hero_shots.json
+      - scripts/make_hero.py
+      - .github/workflows/hero-video.yml
   workflow_dispatch:
     inputs:
       branch:
@@ -18,8 +25,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: hero-video
-  cancel-in-progress: false
+  group: hero-video-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -44,7 +51,8 @@ jobs:
 
       - name: Commit
         env:
-          BRANCH: ${{ inputs.branch }}
+          BRANCH: ${{ inputs.branch || github.ref_name }}
+          SOURCE: ${{ github.ref_name }}
         run: |
           if ! [[ "$BRANCH" =~ ^[A-Za-z0-9._/-]+$ ]]; then echo "Bad branch name"; exit 1; fi
           git config user.name "github-actions[bot]"
@@ -54,8 +62,8 @@ jobs:
                   assets/hero-poster.jpg assets/hero-poster-mobile.jpg assets/hero-credits.txt
           if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
           git commit -m "Render hero film from scripts/hero_shots.json"
-          if [ "$BRANCH" = "main" ]; then
-            git push origin "HEAD:main"
+          if [ "$BRANCH" = "$SOURCE" ]; then
+            git push origin "HEAD:$BRANCH"          # same branch: never overwrite anyone's commits
           else
-            git push --force origin "HEAD:$BRANCH"
+            git push --force origin "HEAD:$BRANCH"  # a separate preview branch is rebuilt from scratch
           fi
