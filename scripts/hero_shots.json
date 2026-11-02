@@ -1,0 +1,41 @@
+{
+  "fps": 30,
+  "crossfade": 1.4,
+  "grade": {
+    "exposure": -0.15,
+    "contrast": 1.06,
+    "saturation": 0.82,
+    "tint": [1.0, 0.97, 0.9],
+    "soften": 0.35
+  },
+  "shots": [
+    {
+      "src": "https://live.staticflickr.com/65535/55305491166_49e9129b53_o.jpg",
+      "page": "https://www.flickr.com/photos/130561288@N04/55305491166",
+      "credit": "Apple M1 die (TSMC N5) on a glitter background, macro. Photo: Fritzchens Fritz",
+      "license": "CC0 1.0 (public domain dedication)",
+      "duration": 6.0,
+      "landscape": {"from": [0.42, 0.50, 0.84], "to": [0.47, 0.47, 0.66]},
+      "portrait": {"from": [0.55, 0.50, 0.30], "to": [0.55, 0.46, 0.24]}
+    },
+    {
+      "src": "https://live.staticflickr.com/65535/55302205348_fe3208f545_o.jpg",
+      "page": "https://www.flickr.com/photos/130561288@N04/55302205348",
+      "credit": "Apple M1 die, polysilicon layer, 5x. Photo: Fritzchens Fritz",
+      "license": "CC0 1.0 (public domain dedication)",
+      "duration": 6.0,
+      "landscape": {"from": [0.33, 0.53, 0.44], "to": [0.42, 0.49, 0.40]},
+      "portrait": {"from": [0.36, 0.62, 0.30], "to": [0.40, 0.50, 0.28]}
+    },
+    {
+      "src": "https://live.staticflickr.com/65535/54046928599_a9585d2b40_o.jpg",
+      "page": "https://www.flickr.com/photos/130561288@N04/54046928599",
+      "credit": "AMD Zen 5 CCD (Ryzen 5 9600X), macro. Photo: Fritzchens Fritz",
+      "license": "CC0 1.0 (public domain dedication)",
+      "duration": 6.0,
+      "rot": [-1.5, 1.0],
+      "landscape": {"from": [0.49, 0.50, 0.95], "to": [0.44, 0.50, 0.74]},
+      "portrait": {"from": [0.50, 0.50, 0.36], "to": [0.50, 0.47, 0.30]}
+    }
+  ]
+}
