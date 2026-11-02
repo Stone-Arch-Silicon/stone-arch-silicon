@@ -1,0 +1,61 @@
+# Builds the home-page hero film from the real photos and footage listed in
+# scripts/hero_shots.json, then commits the new assets/hero-* files.
+#
+# To change the film: edit scripts/hero_shots.json, then Actions ->
+# "Build hero video" -> Run workflow. Leave the branch as hero-preview to
+# check it first, or type main to publish it.
+name: Build hero video
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to commit to (hero-preview to check first, main to publish)"
+        required: true
+        default: hero-preview
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hero-video
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ffmpeg, numpy, OpenCV
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg > /dev/null
+          python -m pip install --quiet numpy opencv-python-headless
+          ffmpeg -version | head -1
+
+      - name: Render
+        run: python scripts/make_hero.py scripts/hero_shots.json
+
+      - name: Commit
+        env:
+          BRANCH: ${{ inputs.branch }}
+        run: |
+          if ! [[ "$BRANCH" =~ ^[A-Za-z0-9._/-]+$ ]]; then echo "Bad branch name"; exit 1; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add assets/hero-1080.mp4 assets/hero-720.webm assets/hero-mobile.mp4 \
+                  assets/hero-poster.jpg assets/hero-poster-mobile.jpg assets/hero-credits.txt
+          if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
+          git commit -m "Render hero film from scripts/hero_shots.json"
+          if [ "$BRANCH" = "main" ]; then
+            git push origin "HEAD:main"
+          else
+            git push --force origin "HEAD:$BRANCH"
+          fi
