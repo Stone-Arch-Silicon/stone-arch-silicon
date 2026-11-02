@@ -63,6 +63,7 @@ jobs:
           if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
           git commit -m "Render hero film from scripts/hero_shots.json"
           if [ "$BRANCH" = "$SOURCE" ]; then
+            git pull --rebase origin "$BRANCH"      # take in anything pushed while this rendered
             git push origin "HEAD:$BRANCH"          # same branch: never overwrite anyone's commits
           else
             git push --force origin "HEAD:$BRANCH"  # a separate preview branch is rebuilt from scratch
