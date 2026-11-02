@@ -1,12 +1,11 @@
 /**
- * @OnlyCurrentDoc
- *
  * =====================================================================
  * Stone Arch Silicon website backend
  *
- * A Google Apps Script web app, owned by SASI@umn.edu and bound to the
- * "SASi website" Google Sheet. Nothing is self-hosted: GitHub Pages serves
- * the site, Google runs this script, and the Sheet stores the rows.
+ * A Google Apps Script web app owned by SASI@umn.edu. Nothing is
+ * self-hosted: GitHub Pages serves the site, Google runs this script, and
+ * a Google Sheet that this script creates (the "SASi website" sheet) stores
+ * the rows.
  *
  *   POST {form: "join" | "sponsor", ...fields}
  *        Checks the fields, adds one row to that form's tab, and emails
@@ -14,7 +13,8 @@
  *   GET  Answers {ok: true}, so you can check that a deployment is live.
  *
  * Visitors can only add rows. Nothing here reads the Sheet back out, so
- * the web app can't leak what other people sent. Setup steps and the
+ * the web app can't leak what other people sent, and its only Drive
+ * permission covers the one sheet it created. Setup steps and the
  * security notes are in backend/README.md.
  * =====================================================================
  */
@@ -106,8 +106,13 @@ function doPost(e) {
     if (count >= CONFIG.perHour) {
       return reply_({ok: false, error: 'We are getting a lot of messages. Please email ' + CONFIG.notify + ' instead.'});
     }
+    const id = sheetId_();
+    if (!id) return reply_({ok: false, error: 'This form isn\'t set up yet. Please email ' + CONFIG.notify + '.'});
     cache.put(hour, String(count + 1), 3600);
-    tab_(form).appendRow([new Date()].concat(form.fields.map(f => asText_(r[f.key]))));
+    // RAW stores every value as typed text, so nothing a visitor sends can run as a formula
+    Sheets.Spreadsheets.Values.append(
+      {values: [[stamp_()].concat(form.fields.map(f => r[f.key]))]},
+      id, range_(form.tab, 'A1'), {valueInputOption: 'RAW', insertDataOption: 'INSERT_ROWS'});
     cache.put(who, '1', CONFIG.perEmailSeconds);
   } finally {
     lock.releaseLock();
@@ -140,23 +145,16 @@ function check_(form, body) {
   return Object.keys(errors).length ? {errors: errors} : {record: record};
 }
 
-// A cell that starts with = + - or @ would run as a formula. The leading
-// apostrophe makes Sheets keep it as plain text, and it isn't displayed.
-function asText_(v) {
-  v = v == null ? '' : String(v);
-  return /^[=+\-@\t\r]/.test(v) ? "'" + v : v;
+function sheetId_() {
+  return PropertiesService.getScriptProperties().getProperty('SHEET_ID');
 }
 
-function tab_(form) {
-  const book = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = book.getSheetByName(form.tab);
-  if (!sheet) {
-    sheet = book.insertSheet(form.tab);
-    const head = ['Received'].concat(form.fields.map(f => f.label));
-    sheet.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight('bold');
-    sheet.setFrozenRows(1);
-  }
-  return sheet;
+function range_(tab, cells) {
+  return "'" + tab.replace(/'/g, "''") + "'!" + cells;
+}
+
+function stamp_() {
+  return Utilities.formatDate(new Date(), 'America/Chicago', 'yyyy-MM-dd HH:mm:ss');
 }
 
 function notify_(form, r) {
@@ -167,7 +165,7 @@ function notify_(form, r) {
       replyTo: r.email,
       subject: form.subject(r).replace(/[\r\n]+/g, ' ').slice(0, 150),
       body: lines.join('\n') + '\n\nSaved in the "' + form.tab + '" tab of ' +
-        SpreadsheetApp.getActiveSpreadsheet().getUrl() + '\n'
+        'https://docs.google.com/spreadsheets/d/' + sheetId_() + '\n'
     });
   } catch (err) {
     console.error('Notification email failed: ' + err);
@@ -181,13 +179,33 @@ function reply_(obj) {
 
 /* ------------------------------------------------- run these by hand */
 
-// Run once from the editor: makes the tabs and asks for permission.
+// Run once from the editor. Asks for permission, creates the "SASi website"
+// sheet in this account's Drive with one tab per form, and logs its link.
+// Running it again only adds tabs or header rows that have gone missing.
 function setup() {
-  Object.keys(FORMS).forEach(k => tab_(FORMS[k]));
-  const book = SpreadsheetApp.getActiveSpreadsheet();
-  const blank = book.getSheetByName('Sheet1');
-  if (blank && book.getSheets().length > 1 && blank.getLastRow() === 0) book.deleteSheet(blank);
-  console.log('Tabs ready: ' + Object.keys(FORMS).map(k => FORMS[k].tab).join(', '));
+  const props = PropertiesService.getScriptProperties();
+  let id = props.getProperty('SHEET_ID');
+  if (!id) {
+    id = Sheets.Spreadsheets.create({
+      properties: {title: 'SASi website', timeZone: 'America/Chicago'},
+      sheets: Object.keys(FORMS).map(k => ({properties: {title: FORMS[k].tab, gridProperties: {frozenRowCount: 1}}}))
+    }).spreadsheetId;
+    props.setProperty('SHEET_ID', id);
+  }
+  const have = Sheets.Spreadsheets.get(id).sheets.map(sh => sh.properties.title);
+  const missing = Object.keys(FORMS).map(k => FORMS[k].tab).filter(t => have.indexOf(t) < 0);
+  if (missing.length) {
+    Sheets.Spreadsheets.batchUpdate({requests: missing.map(t => ({addSheet: {properties: {title: t, gridProperties: {frozenRowCount: 1}}}}))}, id);
+  }
+  Object.keys(FORMS).forEach(k => {
+    const f = FORMS[k];
+    const head = Sheets.Spreadsheets.Values.get(id, range_(f.tab, 'A1:1'));
+    if (!head.values || !head.values.length) {
+      Sheets.Spreadsheets.Values.update({values: [['Received'].concat(f.fields.map(x => x.label))]},
+        id, range_(f.tab, 'A1'), {valueInputOption: 'RAW'});
+    }
+  });
+  console.log('Sheet ready: https://docs.google.com/spreadsheets/d/' + id);
 }
 
 // Sends one fake sign-up through the same path a visitor's would take.
@@ -196,7 +214,7 @@ function testJoin() {
   CacheService.getScriptCache().remove('seen:join:test.student@umn.edu');
   const out = doPost({postData: {contents: JSON.stringify({
     form: 'join', name: 'Test Student', email: 'test.student@umn.edu', year: 'Second year',
-    subteams: ['RTL', 'Verification'], path: 'ASIC 101', note: '=1+1 should stay text', elapsed: 5000
+    subteams: ['RTL', 'Verification'], path: 'ASIC 101', note: '=1+1 should stay as text', elapsed: 5000
   })}});
   console.log(out.getContent());
 }
