@@ -175,10 +175,9 @@
         <h2>How it works</h2>
         <p>Tell us what you'd like to support and we'll send a proposal. In-kind counts too: licenses, PDK access, shuttle slots, hardware.</p>
         <div class="how-actions">
-          <!-- TODO: once the sponsor intake Google Form is published, swap this href
-               for the /viewform URL and relabel to "Sponsor SASi". Left as email
-               for now so the button is never dead. -->
-          <a class="btn btn-solid" href="mailto:SASI@umn.edu?subject=Sponsorship%20inquiry%3A%20Stone%20Arch%20Silicon">Talk to us about sponsoring
+          <!-- Email until the inquiry form below is live (BACKEND_URL in assets/backend.js),
+               then assets/backend.js points this button at the form. -->
+          <a class="btn btn-solid" href="mailto:SASI@umn.edu?subject=Sponsorship%20inquiry%3A%20Stone%20Arch%20Silicon" data-live-href="#inquiry">Talk to us about sponsoring
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></a>
           <a class="btn btn-line" href="https://asicnetwork.net/#sponsors" target="_blank" rel="noopener">Sponsor the whole network</a>
         </div>
@@ -188,6 +187,42 @@
         <div><b>Turnaround</b><span>Within a week.</span></div>
         <div><b>Also welcome</b><span>Mentors, speakers, reviewers.</span></div>
       </div>
+    </div>
+
+    <!-- SPONSOR INQUIRY: posts to the club's Google backend (assets/backend.js, backend/).
+         Hidden until BACKEND_URL is set; the email button above covers it until then. -->
+    <div class="form-grid inquiry reveal" id="inquiry" data-when-live="show" hidden>
+      <div class="form-intro">
+        <p class="eyebrow">Sponsorship inquiry</p>
+        <h2>Tell us what you’d like to support.</h2>
+        <p>The board replies within a week with a proposal. In-kind support counts too.</p>
+      </div>
+      <form class="form" data-form="sponsor" data-fallback="mailto:SASI@umn.edu?subject=Sponsorship%20inquiry%3A%20Stone%20Arch%20Silicon"
+            data-done-title="Thanks. It’s with the board."
+            data-done-text="You’ll hear back from SASI@umn.edu within a week."
+            hidden novalidate>
+        <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" type="text" autocomplete="name" maxlength="100" required /></div>
+        <div class="field"><label for="s-email">Work email</label><input id="s-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="120" required /></div>
+        <div class="field"><label for="s-org">Organization</label><input id="s-org" name="org" type="text" autocomplete="organization" maxlength="120" required /></div>
+        <div class="field"><label for="s-role">Role <span class="opt">Optional</span></label><input id="s-role" name="role" type="text" autocomplete="organization-title" maxlength="100" /></div>
+        <fieldset class="field wide"><legend>Interested in</legend><div class="chips">
+          <label class="chip"><input type="checkbox" name="support" value="Funding" /><span>Funding</span></label>
+          <label class="chip"><input type="checkbox" name="support" value="EDA licenses" /><span>EDA licenses</span></label>
+          <label class="chip"><input type="checkbox" name="support" value="PDK access" /><span>PDK access</span></label>
+          <label class="chip"><input type="checkbox" name="support" value="Shuttle slots" /><span>Shuttle slots</span></label>
+          <label class="chip"><input type="checkbox" name="support" value="Hardware" /><span>Hardware</span></label>
+          <label class="chip"><input type="checkbox" name="support" value="Mentors or speakers" /><span>Mentors or speakers</span></label>
+          <label class="chip"><input type="checkbox" name="support" value="Recruiting" /><span>Recruiting</span></label>
+        </div></fieldset>
+        <div class="field wide"><label for="s-msg">Message <span class="opt">Optional</span></label><textarea id="s-msg" name="message" rows="4" maxlength="4000"></textarea></div>
+        <div class="hp" aria-hidden="true"><label>Website <input class="hp-input" name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+        <div class="form-foot">
+          <p class="form-note">Only the SASi board sees this. It’s saved to the club’s Google account.</p>
+          <button class="btn btn-solid" type="submit">Send inquiry
+            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+        </div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
 
     <p class="fine reveal">A <b>CSE Campus Life Program</b>. Gifts go through the UMN Foundation and are tax-deductible; partnerships go through the University.</p>
@@ -245,6 +280,7 @@
 <!-- /shared:footer -->
 
 <script src="assets/site.js?v=20261023-no-pause"></script>
+<script src="assets/backend.js"></script>
 </body>
 </html>
      
