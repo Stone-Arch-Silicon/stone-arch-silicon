@@ -2,8 +2,17 @@
   "timeZone": "America/Chicago",
   "runtimeVersion": "V8",
   "exceptionLogging": "STACKDRIVER",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Sheets",
+        "version": "v4",
+        "serviceId": "sheets"
+      }
+    ]
+  },
   "oauthScopes": [
-    "https://www.googleapis.com/auth/spreadsheets.currentonly",
+    "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/script.send_mail"
   ],
   "webapp": {
