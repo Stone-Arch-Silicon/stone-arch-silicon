@@ -1,0 +1,11 @@
+Home-page hero film. Built by scripts/make_hero.py from scripts/hero_shots.json.
+
+Shot 1: Apple M1 die (TSMC N5) on a glitter background, macro. Photo: Fritzchens Fritz
+  License: CC0 1.0 (public domain dedication)
+  Source: https://www.flickr.com/photos/130561288@N04/55305491166
+Shot 2: Apple M1 die, polysilicon layer, 5x. Photo: Fritzchens Fritz
+  License: CC0 1.0 (public domain dedication)
+  Source: https://www.flickr.com/photos/130561288@N04/55302205348
+Shot 3: AMD Zen 5 CCD (Ryzen 5 9600X), macro. Photo: Fritzchens Fritz
+  License: CC0 1.0 (public domain dedication)
+  Source: https://www.flickr.com/photos/130561288@N04/54046928599
