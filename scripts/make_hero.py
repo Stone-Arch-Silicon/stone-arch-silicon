@@ -93,10 +93,18 @@ def fetch(url):
     path = os.path.join(CACHE, hashlib.sha1(url.encode()).hexdigest()[:16] + ext)
     if not os.path.exists(path):
         log('  downloading', url)
-        req = urllib.request.Request(url, headers={'User-Agent': UA})
-        with urllib.request.urlopen(req, timeout=120) as r, open(path + '.part', 'wb') as f:
-            shutil.copyfileobj(r, f)
-        os.replace(path + '.part', path)
+        part = path + '.part'
+        if shutil.which('curl'):
+            # retries, and gives up on a stalled transfer instead of hanging the build
+            subprocess.run(['curl', '-fsSL', '--retry', '4', '--retry-all-errors', '--connect-timeout', '20',
+                            '--speed-limit', '100000', '--speed-time', '30', '--max-time', '600',
+                            '-A', UA, '-o', part, url], check=True)
+        else:
+            req = urllib.request.Request(url, headers={'User-Agent': UA})
+            with urllib.request.urlopen(req, timeout=60) as r, open(part, 'wb') as f:
+                shutil.copyfileobj(r, f)
+        os.replace(part, path)
+        log('    {:.1f} MB'.format(os.path.getsize(path) / 1e6))
     return path
 
 
