@@ -1,20 +1,17 @@
 Home-page hero film. Built by scripts/make_hero.py from scripts/hero_shots.json.
 
-Shot 1: Dispense arms over a wafer on a spin chuck, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/936659
-Shot 2: Compute nodes of the AFRL "Flyer" HPE supercomputer. Air Force Research Laboratory, "Flyer Supercomputer Ribbon Cutting"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/1011605
-Shot 3: Technician loading a process tool, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/936659
-Shot 4: Wafer in a spin coater, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/936659
-Shot 5: Fiber bundles in the AFRL "Flyer" supercomputer. Air Force Research Laboratory, "Flyer Supercomputer Ribbon Cutting"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/1011605
-
-The appearance of U.S. Department of Defense (DoD) visual information does not
-imply or constitute DoD endorsement.
+Shot 1: TinyQV, a RISC-V SoC by Michael Bell, taped out on Tiny Tapeout 6 in SkyWater SKY130. Rendered from its GDS
+  License: Apache-2.0
+  Source: https://github.com/TinyTapeout/tinytapeout-06/tree/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV
+Shot 2: Metal 1 and metal 2 routing inside TinyQV (Michael Bell, Tiny Tapeout 6, SKY130)
+  License: Apache-2.0
+  Source: https://github.com/TinyTapeout/tinytapeout-06/tree/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV
+Shot 3: SKY130 standard cells inside TinyQV, down to the transistors and local interconnect (Michael Bell, Tiny Tapeout 6)
+  License: Apache-2.0
+  Source: https://github.com/TinyTapeout/tinytapeout-06/tree/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV
+Shot 4: Address decoder and word-line drivers beside the bitcell array of a 1 KB OpenRAM SRAM macro for SKY130 (VLSIDA)
+  License: Apache-2.0
+  Source: https://github.com/VLSIDA/sky130_sram_macros/tree/965df150c754fe2b3f93a0bd1f9883eb114279b2/sky130_sram_1kbyte_1rw1r_32x256_8
+Shot 5: SRAM bitcells of the same OpenRAM macro, at the transistor and local-interconnect level (VLSIDA)
+  License: Apache-2.0
+  Source: https://github.com/VLSIDA/sky130_sram_macros/tree/965df150c754fe2b3f93a0bd1f9883eb114279b2/sky130_sram_1kbyte_1rw1r_32x256_8

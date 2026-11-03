@@ -1,70 +1,95 @@
 {
   "fps": 30,
   "crossfade": 0.6,
-  "grade": {
-    "exposure": -0.2,
-    "contrast": 1.06,
-    "saturation": 0.82,
-    "soften": 0.0
-  },
+  "grade": {"soften": 0.3},
   "shots": [
     {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2409/DOD_110561021/DOD_110561021.mp4",
-      "page": "https://www.dvidshub.net/video/936659",
-      "credit": "Dispense arms over a wafer on a spin chuck, yellow-light cleanroom. Air Force Research Laboratory, \"Gallium Nitride Device (GaN)\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 33.3,
-      "duration": 3.0,
-      "grade": {"saturation": 0.72},
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.47, 0.5, 0.316], "to": [0.5, 0.5, 0.316]}
-    },
-    {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2606/DOD_111785876/DOD_111785876.mp4",
-      "page": "https://www.dvidshub.net/video/1011605",
-      "credit": "Compute nodes of the AFRL \"Flyer\" HPE supercomputer. Air Force Research Laboratory, \"Flyer Supercomputer Ribbon Cutting\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 72.1,
-      "duration": 2.8,
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.5, 0.5, 0.316], "to": [0.54, 0.5, 0.316]}
-    },
-    {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2409/DOD_110561021/DOD_110561021.mp4",
-      "page": "https://www.dvidshub.net/video/936659",
-      "credit": "Technician loading a process tool, yellow-light cleanroom. Air Force Research Laboratory, \"Gallium Nitride Device (GaN)\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 49.5,
+      "kind": "gds",
+      "src": "https://raw.githubusercontent.com/TinyTapeout/tinytapeout-06/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV/tt_um_MichaelBell_tinyQV.gds",
+      "page": "https://github.com/TinyTapeout/tinytapeout-06/tree/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV",
+      "credit": "TinyQV, a RISC-V SoC by Michael Bell, taped out on Tiny Tapeout 6 in SkyWater SKY130. Rendered from its GDS",
+      "license": "Apache-2.0",
       "duration": 3.4,
-      "grade": {"saturation": 0.72},
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.52, 0.5, 0.93]},
-      "portrait": {"from": [0.56, 0.5, 0.316], "to": [0.6, 0.5, 0.316]}
+      "z_scale": 6,
+      "landscape": {
+        "from": {"at": [158, 108], "width": 420, "tilt": 34, "heading": 70},
+        "to": {"at": [168, 114], "width": 340, "tilt": 42, "heading": 90}
+      },
+      "portrait": {
+        "from": {"at": [160, 110], "width": 160, "tilt": 38, "heading": 74},
+        "to": {"at": [168, 114], "width": 130, "tilt": 45, "heading": 92}
+      }
     },
     {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2409/DOD_110561021/DOD_110561021.mp4",
-      "page": "https://www.dvidshub.net/video/936659",
-      "credit": "Wafer in a spin coater, yellow-light cleanroom. Air Force Research Laboratory, \"Gallium Nitride Device (GaN)\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 10.6,
-      "duration": 2.9,
-      "grade": {"saturation": 0.72},
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.48, 0.5, 0.316], "to": [0.45, 0.5, 0.316]}
+      "kind": "gds",
+      "src": "https://raw.githubusercontent.com/TinyTapeout/tinytapeout-06/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV/tt_um_MichaelBell_tinyQV.gds",
+      "page": "https://github.com/TinyTapeout/tinytapeout-06/tree/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV",
+      "credit": "Metal 1 and metal 2 routing inside TinyQV (Michael Bell, Tiny Tapeout 6, SKY130)",
+      "license": "Apache-2.0",
+      "duration": 3.0,
+      "z_scale": 3,
+      "layers": ["nwell", "diff", "tap", "poly", "licon", "li1", "mcon", "met1", "via", "met2"],
+      "landscape": {
+        "from": {"at": [148, 111], "width": 66, "tilt": 49, "heading": 96},
+        "to": {"at": [160, 115], "width": 56, "tilt": 52, "heading": 108}
+      },
+      "portrait": {
+        "from": {"at": [151, 111.5], "width": 33, "tilt": 47, "heading": 96},
+        "to": {"at": [158, 114], "width": 29, "tilt": 50, "heading": 108}
+      }
     },
     {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2606/DOD_111785876/DOD_111785876.mp4",
-      "page": "https://www.dvidshub.net/video/1011605",
-      "credit": "Fiber bundles in the AFRL \"Flyer\" supercomputer. Air Force Research Laboratory, \"Flyer Supercomputer Ribbon Cutting\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 102.4,
-      "duration": 3.6,
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.5, 0.5, 0.316], "to": [0.46, 0.5, 0.316]}
+      "kind": "gds",
+      "src": "https://raw.githubusercontent.com/TinyTapeout/tinytapeout-06/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV/tt_um_MichaelBell_tinyQV.gds",
+      "page": "https://github.com/TinyTapeout/tinytapeout-06/tree/a0a6d975825bfad0ffda6e3a2d4319b73990bdf0/projects/tt_um_MichaelBell_tinyQV",
+      "credit": "SKY130 standard cells inside TinyQV, down to the transistors and local interconnect (Michael Bell, Tiny Tapeout 6)",
+      "license": "Apache-2.0",
+      "duration": 3.0,
+      "z_scale": 2.2,
+      "layers": ["nwell", "diff", "tap", "poly", "licon", "li1"],
+      "landscape": {
+        "from": {"at": [174.5, 112.9], "width": 16, "tilt": 56, "heading": 68},
+        "to": {"at": [177.5, 113.2], "width": 14.5, "tilt": 56, "heading": 76}
+      },
+      "portrait": {
+        "from": {"at": [175.5, 112.9], "width": 8.5, "tilt": 54, "heading": 70},
+        "to": {"at": [177.2, 113.1], "width": 7.8, "tilt": 54, "heading": 76}
+      }
+    },
+    {
+      "kind": "gds",
+      "src": "https://raw.githubusercontent.com/VLSIDA/sky130_sram_macros/965df150c754fe2b3f93a0bd1f9883eb114279b2/sky130_sram_1kbyte_1rw1r_32x256_8/sky130_sram_1kbyte_1rw1r_32x256_8.gds",
+      "page": "https://github.com/VLSIDA/sky130_sram_macros/tree/965df150c754fe2b3f93a0bd1f9883eb114279b2/sky130_sram_1kbyte_1rw1r_32x256_8",
+      "credit": "Address decoder and word-line drivers beside the bitcell array of a 1 KB OpenRAM SRAM macro for SKY130 (VLSIDA)",
+      "license": "Apache-2.0",
+      "duration": 3.2,
+      "z_scale": 5,
+      "landscape": {
+        "from": {"at": [126, 148], "width": 245, "tilt": 45, "heading": 56},
+        "to": {"at": [136, 156], "width": 200, "tilt": 49, "heading": 70}
+      },
+      "portrait": {
+        "from": {"at": [129, 151], "width": 125, "tilt": 43, "heading": 58},
+        "to": {"at": [135, 155], "width": 104, "tilt": 47, "heading": 70}
+      }
+    },
+    {
+      "kind": "gds",
+      "src": "https://raw.githubusercontent.com/VLSIDA/sky130_sram_macros/965df150c754fe2b3f93a0bd1f9883eb114279b2/sky130_sram_1kbyte_1rw1r_32x256_8/sky130_sram_1kbyte_1rw1r_32x256_8.gds",
+      "page": "https://github.com/VLSIDA/sky130_sram_macros/tree/965df150c754fe2b3f93a0bd1f9883eb114279b2/sky130_sram_1kbyte_1rw1r_32x256_8",
+      "credit": "SRAM bitcells of the same OpenRAM macro, at the transistor and local-interconnect level (VLSIDA)",
+      "license": "Apache-2.0",
+      "duration": 3.0,
+      "z_scale": 2.4,
+      "layers": ["nwell", "diff", "tap", "poly", "licon", "li1"],
+      "landscape": {
+        "from": {"at": [236, 202], "width": 19, "tilt": 55, "heading": 93},
+        "to": {"at": [241, 204], "width": 17.5, "tilt": 55, "heading": 99}
+      },
+      "portrait": {
+        "from": {"at": [237, 202], "width": 10, "tilt": 53, "heading": 93},
+        "to": {"at": [240, 203.5], "width": 9.2, "tilt": 53, "heading": 99}
+      }
     }
   ]
 }
