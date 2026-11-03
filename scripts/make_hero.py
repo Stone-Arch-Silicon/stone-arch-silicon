@@ -397,6 +397,9 @@ def write_credits(spec, path):
         lines.append('Shot {}: {}'.format(i, s.get('credit', 'unknown')))
         lines.append('  License: {}'.format(s.get('license', 'unknown')))
         lines.append('  Source: {}'.format(s.get('page', s['src'])))
+    if any('DVIDS' in s.get('license', '') for s in spec['shots']):
+        lines += ['', 'The appearance of U.S. Department of Defense (DoD) visual information does not',
+                  'imply or constitute DoD endorsement.']
     with open(path, 'w') as f:
         f.write('\n'.join(lines) + '\n')
 
