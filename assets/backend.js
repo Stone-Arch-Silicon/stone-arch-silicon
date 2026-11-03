@@ -10,7 +10,7 @@
    ===================================================================== */
 (function(){
   'use strict';
-  const BACKEND_URL = '';   // https://script.google.com/macros/s/.../exec
+  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwyjNVdpCxf8THGkcGcT9pDd5KQZETqRKsSfA--9-DJe35cJndweCn2_77zLsMxr7HnhA/exec';   // "SASi website backend" in SASI@umn.edu
 
   const forms = Array.from(document.querySelectorAll('form[data-form]'));
   if (!forms.length) return;
