@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Render the home-page hero film from real photographs or footage.
+"""Render the home-page hero film from real chip layouts, photographs or footage.
 
 Reads a shot list (scripts/hero_shots.json), downloads each source, moves a
 slow virtual camera across it, grades it toward the site's black, white and
-gold look, and crossfades the shots into a seamless loop. Writes:
+gold look, and crossfades the shots into a seamless loop. A source can be a
+GDSII layout ("kind": "gds", drawn in 3D by scripts/layout3d.py), a video
+("kind": "video") or a photo. Writes:
 
   assets/hero-1080.mp4            1920x1080 H.264 High 4.1 (matches index.html)
   assets/hero-720.webm            1280x720 VP9
@@ -15,7 +17,7 @@ gold look, and crossfades the shots into a seamless loop. Writes:
 The file names stay the same, so index.html and site.css need no edits.
 
 Run it from GitHub Actions ("Build hero video" in the Actions tab), or
-locally with python3, numpy, opencv-python-headless and ffmpeg:
+locally with python3, numpy, opencv-python-headless, gdstk, numexpr and ffmpeg:
 
   python3 scripts/make_hero.py scripts/hero_shots.json
   python3 scripts/make_hero.py scripts/hero_shots.json --preview   # fast, small
@@ -41,6 +43,9 @@ Shot list format (all coordinates are fractions of the source image):
   source. The camera moves in a straight line from "from" to "to" over the
   shot (zoom changes at a constant rate). Optional per shot: "rot": [a, b] in
   degrees, "start" and "speed" for video sources, "grade" overrides.
+
+  Layout shots ("kind": "gds") use a 3D camera instead; their keys are
+  described at the top of scripts/layout3d.py.
 """
 import argparse
 import hashlib
@@ -280,12 +285,18 @@ class Renderer:
         self.sources = []
         for s in self.shots:
             path = fetch(s['src'])
-            if s.get('kind') == 'video':
+            if s.get('kind') == 'gds':
+                import layout3d    # needs gdstk; only loaded when a shot list uses layouts
+                log('  layout', os.path.basename(path), orient)
+                self.sources.append(layout3d.LayoutShot(layout3d.load(path, s.get('cell')), s, orient, out_w, out_h))
+            elif s.get('kind') == 'video':
                 self.sources.append(Footage(path, float(s.get('start', 0)), float(s.get('speed', 1.0)), self.fps))
             else:
                 self.sources.append(Still(path))
         aspect = out_w / out_h
         for i, (s, src) in enumerate(zip(self.shots, self.sources)):
+            if s.get('kind') == 'gds':
+                continue
             path = s[orient]
             check_bounds('shot {} ({})'.format(i + 1, orient), path, aspect, src.w, src.h, s.get('rot'))
             # one pre-shrink per shot, from its tightest framing, so sharpness never pops
@@ -297,14 +308,17 @@ class Renderer:
         s, src = self.shots[i], self.sources[i]
         length = self.durs[i] + self.xf
         u = min(max(tau / length, 0.0), 1.0)
-        cx, cy, w = camera(s[self.orient], u)
-        rot = s.get('rot')
-        angle = rot[0] + (rot[1] - rot[0]) * u if rot else 0.0
-        img = src.frame_at(int(round(tau * self.fps))) if isinstance(src, Footage) else src.img
-        out = warp(img, cx, cy, w, angle, self.out_w, self.out_h)
         g = dict(GRADE_DEFAULTS, **self.spec.get('grade', {}))
         g.update(s.get('grade', {}))
-        x = out.astype(np.float32) / 255.0
+        if s.get('kind') == 'gds':
+            x = src.render(u)          # float sRGB, already at the output size
+        else:
+            cx, cy, w = camera(s[self.orient], u)
+            rot = s.get('rot')
+            angle = rot[0] + (rot[1] - rot[0]) * u if rot else 0.0
+            img = src.frame_at(int(round(tau * self.fps))) if isinstance(src, Footage) else src.img
+            out = warp(img, cx, cy, w, angle, self.out_w, self.out_h)
+            x = out.astype(np.float32) / 255.0
         if g['soften'] > 0:
             x = cv2.GaussianBlur(x, (0, 0), g['soften'])
         return grade(x, g)
