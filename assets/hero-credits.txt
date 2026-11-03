@@ -1,11 +1,20 @@
 Home-page hero film. Built by scripts/make_hero.py from scripts/hero_shots.json.
 
-Shot 1: Apple M1 die (TSMC N5) on a glitter background, macro. Photo: Fritzchens Fritz
-  License: CC0 1.0 (public domain dedication)
-  Source: https://www.flickr.com/photos/130561288@N04/55305491166
-Shot 2: Apple M1 die, polysilicon layer, 5x. Photo: Fritzchens Fritz
-  License: CC0 1.0 (public domain dedication)
-  Source: https://www.flickr.com/photos/130561288@N04/55302205348
-Shot 3: AMD Zen 5 CCD (Ryzen 5 9600X), macro. Photo: Fritzchens Fritz
-  License: CC0 1.0 (public domain dedication)
-  Source: https://www.flickr.com/photos/130561288@N04/54046928599
+Shot 1: Dispense arms over a wafer on a spin chuck, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
+  License: Public domain (U.S. Government work via DVIDS)
+  Source: https://www.dvidshub.net/video/936659
+Shot 2: Compute nodes of the AFRL "Flyer" HPE supercomputer. Air Force Research Laboratory, "Flyer Supercomputer Ribbon Cutting"
+  License: Public domain (U.S. Government work via DVIDS)
+  Source: https://www.dvidshub.net/video/1011605
+Shot 3: Technician loading a process tool, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
+  License: Public domain (U.S. Government work via DVIDS)
+  Source: https://www.dvidshub.net/video/936659
+Shot 4: Wafer in a spin coater, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
+  License: Public domain (U.S. Government work via DVIDS)
+  Source: https://www.dvidshub.net/video/936659
+Shot 5: Fiber bundles in the AFRL "Flyer" supercomputer. Air Force Research Laboratory, "Flyer Supercomputer Ribbon Cutting"
+  License: Public domain (U.S. Government work via DVIDS)
+  Source: https://www.dvidshub.net/video/1011605
+
+The appearance of U.S. Department of Defense (DoD) visual information does not
+imply or constitute DoD endorsement.
