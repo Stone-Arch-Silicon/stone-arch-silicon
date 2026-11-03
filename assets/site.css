@@ -243,6 +243,10 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 .card-logo{display:grid;place-items:center;width:132px;height:52px;padding:8px 12px;background:#fff;border:1px solid var(--line);}
 .card-logo img{max-height:34px;width:auto;object-fit:contain;}
 .card-status{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);}
+/* a lead update that spans the whole row: picture left, text right */
+.card--wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(18px,2.6vw,44px);align-items:end;}
+.card--wide .card-media{aspect-ratio:16/9;}
+.card--wide .card-body{padding:0 2px;}
 
 /* home: latest updates as a list of headlines */
 .news{margin-top:clamp(40px,7vh,72px);border-top:1px solid var(--line-2);}
@@ -322,6 +326,11 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 .partner h2,.partner h3{margin-top:16px;font-size:clamp(28px,3vw,46px);font-weight:400;line-height:1.08;letter-spacing:-.042em;}
 .partner p{margin-top:14px;max-width:62ch;color:var(--muted);}
 .partner .link{display:inline-block;margin-top:18px;font-size:15px;}
+/* founding partner: the top tier gets a larger logo and a gold rule */
+.partner--founding{border-top:2px solid var(--gold);}
+.partner--founding .partner-logo{min-height:220px;}
+.partner--founding .partner-logo img{height:124px;}
+.partner .partner-tm{margin-top:20px;font-size:12px;line-height:1.5;color:var(--faint);}
 .pager{display:flex;align-items:flex-end;justify-content:space-between;gap:28px 56px;margin-top:56px;padding:0 0 8px;}
 .pager h2{margin-top:16px;font-size:clamp(28px,3vw,46px);font-weight:400;line-height:1.08;letter-spacing:-.042em;}
 .pager p{margin-top:14px;max-width:60ch;color:var(--muted);}
@@ -469,6 +478,9 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
   .pager{flex-direction:column;align-items:flex-start;}
   .cards{grid-template-columns:1fr;max-width:560px;}
   .card-media{aspect-ratio:5/4;}
+  .card--wide{display:flex;}
+  .card--wide .card-media{aspect-ratio:5/4;}
+  .card--wide .card-body{padding:18px 2px 0;}
   .net-grid,.how,.join-grid{grid-template-columns:1fr;}
   .partner{grid-template-columns:1fr;}
   .partner-logo{max-width:320px;}
@@ -552,6 +564,14 @@ a.path:hover .link{text-decoration-color:var(--gold);}   /* whole tile is the li
 /* Sponsor belt: static and horizontally scrollable until JS creates the loop. */
 .sponsor-belt{padding:32px 0 36px;border-bottom:1px solid var(--line);}
 .sponsor-belt-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px;}
+/* founding partner row above the scrolling sponsor belt (home page) */
+.founding{display:flex;align-items:center;flex-wrap:wrap;gap:14px clamp(20px,4vw,56px);margin-bottom:34px;padding-bottom:30px;border-bottom:1px solid var(--line);}
+.founding .eyebrow{margin:0;}
+.founding-logo{display:block;line-height:0;}
+.founding-logo img{display:block;width:auto;height:clamp(40px,5vw,58px);}
+.founding .link{margin-left:auto;font-size:15px;}
+.founding-tm{flex-basis:100%;margin:0;font-size:12px;line-height:1.5;color:var(--faint);}
+@media (max-width:900px){.founding .link{margin-left:0;}}
 
 .sponsor-window{overflow-x:auto;overflow-y:hidden;}
 .sponsor-track{display:flex;width:max-content;}
