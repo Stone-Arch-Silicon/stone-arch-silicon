@@ -33,6 +33,128 @@
 .sponsor-belt .sponsor-mark--ucla img{filter:brightness(0)}
 @media(max-width:600px){.sponsor-belt .sponsor-group{gap:32px;padding-right:32px}.sponsor-belt .sponsor-group li{flex:0 0 auto;width:auto}}
 </style>
+<style id="sponsor-tier-layout">
+.sponsor-tier-list {
+  margin-top: clamp(48px, 8vh, 88px);
+}
+
+.sponsor-tier {
+  display: grid;
+  grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  margin: 0;
+  padding: 36px 0;
+  border-top: 1px solid var(--line-2);
+}
+
+.sponsor-tier:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.sponsor-tier > * {
+  min-width: 0;
+}
+
+.sponsor-tier-heading h2 {
+  margin-top: 16px;
+  font-size: clamp(28px, 3vw, 46px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.042em;
+}
+
+.sponsor-tier-logos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sponsor-tier-logos li {
+  min-width: 0;
+}
+
+.sponsor-tier-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 156px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .2s;
+}
+
+.sponsor-tier-logo img {
+  display: block;
+  width: 100%;
+  height: 68px;
+  object-fit: contain;
+  filter: grayscale(1);
+  transition: filter .2s;
+}
+
+.sponsor-tier-logo:hover,
+.sponsor-tier-logo:focus-visible {
+  border-color: var(--gold);
+}
+
+.sponsor-tier-logo:hover img,
+.sponsor-tier-logo:focus-visible img {
+  filter: none;
+}
+
+.sponsor-tier-logo--scale img,
+.sponsor-tier-logo--scale:hover img,
+.sponsor-tier-logo--scale:focus-visible img {
+  filter: brightness(0);
+}
+
+.sponsor-tier-logo--umn-ece img {
+  height: 48px;
+}
+
+.sponsor-tier-logo span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sponsor-tier-empty {
+  min-height: 156px;
+  background: rgba(255, 255, 255, .55);
+  border: 1px dashed var(--line-2);
+}
+
+@media (max-width: 760px) {
+  .sponsor-tier {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .sponsor-tier-logos {
+    grid-template-columns: 1fr;
+  }
+
+  .sponsor-tier-logo,
+  .sponsor-tier-empty {
+    min-height: 140px;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -107,7 +229,7 @@
 <!-- /shared:header -->
 
 <main id="main">
-
+)
 <!-- PAGE HERO -->
 <section class="page-hero has-index theme-dark" id="top" data-nav="dark">
   <div class="page-hero-bg" aria-hidden="true"><div class="grain"></div></div>
@@ -116,7 +238,7 @@
     <h1 class="page-title"><span>Silicon is expensive.</span> <span>Undergrads are not.</span></h1>
     <p class="page-lead">If you hire people who can take a design from RTL to GDSII, this is where they come from.</p>
     <nav class="hero-specs" aria-label="On this page">
-      <a class="spec" href="#forwardedge"><b>Our sponsor <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>ForwardEdge ASIC</span></a>
+      <a class="spec" href="#partner-tiers"><b>Partner tiers <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Founding, lab &amp; program partners</span></a>
       <a class="spec" href="#one-pager"><b>One-pager <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Hackathons, conferences, ASIC Network</span></a>
       <a class="spec" href="#how"><b>How it works <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Turnaround within a week</span></a>
     </nav>
@@ -137,9 +259,15 @@
            <li><a class="sponsor-mark sponsor-mark--cadence" href="https://www.cadence.com/" target="_blank" rel="noopener" aria-label="Cadence"><img src="https://www.cadence.com/content/dam/cadence-www/global/en_US/images/site-images/icons/navigation-icons/cadence-logo-black.png" alt="" width="180" height="72" loading="lazy" decoding="async" /></a></li>
            <!-- <li><a class="sponsor-mark sponsor-mark--synopsys" href="https://www.synopsys.com/" target="_blank" rel="noopener" aria-label="Synopsys"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 276.32 60.13" width="166" aria-hidden="true" focusable="false"><g data-name="logo"><path d="M19.24 7c0-1.84-.92-3.23-5-3.23s-5 1.39-5 3.23v5a5.43 5.43 0 0 0 2 4.28L25 28.18A7.75 7.75 0 0 1 28.2 34v7.52c0 4.48-5.27 7-14 7C4.61 48.47 0 46.3 0 41.49V35h8.7v6.26c0 2.25 1.71 3.56 5.53 3.56 3.56 0 5.27-1.31 5.27-3.56v-6.69c0-1.65-.66-2.9-2.51-4.55L4.22 18.88c-2.37-2-3.69-3.62-3.69-6.06V7.09c0-4.68 4.88-7 13.7-7C24 .1 27.94 2.41 27.94 6.76v6.06h-8.7ZM103.13 8c0-4.68 3.55-8 15.29-8s15.28 3.36 15.28 8v32.33c0 4.68-3.56 8-15.29 8s-15.29-3.36-15.29-8Zm8.69 32.15c0 2.64 1.06 4.49 6.59 4.49s6.59-1.81 6.59-4.45v-32c0-2.64-1-4.48-6.58-4.48s-6.6 1.84-6.6 4.48ZM138.51.39h13.84c11.21 0 14.5 1.85 14.5 7.25v11.67c0 5.4-3.3 7.25-14.5 7.25h-5.14V48h-8.7Zm12.92 22.47c3.95 0 6.72-.52 6.72-3V7.05c0-2.44-2.77-3-6.72-3h-4.22v18.81ZM188.57 6.92c0-1.85-.92-3.23-5-3.23s-5 1.38-5 3.23v5a5.45 5.45 0 0 0 2 4.28l13.84 11.86a7.8 7.8 0 0 1 3.16 5.8v7.51c0 4.49-5.27 7-14 7-9.62 0-14.23-2.18-14.23-7v-6.51H178v6.26c0 2.24 1.71 3.56 5.53 3.56 3.56 0 5.27-1.32 5.27-3.56v-6.66c0-1.64-.65-2.9-2.5-4.54l-12.75-11.14c-2.38-2-3.69-3.62-3.69-6.06V7c0-4.68 4.87-7 13.71-7 9.75 0 13.7 2.3 13.7 6.66v6.06h-8.7ZM252.76 6.92c0-1.85-.92-3.23-5-3.23s-5 1.38-5 3.23v5a5.45 5.45 0 0 0 2 4.28l13.84 11.86a7.77 7.77 0 0 1 3.16 5.8v7.51c0 4.49-5.27 7-14 7-9.62 0-14.24-2.18-14.24-7v-6.51h8.71v6.26c0 2.24 1.72 3.56 5.54 3.56 3.56 0 5.27-1.32 5.27-3.56v-6.66c0-1.64-.66-2.9-2.5-4.54l-12.81-11.14c-2.37-2-3.69-3.62-3.69-6.06V7c0-4.67 4.88-7 13.71-7 9.75 0 13.71 2.31 13.71 6.66v6.06h-8.7ZM55.12.4h8.71L44.77 60.13h-8.71L55.12.4zM41.38 37.5 29.6.5h8.71l7.42 23.33-4.35 13.67zM224.35.4h8.71L214 60.13h-8.71L224.35.4zM210.66 37.39 198.87.4h8.71l7.43 23.32-4.35 13.67zM97.76 48V7.65c0-5.4-3.3-7.25-14.5-7.25H66.54V48h8.7V4.1h7.16c4 0 6.72.52 6.72 3V48ZM265.1 6.27a5.61 5.61 0 1 1 5.63 5.56 5.53 5.53 0 0 1-5.63-5.56Zm5.63 4.63a4.47 4.47 0 0 0 4.48-4.63 4.5 4.5 0 1 0-9 0 4.48 4.48 0 0 0 4.52 4.63Zm-1.18-1.42h-1V3.09H271c1.51 0 2.26.56 2.26 1.82a1.67 1.67 0 0 1-1.66 1.76l1.82 2.81h-1.08l-1.69-2.77h-1.12Zm1.16-3.59c.82 0 1.56-.06 1.56-1 0-.79-.72-.94-1.39-.94h-1.33v2Z"/></g></svg></a></li> -->
            <!-- <li><a class="sponsor-mark sponsor-mark--arm" href="https://www.arm.com/" target="_blank" rel="noopener" aria-label="ARM"><img src="https://www.arm.com/-/media/global/logos/arm%20logo%20-%202025%20ink_rgb.svg?w=300&rev=741b6887a4954e7a91215ed4d5909083&revision=741b6887-a495-4e7a-9121-5ed4d5909083&hash=F363E98634E2773E80F10C7FF96D5459" alt="" width="180" height="72" loading="lazy" decoding="async" /></a></li> -->
-           <li><a class="sponsor-mark sponsor-mark--cemid" href="https://cemid.seas.ucla.edu/" target="_blank" rel="noopener" aria-label="CEMiD"><img src="https://cemid.seas.ucla.edu/files/2025/02/logo-1.png" alt="" width="180" height="72" loading="lazy" decoding="async" /></a></li>
+           <li><a class="sponsor-mark sponsor-mark--cemid" href="https://cemid.seas.ucla.edu/" target="_blank" rel="noopener" aria-label="CEMiD"><img src="https://research.seas.ucla.edu/cemid/files/2025/01/CEMiD-logo-e1738806051974.png" alt="" width="180" height="72" loading="lazy" decoding="async" /></a></li>
            <li><a class="sponsor-mark sponsor-mark--forwardedge" href="https://forwardedgeasic.com/" target="_blank" rel="noopener" aria-label="ForwardEdge ASIC"><img src="https://forwardedgeasic.com/wp-content/themes/forwardedge/images/forwardedge-logo.svg" alt="" width="180" height="72" loading="lazy" decoding="async" /></a></li>
            <li><a class="sponsor-mark sponsor-mark--scale" href="https://www.scale4me.org/" target="_blank" rel="noopener" aria-label="SCALE"><img src="https://images.squarespace-cdn.com/content/v1/66c355a0053500132cb937ed/35c9c238-c61e-4b10-919a-413cd3532a48/Scale+White+Logo.png?format=500w" alt="" width="180" height="72" loading="lazy" decoding="async" /></a></li>
+           <li>
+             <a class="sponsor-mark sponsor-mark--umn-ece" href="https://cse.umn.edu/ece" target="_blank" rel="noopener" aria-label="University of Minnesota Department of Electrical and Computer Engineering">
+               <img src="https://cse.umn.edu/themes/custom/folwell/images/branding/wordmarks/umnhf-campus-tc-no-dtd-maroon.svg?version=1.9" alt="" width="180" height="44" loading="lazy" decoding="async" />
+               <span>University of Minnesota ECE</span>
+             </a>
+           </li>
       </ul>
     </div>
   </div>
@@ -149,17 +277,82 @@
 <!-- SPONSOR -->
 <section class="sec theme-light" id="sponsor" data-nav="light">
   <div class="wrap">
-    <article class="partner reveal" id="forwardedge" aria-labelledby="forwardedge-title">
-      <a class="partner-logo" href="https://forwardedgeasic.com/" target="_blank" rel="noopener">
-        <img src="https://forwardedgeasic.com/wp-content/themes/forwardedge/images/forwardedge-logo.svg" alt="ForwardEdge ASIC" width="280" height="100" loading="lazy" decoding="async" />
-      </a>
-      <div>
-        <p class="eyebrow">Our sponsor</p>
-        <h2 id="forwardedge-title">ForwardEdge ASIC</h2>
-        <p>Thank you to ForwardEdge ASIC for supporting Stone Arch Silicon and hands-on chip design at the University of Minnesota.</p>
-        <a class="link" href="https://forwardedgeasic.com/" target="_blank" rel="noopener">Visit ForwardEdge ASIC →</a>
-      </div>
-    </article>
+    <div class="sponsor-tier-list" id="partner-tiers" aria-label="Partner categories">
+      <article class="sponsor-tier" id="founding-partners" aria-labelledby="founding-partners-title">
+        <div class="sponsor-tier-heading">
+          <p class="eyebrow">Partner tier 01</p>
+          <h2 id="founding-partners-title">Founding partners</h2>
+        </div>
+        <ul class="sponsor-tier-logos" aria-label="Founding partners">
+          <li>
+            <a class="sponsor-tier-logo" href="https://www.cadence.com/" target="_blank" rel="noopener" aria-label="Cadence">
+              <img src="https://www.cadence.com/content/dam/cadence-www/global/en_US/images/site-images/icons/navigation-icons/cadence-logo-black.png" alt="Cadence logo" width="180" height="72" loading="lazy" decoding="async" />
+              <span>Cadence</span>
+            </a>
+          </li>
+          <li>
+            <a class="sponsor-tier-logo" href="https://cemid.seas.ucla.edu/" target="_blank" rel="noopener" aria-label="CEMiD">
+              <img src="https://research.seas.ucla.edu/cemid/files/2025/01/CEMiD-logo-e1738806051974.png" alt="CEMiD logo" width="180" height="72" loading="lazy" decoding="async" />
+              <span>CEMiD</span>
+            </a>
+          </li>
+          <li>
+            <a class="sponsor-tier-logo sponsor-tier-logo--scale" href="https://www.scale4me.org/" target="_blank" rel="noopener" aria-label="SCALE">
+              <img src="https://images.squarespace-cdn.com/content/v1/66c355a0053500132cb937ed/35c9c238-c61e-4b10-919a-413cd3532a48/Scale+White+Logo.png?format=500w" alt="SCALE logo" width="180" height="72" loading="lazy" decoding="async" />
+              <span>SCALE</span>
+            </a>
+          </li>
+          <li>
+            <a class="sponsor-tier-logo sponsor-tier-logo--umn-ece" href="https://cse.umn.edu/ece" target="_blank" rel="noopener" aria-label="University of Minnesota Department of Electrical and Computer Engineering">
+              <img src="https://cse.umn.edu/themes/custom/folwell/images/branding/wordmarks/umnhf-campus-tc-no-dtd-maroon.svg?version=1.9" alt="University of Minnesota Twin Cities wordmark" width="180" height="72" loading="lazy" decoding="async" />
+              <span>Department of Electrical and Computer Engineering · University of Minnesota</span>
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="sponsor-tier" id="lab-partner" aria-labelledby="lab-partner-title">
+        <div class="sponsor-tier-heading">
+          <p class="eyebrow">Partner tier 02</p>
+          <h2 id="lab-partner-title">Lab Partner</h2>
+        </div>
+        <ul class="sponsor-tier-logos" aria-label="Lab partner">
+          <li>
+            <a class="sponsor-tier-logo" href="https://forwardedgeasic.com/" target="_blank" rel="noopener" aria-label="ForwardEdge ASIC">
+              <img src="https://forwardedgeasic.com/wp-content/themes/forwardedge/images/forwardedge-logo.svg" alt="ForwardEdge ASIC logo" width="180" height="72" loading="lazy" decoding="async" />
+              <span>ForwardEdge ASIC</span>
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="sponsor-tier" id="program-partner" aria-labelledby="program-partner-title">
+        <div class="sponsor-tier-heading">
+          <p class="eyebrow">Partner tier 03</p>
+          <h2 id="program-partner-title">Program Partner</h2>
+        </div>
+        <ul class="sponsor-tier-logos" aria-label="Program partner">
+          <li>
+            <a class="sponsor-tier-logo" href="https://www.vulkos.co.uk/" target="_blank" rel="noopener" aria-label="Vulkos">
+              <img src="https://www.vulkos.co.uk/logos/Vulkos_logo_transparent.webp" alt="Vulkos logo" width="180" height="72" loading="lazy" decoding="async" />
+              <span>Vulkos</span>
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="sponsor-tier" id="supporter" aria-labelledby="supporter-title">
+        <div class="sponsor-tier-heading">
+          <p class="eyebrow">Partner tier 04</p>
+          <h2 id="supporter-title">Supporter</h2>
+        </div>
+        <ul class="sponsor-tier-logos" aria-label="Supporter">
+          <li>
+            <div class="sponsor-tier-empty" role="img" aria-label="Reserved space for a future supporter"></div>
+          </li>
+        </ul>
+      </article>
+    </div>
 
     <!-- The one-pager is assets/sasi-sponsorship.pdf. Replace that file to update it; the link stays the same. -->
     <div class="pager reveal" id="one-pager">
