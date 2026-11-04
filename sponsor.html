@@ -36,6 +36,7 @@
 <style id="sponsor-tier-layout">
 .sponsor-tier-list {
   margin-top: clamp(48px, 8vh, 88px);
+  scroll-margin-top: 96px;
 }
 
 .sponsor-tier {
@@ -114,6 +115,18 @@
 .sponsor-tier-logo--scale img,
 .sponsor-tier-logo--scale:hover img,
 .sponsor-tier-logo--scale:focus-visible img {
+  filter: brightness(0);
+}
+
+.sponsor-tier-logo--cemid img,
+.sponsor-tier-logo--cemid:hover img,
+.sponsor-tier-logo--cemid:focus-visible img,
+.sponsor-mark--cemid img,
+.sponsor-mark--cemid:hover img,
+.sponsor-mark--cemid:focus-visible img,
+.sponsor-tier-logo--umn-ece img,
+.sponsor-tier-logo--umn-ece:hover img,
+.sponsor-tier-logo--umn-ece:focus-visible img {
   filter: brightness(0);
 }
 
@@ -291,7 +304,7 @@
             </a>
           </li>
           <li>
-            <a class="sponsor-tier-logo" href="https://cemid.seas.ucla.edu/" target="_blank" rel="noopener" aria-label="CEMiD">
+            <a class="sponsor-tier-logo sponsor-tier-logo--cemid" href="https://cemid.seas.ucla.edu/" target="_blank" rel="noopener" aria-label="CEMiD">
               <img src="https://research.seas.ucla.edu/cemid/files/2025/01/CEMiD-logo-e1738806051974.png" alt="CEMiD logo" width="180" height="72" loading="lazy" decoding="async" />
               <span>CEMiD</span>
             </a>
