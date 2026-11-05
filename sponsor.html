@@ -23,7 +23,7 @@
 <!-- Fonts: Geist + Geist Mono (SIL OFL 1.1, see assets/Geist-OFL.txt), self-hosted -->
 <link rel="preload" href="assets/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="assets/site.css?v=20261023-no-pause" />
+<link rel="stylesheet" href="assets/site.css?v=20261105-sponsor-motion" />
 <script>document.documentElement.className = 'js';</script>
 <!-- /shared:head -->
 <style id="sponsor-tier-layout">
@@ -83,7 +83,7 @@
   border: 1px solid var(--line);
   color: inherit;
   text-decoration: none;
-  transition: border-color .2s;
+  transition: box-shadow .24s ease;
 }
 
 .sponsor-tier-logo img {
@@ -92,33 +92,34 @@
   max-width: 360px;
   height: 68px;
   object-fit: contain;
-  filter: grayscale(1);
-  transition: filter .2s;
-}
-
-.sponsor-tier-logo:hover,
-.sponsor-tier-logo:focus-visible {
-  border-color: var(--gold);
-}
-
-.sponsor-tier-logo:hover img,
-.sponsor-tier-logo:focus-visible img {
   filter: none;
 }
 
-.sponsor-tier-logo--scale img,
-.sponsor-tier-logo--scale:hover img,
-.sponsor-tier-logo--scale:focus-visible img {
-  filter: brightness(0);
+/* A soft shadow adds depth without moving or scaling the card or logo. */
+.sponsor-tier-logo:hover,
+.sponsor-tier-logo:focus-visible {
+  box-shadow: 0 8px 24px rgba(13, 13, 14, .12), 0 2px 6px rgba(13, 13, 14, .06);
 }
 
-.sponsor-tier-logo--cemid img,
-.sponsor-tier-logo--cemid:hover img,
-.sponsor-tier-logo--cemid:focus-visible img,
-.sponsor-tier-logo--umn-ece img,
-.sponsor-tier-logo--umn-ece:hover img,
-.sponsor-tier-logo--umn-ece:focus-visible img {
-  filter: brightness(0);
+.sponsor-tier-logo:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* Match the original artwork and background colors in the homepage belt. */
+.sponsor-tier-logo--scale img,
+.sponsor-tier-logo--umn-ece img {
+  height: 72px;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.sponsor-tier-logo--scale img {
+  background: #0d0d0e;
+}
+
+.sponsor-tier-logo--umn-ece img {
+  background: #7a0019;
 }
 
 .sponsor-tier-logo--cadence img {
@@ -126,8 +127,10 @@
   height: auto;
 }
 
-.sponsor-tier-logo--umn-ece img {
-  height: 48px;
+@media (prefers-reduced-motion: reduce) {
+  .sponsor-tier-logo {
+    transition: none;
+  }
 }
 
 .sponsor-tier-logo span {
@@ -450,7 +453,7 @@
 </footer>
 <!-- /shared:footer -->
 
-<script src="assets/site.js?v=20261023-no-pause"></script>
+<script src="assets/site.js?v=20261105-sponsor-motion"></script>
 <script src="assets/backend.js"></script>
 </body>
 </html>
