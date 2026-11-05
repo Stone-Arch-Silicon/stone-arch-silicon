@@ -48,7 +48,7 @@
     const copy = group.cloneNode(true);
     copy.setAttribute('aria-hidden', 'true');
     copy.removeAttribute('aria-label');
-    copy.setAttribute('inert', '');
+    // Keep the visual copy hoverable and clickable, without duplicate tab stops.
     $$('a', copy).forEach(link => link.setAttribute('tabindex', '-1'));
     track.appendChild(copy);
     belt.classList.add('is-ready');
