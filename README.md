@@ -58,6 +58,7 @@ The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages ser
 | [assets/](assets/) | Fonts, images, and the hero film (`hero-*`, credits in `hero-credits.txt`) |
 | [scripts/sync_layout.py](scripts/sync_layout.py) | Copies the shared blocks from index.html into every page |
 | [scripts/make_hero.py](scripts/make_hero.py) | Renders the home-page hero film from the shots in `scripts/hero_shots.json` |
+| [scripts/layout3d.py](scripts/layout3d.py) | Draws real chip layouts (GDS files) in 3D for the hero film |
 | [sitemap.xml](sitemap.xml) | Page list for search engines |
 | [.github/workflows/](.github/workflows/) | Automation and deployment |
 | [package.json](package.json) | Project configuration |
@@ -74,7 +75,9 @@ The script copies the blocks into the other pages and marks each page's own link
 
 ### Changing the hero film
 
-The film on the home page is built from real photographs and footage, listed with their credits, licenses and camera moves in `scripts/hero_shots.json`. Edit that file, then in the Actions tab run "Build hero video". Leave the branch as `hero-preview` to check the result first, then run it again with `main` to publish. It writes the `assets/hero-*` files under the same names, so the HTML doesn't change.
+The film on the home page is drawn from real chip layouts: open-source SKY130 GDS files, shown in 3D at their real layer heights. The layouts, credits, licenses and camera moves are listed in `scripts/hero_shots.json`. A shot can also be a photo or a video clip. To put one of our own tapeouts in the film, add a shot that points at its GDS file (the keys are described at the top of `scripts/layout3d.py`).
+
+Edit that file on any branch except `main` and the "Build hero video" workflow renders the film and commits it to that branch, so the pull request shows the new film before anyone merges it. You can also run the workflow by hand from the Actions tab. It writes the `assets/hero-*` files under the same names, so the HTML doesn't change.
 
 ### Adding a page
 
