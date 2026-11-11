@@ -133,7 +133,7 @@ ul,ol{margin:0;padding:0;list-style:none;}
 body.menu-open{overflow:hidden;}
 
 /* =====================================================================
-   Hero: full-bleed rendered chip film, headline bottom-left.
+   Hero: full-bleed design-flow film (RTL to layout), headline bottom-left.
    ===================================================================== */
 .hero{position:relative;isolation:isolate;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;padding-top:calc(var(--nav-h) + 60px);}
 .hero-media{position:absolute;inset:0;z-index:-1;background:#050505 url("hero-poster.jpg") 50% 50%/cover no-repeat;}

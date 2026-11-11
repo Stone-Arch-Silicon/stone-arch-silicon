@@ -1,20 +1,14 @@
 Home-page hero film. Built by scripts/make_hero.py from scripts/hero_shots.json.
 
-Shot 1: Dispense arms over a wafer on a spin chuck, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/936659
-Shot 2: Compute nodes of the AFRL "Flyer" HPE supercomputer. Air Force Research Laboratory, "Flyer Supercomputer Ribbon Cutting"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/1011605
-Shot 3: Technician loading a process tool, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/936659
-Shot 4: Wafer in a spin coater, yellow-light cleanroom. Air Force Research Laboratory, "Gallium Nitride Device (GaN)"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/936659
-Shot 5: Fiber bundles in the AFRL "Flyer" supercomputer. Air Force Research Laboratory, "Flyer Supercomputer Ribbon Cutting"
-  License: Public domain (U.S. Government work via DVIDS)
-  Source: https://www.dvidshub.net/video/1011605
-
-The appearance of U.S. Department of Defense (DoD) visual information does not
-imply or constitute DoD endorsement.
+Shot 1: Place and route: standard-cell rows, signal routing on two metal layers, and a gold H-tree clock net growing out from its root
+  License: Original work by Stone Arch Silicon
+  Source: drawn by scripts/hero_scenes.py (scene "route")
+Shot 2: The finished die: pad ring, power grid, two SRAM macros, an 8x8 systolic array, standard-cell logic, and the club's name in top metal
+  License: Original work by Stone Arch Silicon
+  Source: drawn by scripts/hero_scenes.py (scene "die")
+Shot 3: RTL: a systolic-array processing element written in SystemVerilog
+  License: Original work by Stone Arch Silicon
+  Source: drawn by scripts/hero_scenes.py (scene "rtl")
+Shot 4: Verification: the processing element's simulation running, with values that follow from its RTL
+  License: Original work by Stone Arch Silicon
+  Source: drawn by scripts/hero_scenes.py (scene "waves")

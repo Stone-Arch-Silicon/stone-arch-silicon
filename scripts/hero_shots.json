@@ -1,70 +1,85 @@
 {
   "fps": 30,
-  "crossfade": 0.6,
-  "grade": {
-    "exposure": -0.2,
-    "contrast": 1.06,
-    "saturation": 0.82,
-    "soften": 0.0
-  },
+  "crossfade": 0.8,
+  "grade": {"exposure": 0.0, "contrast": 1.04, "saturation": 1.0, "soften": 0.0},
+  "poster": {"shot": 1, "time": 3.4},
   "shots": [
     {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2409/DOD_110561021/DOD_110561021.mp4",
-      "page": "https://www.dvidshub.net/video/936659",
-      "credit": "Dispense arms over a wafer on a spin chuck, yellow-light cleanroom. Air Force Research Laboratory, \"Gallium Nitride Device (GaN)\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 33.3,
-      "duration": 3.0,
-      "grade": {"saturation": 0.72},
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.47, 0.5, 0.316], "to": [0.5, 0.5, 0.316]}
+      "kind": "scene",
+      "scene": "route",
+      "credit": "Place and route: standard-cell rows, signal routing on two metal layers, and a gold H-tree clock net growing out from its root",
+      "params": {"span": 4.6},
+      "duration": 3.8,
+      "bloom": {"threshold": 0.5, "sigma": 9, "strength": 0.7},
+      "landscape": {
+        "from": [0.57, 0.5, 0.74],
+        "to": [0.6, 0.47, 0.66],
+        "tilt": [-24, -8],
+        "dof": {"focus": [0.6, 0.45], "normal": [0, 1], "radius": 0.16, "feather": 0.4, "blur": 3.5}
+      },
+      "portrait": {
+        "from": [0.57, 0.68, 0.22],
+        "to": [0.58, 0.66, 0.2],
+        "tilt": [-20, 0],
+        "dof": {"focus": [0.5, 0.14], "normal": [0, 1], "radius": 0.1, "feather": 0.3, "blur": 6.0}
+      }
     },
     {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2606/DOD_111785876/DOD_111785876.mp4",
-      "page": "https://www.dvidshub.net/video/1011605",
-      "credit": "Compute nodes of the AFRL \"Flyer\" HPE supercomputer. Air Force Research Laboratory, \"Flyer Supercomputer Ribbon Cutting\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 72.1,
-      "duration": 2.8,
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.5, 0.5, 0.316], "to": [0.54, 0.5, 0.316]}
+      "kind": "scene",
+      "scene": "die",
+      "credit": "The finished die: pad ring, power grid, two SRAM macros, an 8x8 systolic array, standard-cell logic, and the club's name in top metal",
+      "duration": 3.8,
+      "rot": [5, 0],
+      "bloom": {"threshold": 0.55, "sigma": 8, "strength": 0.45},
+      "landscape": {
+        "from": [0.68, 0.66, 0.5],
+        "to": [0.32, 0.5, 2.1],
+        "tilt": [-12, 0]
+      },
+      "portrait": {
+        "from": [0.76, 0.72, 0.22],
+        "to": [0.5, 0.92, 1.12],
+        "tilt": [-10, 0],
+        "dof": {"focus": [0.5, 0.14], "normal": [0, 1], "radius": 0.1, "feather": 0.3, "blur": 6.0}
+      }
     },
     {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2409/DOD_110561021/DOD_110561021.mp4",
-      "page": "https://www.dvidshub.net/video/936659",
-      "credit": "Technician loading a process tool, yellow-light cleanroom. Air Force Research Laboratory, \"Gallium Nitride Device (GaN)\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 49.5,
-      "duration": 3.4,
-      "grade": {"saturation": 0.72},
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.52, 0.5, 0.93]},
-      "portrait": {"from": [0.56, 0.5, 0.316], "to": [0.6, 0.5, 0.316]}
+      "kind": "scene",
+      "scene": "rtl",
+      "credit": "RTL: a systolic-array processing element written in SystemVerilog",
+      "params": {"type_from": 26, "cps": 36, "type_start": 0.15},
+      "duration": 3.8,
+      "landscape": {
+        "from": [0.15, 0.83, 0.88],
+        "to": [0.165, 0.9, 0.86],
+        "tilt": [-4, -14],
+        "dof": {"focus": [0.66, 0.4], "radius": 0.3, "feather": 0.5, "blur": 3.0}
+      },
+      "portrait": {
+        "from": [0.26, 1.0, 0.3],
+        "to": [0.27, 1.14, 0.3],
+        "tilt": [-8, 0],
+        "dof": {"focus": [0.5, 0.14], "normal": [0, 1], "radius": 0.1, "feather": 0.3, "blur": 6.0}
+      }
     },
     {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2409/DOD_110561021/DOD_110561021.mp4",
-      "page": "https://www.dvidshub.net/video/936659",
-      "credit": "Wafer in a spin coater, yellow-light cleanroom. Air Force Research Laboratory, \"Gallium Nitride Device (GaN)\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 10.6,
-      "duration": 2.9,
-      "grade": {"saturation": 0.72},
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.48, 0.5, 0.316], "to": [0.45, 0.5, 0.316]}
-    },
-    {
-      "kind": "video",
-      "src": "https://d34w7g4gy10iej.cloudfront.net/video/2606/DOD_111785876/DOD_111785876.mp4",
-      "page": "https://www.dvidshub.net/video/1011605",
-      "credit": "Fiber bundles in the AFRL \"Flyer\" supercomputer. Air Force Research Laboratory, \"Flyer Supercomputer Ribbon Cutting\"",
-      "license": "Public domain (U.S. Government work via DVIDS)",
-      "start": 102.4,
-      "duration": 3.6,
-      "landscape": {"from": [0.5, 0.5, 1.0], "to": [0.5, 0.5, 0.93]},
-      "portrait": {"from": [0.5, 0.5, 0.316], "to": [0.46, 0.5, 0.316]}
+      "kind": "scene",
+      "scene": "waves",
+      "credit": "Verification: the processing element's simulation running, with values that follow from its RTL",
+      "params": {"span": 4.6, "head": [1500, 2600]},
+      "duration": 3.8,
+      "landscape": {
+        "from": [0.44, 0.45, 0.8],
+        "to": [0.66, 0.45, 0.8],
+        "tilt": [-6, -14],
+        "dof": {"focus": [0.7, 0.42], "radius": 0.34, "feather": 0.5, "blur": 3.0}
+      },
+      "portrait": {
+        "from": [0.48, 0.6, 0.22],
+        "to": [0.874, 0.6, 0.22],
+        "tilt": [-8, 0],
+        "dof": {"focus": [0.5, 0.14], "normal": [0, 1], "radius": 0.1, "feather": 0.3, "blur": 6.0}
+      }
     }
   ]
 }

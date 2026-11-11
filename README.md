@@ -58,6 +58,7 @@ The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages ser
 | [assets/](assets/) | Fonts, images, and the hero film (`hero-*`, credits in `hero-credits.txt`) |
 | [scripts/sync_layout.py](scripts/sync_layout.py) | Copies the shared blocks from index.html into every page |
 | [scripts/make_hero.py](scripts/make_hero.py) | Renders the home-page hero film from the shots in `scripts/hero_shots.json` |
+| [scripts/hero_scenes.py](scripts/hero_scenes.py) | Draws the film's scenes: RTL, simulation waveforms, place and route with a clock tree, and the finished die |
 | [sitemap.xml](sitemap.xml) | Page list for search engines |
 | [.github/workflows/](.github/workflows/) | Automation and deployment |
 | [package.json](package.json) | Project configuration |
@@ -74,7 +75,9 @@ The script copies the blocks into the other pages and marks each page's own link
 
 ### Changing the hero film
 
-The film on the home page is built from real photographs and footage, listed with their credits, licenses and camera moves in `scripts/hero_shots.json`. Edit that file, then in the Actions tab run "Build hero video". Leave the branch as `hero-preview` to check the result first, then run it again with `main` to publish. It writes the `assets/hero-*` files under the same names, so the HTML doesn't change.
+The film on the home page walks through the digital design flow, and every frame of it is drawn from scratch by `scripts/hero_scenes.py`, so there is nothing to credit or license. It plays four shots in a loop: a clock tree routing across standard cells, a pull-back over the finished die (with the club's name in top metal), a systolic-array PE being written in SystemVerilog, and that PE's simulation running. The shots, their order, timing and camera moves, and which frame becomes the poster are in `scripts/hero_shots.json`.
+
+Edit that file (or the scenes), then in the Actions tab run "Build hero video". Leave the branch as `hero-preview` to check the result first, then run it again with `main` to publish. It writes the `assets/hero-*` files under the same names, so the HTML doesn't change. To render on your own machine, install ffmpeg and `pip install numpy opencv-python-headless pillow fonttools brotli`, then run `python3 scripts/make_hero.py scripts/hero_shots.json` (add `--preview` for a fast half-size check). The renderer can still take photos or footage as shots too; see the top of `scripts/make_hero.py`.
 
 ### Adding a page
 

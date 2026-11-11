@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Render the home-page hero film from real photographs or footage.
+"""Render the home-page hero film.
 
-Reads a shot list (scripts/hero_shots.json), downloads each source, moves a
-slow virtual camera across it, grades it toward the site's black, white and
-gold look, and crossfades the shots into a seamless loop. Writes:
+Reads a shot list (scripts/hero_shots.json), moves a slow virtual camera across
+each shot's source, grades it toward the site's black, white and gold look, and
+crossfades the shots into a seamless loop. A source is either a procedural scene
+drawn by scripts/hero_scenes.py (the digital design flow: RTL, simulation,
+place and route, the finished die) or a photo or video to download. Writes:
 
   assets/hero-1080.mp4            1920x1080 H.264 High 4.1 (matches index.html)
   assets/hero-720.webm            1280x720 VP9
@@ -15,7 +17,8 @@ gold look, and crossfades the shots into a seamless loop. Writes:
 The file names stay the same, so index.html and site.css need no edits.
 
 Run it from GitHub Actions ("Build hero video" in the Actions tab), or
-locally with python3, numpy, opencv-python-headless and ffmpeg:
+locally with python3, ffmpeg, and pip install numpy opencv-python-headless
+pillow fonttools brotli:
 
   python3 scripts/make_hero.py scripts/hero_shots.json
   python3 scripts/make_hero.py scripts/hero_shots.json --preview   # fast, small
@@ -26,8 +29,15 @@ Shot list format (all coordinates are fractions of the source image):
     "fps": 30,
     "crossfade": 1.4,                  seconds of dissolve between shots
     "grade": {...},                    see GRADE_DEFAULTS below
+    "poster": {"shot": 1, "time": 3},  optional: the still for the posters, as
+                                       shot number (from 1) and seconds into it;
+                                       without it the posters are the first frame
     "shots": [{
-      "src": "https://...jpg",         a photo, or a video (set "kind": "video")
+      "kind": "scene",                 a drawing from scripts/hero_scenes.py ...
+      "scene": "route",                ... by name: rtl, waves, route or die
+      "params": {...},                 optional settings for that scene
+    }, {
+      "src": "https://...jpg",         or a photo, or a video (set "kind": "video")
       "page": "https://...",           the page it came from, for the credits
       "credit": "What it is. Photo: Name",
       "license": "CC0 1.0",
@@ -41,6 +51,14 @@ Shot list format (all coordinates are fractions of the source image):
   source. The camera moves in a straight line from "from" to "to" over the
   shot (zoom changes at a constant rate). Optional per shot: "rot": [a, b] in
   degrees, "start" and "speed" for video sources, "grade" overrides.
+
+  Scenes also take, per shot or inside "landscape"/"portrait":
+    "tilt":  [rx, ry]                   degrees; swings the camera for perspective
+    "dof":   {"focus": [x, y], "radius": r, "feather": f, "blur": px}
+                                        soft focus away from a point (fractions of
+                                        the frame); add "normal": [nx, ny] to focus
+                                        along a line instead
+    "bloom": {"threshold": t, "sigma": px, "strength": k}   glow on bright gold
 """
 import argparse
 import hashlib
@@ -55,6 +73,9 @@ import urllib.request
 
 import cv2
 import numpy as np
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import hero_scenes  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(tempfile.gettempdir(), 'sasi-hero-sources')   # downloads, kept out of the repo
@@ -279,13 +300,20 @@ class Renderer:
         self.total = sum(self.durs)
         self.sources = []
         for s in self.shots:
+            if s.get('kind') == 'scene':
+                log('  drawing scene', s['scene'])
+                self.sources.append(hero_scenes.get(s['scene'], s.get('params', {})))
+                continue
             path = fetch(s['src'])
             if s.get('kind') == 'video':
                 self.sources.append(Footage(path, float(s.get('start', 0)), float(s.get('speed', 1.0)), self.fps))
             else:
                 self.sources.append(Still(path))
         aspect = out_w / out_h
+        self._masks = {}
         for i, (s, src) in enumerate(zip(self.shots, self.sources)):
+            if isinstance(src, hero_scenes.Scene):
+                continue      # scenes are drawn at full size and mip-mapped instead
             path = s[orient]
             check_bounds('shot {} ({})'.format(i + 1, orient), path, aspect, src.w, src.h, s.get('rot'))
             # one pre-shrink per shot, from its tightest framing, so sharpness never pops
@@ -297,17 +325,57 @@ class Renderer:
         s, src = self.shots[i], self.sources[i]
         length = self.durs[i] + self.xf
         u = min(max(tau / length, 0.0), 1.0)
-        cx, cy, w = camera(s[self.orient], u)
+        path = s[self.orient]
+        cx, cy, w = camera(path, u)
         rot = s.get('rot')
         angle = rot[0] + (rot[1] - rot[0]) * u if rot else 0.0
-        img = src.frame_at(int(round(tau * self.fps))) if isinstance(src, Footage) else src.img
-        out = warp(img, cx, cy, w, angle, self.out_w, self.out_h)
+        if isinstance(src, hero_scenes.Scene):
+            tilt = path.get('tilt', s.get('tilt'))
+            x = src.view(tau, cx, cy, w, angle, tilt, self.out_w, self.out_h)
+        else:
+            img = src.frame_at(int(round(tau * self.fps))) if isinstance(src, Footage) else src.img
+            x = warp(img, cx, cy, w, angle, self.out_w, self.out_h).astype(np.float32) / 255.0
         g = dict(GRADE_DEFAULTS, **self.spec.get('grade', {}))
         g.update(s.get('grade', {}))
-        x = out.astype(np.float32) / 255.0
         if g['soften'] > 0:
             x = cv2.GaussianBlur(x, (0, 0), g['soften'])
-        return grade(x, g)
+        dof = path.get('dof', s.get('dof'))
+        if dof:
+            m = self.dof_mask(i, dof)
+            k = self.out_w / 1920.0 if self.out_w > self.out_h else self.out_h / 1920.0
+            soft = cv2.GaussianBlur(x, (0, 0), dof.get('blur', 4.0) * k)
+            x = x + (soft - x) * m[..., None]
+        x = grade(x, g)
+        bloom = path.get('bloom', s.get('bloom'))
+        if bloom:
+            x = self.add_bloom(x, bloom)
+        return x
+
+    def dof_mask(self, i, dof):
+        """0 where the shot is in focus, rising to 1 where it is fully soft."""
+        key = (i, json.dumps(dof, sort_keys=True))
+        if key not in self._masks:
+            h, w = self.out_h, self.out_w
+            ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+            fx, fy = dof.get('focus', [0.5, 0.5])
+            dx, dy = (xs / w - fx) * (w / h), ys / h - fy        # in frame heights
+            if 'normal' in dof:
+                nx, ny = dof['normal']
+                n = math.hypot(nx, ny)
+                d = np.abs(dx * nx / n + dy * ny / n)
+            else:
+                d = np.sqrt(dx * dx + dy * dy)
+            m = np.clip((d - dof.get('radius', 0.3)) / dof.get('feather', 0.4), 0.0, 1.0)
+            self._masks[key] = smoothstep(m).astype(np.float32)
+        return self._masks[key]
+
+    def add_bloom(self, x, b):
+        """A soft glow around the brightest parts of the frame (the gold clock net)."""
+        k = self.out_w / 1920.0 if self.out_w > self.out_h else self.out_h / 1920.0
+        hot = np.clip(x - b.get('threshold', 0.55), 0.0, None)
+        glow = cv2.GaussianBlur(hot, (0, 0), b.get('sigma', 14) * k) + \
+            0.5 * cv2.GaussianBlur(hot, (0, 0), b.get('sigma', 14) * k * 3)
+        return np.clip(x + glow * b.get('strength', 0.8), 0.0, 1.0)
 
     def frame(self, n):
         """Output frame n. The film starts as shot 1 becomes fully visible and
@@ -382,19 +450,28 @@ def render(spec, orient, outputs, outdir, preview):
         sys.exit('ffmpeg failed')
     for name in outputs:          # only replace the real files once ffmpeg has finished cleanly
         os.replace(tmp[name], os.path.join(outdir, name))
+    poster = spec.get('poster')
+    if poster:
+        # the still shown before the film loads, and instead of it when motion is off
+        first = (r.shot_frame(int(poster['shot']) - 1, float(poster['time'])) * 255.0 + 0.5).astype(np.uint8)
     return first
 
 
 def save_poster(frame, size, path):
     img = cv2.resize(frame, size, interpolation=cv2.INTER_AREA)
+    img = cv2.GaussianBlur(img, (0, 0), 0.6)    # the finest layout detail costs bytes nobody sees under the shade
     cv2.imwrite(path, cv2.cvtColor(img, cv2.COLOR_RGB2BGR),
-                [cv2.IMWRITE_JPEG_QUALITY, 84, cv2.IMWRITE_JPEG_PROGRESSIVE, 1])
+                [cv2.IMWRITE_JPEG_QUALITY, 80, cv2.IMWRITE_JPEG_PROGRESSIVE, 1])
 
 
 def write_credits(spec, path):
     lines = ['Home-page hero film. Built by scripts/make_hero.py from scripts/hero_shots.json.', '']
     for i, s in enumerate(spec['shots'], 1):
         lines.append('Shot {}: {}'.format(i, s.get('credit', 'unknown')))
+        if s.get('kind') == 'scene':
+            lines.append('  License: {}'.format(s.get('license', 'Original work by Stone Arch Silicon')))
+            lines.append('  Source: drawn by scripts/hero_scenes.py (scene "{}")'.format(s['scene']))
+            continue
         lines.append('  License: {}'.format(s.get('license', 'unknown')))
         lines.append('  Source: {}'.format(s.get('page', s['src'])))
     if any('DVIDS' in s.get('license', '') for s in spec['shots']):
