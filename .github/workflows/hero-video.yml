@@ -59,8 +59,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B "$BRANCH"
-          git add assets/hero-1080.mp4 assets/hero-720.webm assets/hero-mobile.mp4 \
-                  assets/hero-poster.jpg assets/hero-poster-mobile.jpg assets/hero-credits.txt
+          git add assets/hero-*
           if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
           git commit -m "Render hero film from scripts/hero_shots.json"
           if [ "$BRANCH" = "$SOURCE" ]; then

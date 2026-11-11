@@ -3,6 +3,13 @@
   "crossfade": 0.8,
   "grade": {"exposure": 0.0, "contrast": 1.04, "saturation": 1.0, "soften": 0.0},
   "poster": {"shot": 1, "time": 3.4},
+  "posters": [
+    {"name": "hero-poster-about", "shot": 2, "time": 1.6},
+    {"name": "hero-poster-events", "shot": 4, "time": 1.2},
+    {"name": "hero-poster-updates", "shot": 3, "time": 2.2},
+    {"name": "hero-poster-sponsor", "shot": 2, "time": 3.6},
+    {"name": "hero-poster-join", "shot": 1, "time": 2.4}
+  ],
   "shots": [
     {
       "kind": "scene",

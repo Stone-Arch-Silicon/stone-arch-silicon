@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>About · Stone Arch Silicon</title>
-<meta name="description" content="Stone Arch Silicon (SASi) is the University of Minnesota chip design club: four subteams (RTL, verification, physical design, analog), the people who run it, and our place in the ASIC Network." />
+<meta name="description" content="Stone Arch Silicon (SASi) is the University of Minnesota chip design club: five subteams (RTL, verification, physical design, analog, and logistics), the people who run it, and our place in the ASIC Network." />
 
 <link rel="canonical" href="https://stone-arch-silicon.github.io/stone-arch-silicon/about.html" />
 
@@ -23,7 +23,7 @@
 <!-- Fonts: Geist + Geist Mono (SIL OFL 1.1, see assets/Geist-OFL.txt), self-hosted -->
 <link rel="preload" href="assets/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="assets/site.css?v=20261023-belt" />
+<link rel="stylesheet" href="assets/site.css?v=20261111-logistics" />
 <script>document.documentElement.className = 'js';</script>
 <!-- /shared:head -->
 </head>
@@ -103,13 +103,22 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero has-index theme-dark" id="top" data-nav="dark">
-  <div class="page-hero-bg" aria-hidden="true"><div class="grain"></div></div>
+  <div class="page-hero-bg has-film film-about" aria-hidden="true">
+    <!-- The home film, started from this page's still (scripts/hero_shots.json, "posters"). -->
+    <video class="hero-video page-film" muted loop playsinline preload="none" disablepictureinpicture data-start="4.6">
+      <source src="assets/hero-mobile.mp4" type='video/mp4; codecs="avc1.640029"' media="(max-aspect-ratio: 3/4)" />
+      <source src="assets/hero-1080.mp4" type='video/mp4; codecs="avc1.640029"' />
+      <source src="assets/hero-720.webm" type='video/webm; codecs="vp9"' />
+    </video>
+    <div class="page-hero-shade"></div>
+    <div class="grain"></div>
+  </div>
   <div class="wrap">
     <p class="eyebrow">About SASi</p>
     <h1 class="page-title">The chip design club at the University of Minnesota.</h1>
     <p class="page-lead">Undergraduates learning, building, and taking designs from RTL to fabrication-ready layouts. A CSE Campus Life Program and a founding chapter of the ASIC Network.</p>
     <nav class="hero-specs" aria-label="On this page">
-      <a class="spec" href="#subteams"><b>Subteams <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>RTL, verification, PD, analog</span></a>
+      <a class="spec" href="#subteams"><b>Subteams <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Four technical, plus logistics</span></a>
       <a class="spec" href="#team"><b>Our team <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Board and advisors</span></a>
       <a class="spec" href="#network"><b>ASIC Network <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg></b><span>Clubs working in the open</span></a>
     </nav>
@@ -121,14 +130,15 @@
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow reveal">Subteams</p>
-      <h2 class="h2 reveal">Four subteams. Plug in wherever you're curious.</h2>
+      <h2 class="h2 reveal">Five subteams. Plug in wherever you're curious.</h2>
       <p class="lead reveal" data-d="1">Every subteam needs people. Pick the one you like.</p>
     </div>
-    <div class="paths">
+    <div class="paths paths-5">
       <div class="path reveal"><span class="idx"><span>Subteam</span><span>/01</span></span><h3>RTL</h3><p>Describe the hardware in SystemVerilog.</p><p class="path-lead">Lead · <a class="link" href="team-paulo-dietrich.html">Paulo Dietrich</a></p></div>
       <div class="path reveal" data-d="1"><span class="idx"><span>Subteam</span><span>/02</span></span><h3>Verification</h3><p>Prove it does what you claimed it does.</p><p class="path-lead">Lead · <a class="link" href="team-alexander-weimer.html">Alexander Weimer</a></p></div>
       <div class="path reveal" data-d="2"><span class="idx"><span>Subteam</span><span>/03</span></span><h3>Physical Design</h3><p>Floorplan, clock tree, and every wire, signed off DRC and LVS clean.</p><p class="path-lead">Lead · <a class="link" href="team-avi-raghuvanshi.html">Avi Raghuvanshi</a></p></div>
       <div class="path reveal" data-d="3"><span class="idx"><span>Subteam</span><span>/04</span></span><h3>Analog</h3><p>Circuits at the transistor level, from schematic to layout.</p><p class="path-lead">Lead · <a class="link" href="team-mohamed-elbahrawy.html">Mohamed Elbahrawy</a></p></div>
+      <div class="path reveal" data-d="4"><span class="idx"><span>Subteam</span><span>/05</span></span><h3>Logistics</h3><p>Events, spaces, timelines, funding, and promotion: everything that keeps the club running.</p><p class="path-lead">Co-leads · <a class="link" href="team-ethan-chung.html">Ethan Chung</a>, <a class="link" href="team-madeline-ngo.html">Madeline Ngo</a>, <a class="link" href="team-bear-blinschauer.html">Bear Blinschauer</a>, <a class="link" href="team-aparajita-lohmor.html">Aparajita Lohmor</a></p></div>
     </div>
   </div>
 </section>
@@ -151,9 +161,10 @@
       <li class="person reveal" data-d="2"><a class="person-link" href="team-alexander-weimer.html"><img src="assets/team/alexander-weimer.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Alexander Weimer</h4><p>Verification lead</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
       <li class="person reveal" data-d="3"><a class="person-link" href="team-mohamed-elbahrawy.html"><img src="assets/team/mohamed-elbahrawy.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Mohamed Elbahrawy</h4><p>Analog lead</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
       <li class="person reveal"><a class="person-link" href="team-leonard-jin.html"><img src="assets/team/leonard-jin.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Leonard Jin</h4><p>Documentation lead</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
-      <li class="person reveal" data-d="1"><a class="person-link" href="team-madeline-ngo.html"><img src="assets/team/madeline-ngo.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Madeline Ngo</h4><p>Timeline / Funding</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
-      <li class="person reveal" data-d="2"><a class="person-link" href="team-bear-blinschauer.html"><img src="assets/team/bear-blinschauer.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Bear Blinschauer</h4><p>Events / Spaces</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
-      <li class="person reveal" data-d="3"><a class="person-link" href="team-ethan-chung.html"><img src="assets/team/ethan-chung.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Ethan Chung</h4><p>Promotion</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
+      <li class="person reveal" data-d="1"><a class="person-link" href="team-madeline-ngo.html"><img src="assets/team/madeline-ngo.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Madeline Ngo</h4><p>Logistics co-lead</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
+      <li class="person reveal" data-d="2"><a class="person-link" href="team-bear-blinschauer.html"><img src="assets/team/bear-blinschauer.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Bear Blinschauer</h4><p>Logistics co-lead</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
+      <li class="person reveal" data-d="3"><a class="person-link" href="team-ethan-chung.html"><img src="assets/team/ethan-chung.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Ethan Chung</h4><p>Logistics co-lead</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
+      <li class="person reveal"><a class="person-link" href="team-aparajita-lohmor.html"><img src="assets/team/aparajita-lohmor.jpg" alt="" width="256" height="256" loading="lazy" decoding="async" /><h4>Aparajita Lohmor</h4><p>Logistics co-lead</p><span class="person-more">View profile <span aria-hidden="true">↗</span></span></a></li>
     </ul>
 
     <h3 class="team-group reveal">Advisors</h3>
@@ -273,7 +284,7 @@
 </footer>
 <!-- /shared:footer -->
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=20261111-logistics"></script>
 </body>
 </html>
      
