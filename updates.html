@@ -23,7 +23,7 @@
 <!-- Fonts: Geist + Geist Mono (SIL OFL 1.1, see assets/Geist-OFL.txt), self-hosted -->
 <link rel="preload" href="assets/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="assets/site.css?v=20261023-belt" />
+<link rel="stylesheet" href="assets/site.css?v=20261111-logistics" />
 <script>document.documentElement.className = 'js';</script>
 <!-- /shared:head -->
 </head>
@@ -103,7 +103,16 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero theme-dark" id="top" data-nav="dark">
-  <div class="page-hero-bg" aria-hidden="true"><div class="grain"></div></div>
+  <div class="page-hero-bg has-film film-updates" aria-hidden="true">
+    <!-- The home film, started from this page's still (scripts/hero_shots.json, "posters"). -->
+    <video class="hero-video page-film" muted loop playsinline preload="none" disablepictureinpicture data-start="9.0">
+      <source src="assets/hero-mobile.mp4" type='video/mp4; codecs="avc1.640029"' media="(max-aspect-ratio: 3/4)" />
+      <source src="assets/hero-1080.mp4" type='video/mp4; codecs="avc1.640029"' />
+      <source src="assets/hero-720.webm" type='video/webm; codecs="vp9"' />
+    </video>
+    <div class="page-hero-shade"></div>
+    <div class="grain"></div>
+  </div>
   <div class="wrap">
     <p class="eyebrow">Updates</p>
     <h1 class="page-title">Connecting students with industry.</h1>
@@ -222,7 +231,7 @@
 </footer>
 <!-- /shared:footer -->
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=20261111-logistics"></script>
 </body>
 </html>
      

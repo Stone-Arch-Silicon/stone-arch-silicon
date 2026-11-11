@@ -32,6 +32,9 @@ Shot list format (all coordinates are fractions of the source image):
     "poster": {"shot": 1, "time": 3},  optional: the still for the posters, as
                                        shot number (from 1) and seconds into it;
                                        without it the posters are the first frame
+    "posters": [{"name": "hero-poster-about", "shot": 2, "time": 1.6}, ...]
+                                       optional: more stills, for the inner pages'
+                                       heroes; each writes NAME.jpg and NAME-mobile.jpg
     "shots": [{
       "kind": "scene",                 a drawing from scripts/hero_scenes.py ...
       "scene": "route",                ... by name: rtl, waves, route or die
@@ -464,6 +467,24 @@ def save_poster(frame, size, path):
                 [cv2.IMWRITE_JPEG_QUALITY, 80, cv2.IMWRITE_JPEG_PROGRESSIVE, 1])
 
 
+def extra_posters(spec, outdir, preview, only):
+    """Stills for the inner pages' heroes. Each page plays the same film from its
+    poster's moment (data-start in the HTML), so the still and the film line up."""
+    jobs = [('landscape', (1920, 1080), ''), ('portrait', (720, 1280), '-mobile')]
+    for orient, size, suffix in jobs:
+        if only and only != orient or not spec.get('posters'):
+            continue
+        w, h = (size[0] // 2, size[1] // 2) if preview else size
+        r = Renderer(spec, orient, w, h)
+        for p in spec['posters']:
+            frame = (r.shot_frame(int(p['shot']) - 1, float(p['time'])) * 255.0 + 0.5).astype(np.uint8)
+            save_poster(frame, (w, h), os.path.join(outdir, p['name'] + suffix + '.jpg'))
+            start = (sum(float(x['duration']) for x in spec['shots'][:int(p['shot']) - 1])
+                     + float(p['time']) - spec['crossfade']) % sum(float(x['duration']) for x in spec['shots'])
+            if orient == 'landscape' or only == 'portrait':
+                log('  {}.jpg  (film time {:.2f}s, use data-start="{:.1f}")'.format(p['name'], start, start))
+
+
 def write_credits(spec, path):
     lines = ['Home-page hero film. Built by scripts/make_hero.py from scripts/hero_shots.json.', '']
     for i, s in enumerate(spec['shots'], 1):
@@ -504,6 +525,7 @@ def main():
         first = render(spec, 'portrait', PORTRAIT, args.out, args.preview)
         save_poster(first, (720, 1280) if not args.preview else (360, 640),
                     os.path.join(args.out, 'hero-poster-mobile.jpg'))
+    extra_posters(spec, args.out, args.preview, args.only)
     write_credits(spec, os.path.join(args.out, 'hero-credits.txt'))
     for name in list(LANDSCAPE) + list(PORTRAIT) + ['hero-poster.jpg', 'hero-poster-mobile.jpg']:
         p = os.path.join(args.out, name)

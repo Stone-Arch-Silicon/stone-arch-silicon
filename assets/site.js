@@ -78,6 +78,31 @@
     document.addEventListener('visibilitychange', () => { if (!document.hidden && Motion.on) syncVideo(true); });
   }
 
+  /* ---------- inner-page films: the home film, started at this page's shot ---------- */
+  $$('video.page-film').forEach(film => {
+    film.muted = true;
+    const start = parseFloat(film.dataset.start) || 0;
+    film.addEventListener('loadedmetadata', () => {
+      if (start) { try { film.currentTime = start % (film.duration || Infinity); } catch(e){} }
+    }, { once: true });
+    film.addEventListener('playing', () => film.classList.add('is-playing'));
+    function sync(on){
+      if (on){
+        if (film.preload !== 'auto') film.preload = 'auto';
+        const p = film.play();
+        if (p && p.catch) p.catch(() => {});   // low-power mode etc.: the still stays up
+      } else {
+        film.pause();
+      }
+    }
+    new IntersectionObserver(([e]) => {
+      if (!Motion.on) return;
+      if (e.isIntersecting) sync(true); else film.pause();
+    }, { threshold: 0 }).observe(film);
+    Motion.subscribe(sync);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && Motion.on) sync(true); });
+  });
+
   /* ---------- rolling word in the headline ---------- */
   const roller = $('#roller');
   if (roller){

@@ -625,3 +625,48 @@ img[src="assets/team/ethan-chung.jpg"]{view-transition-name:portrait-ethan-chung
 .hero .hero-specs{grid-template-columns:repeat(2,minmax(0,1fr));}
 @media(max-width:600px){.hero .hero-specs{grid-template-columns:1fr;}}
    
+
+/* =====================================================================
+   Inner-page heroes: the home film behind the title block, started at a
+   different shot on each page, with a matching still (hero-poster-PAGE).
+   ===================================================================== */
+.page-hero-bg.has-film{background:#050505 50% 50%/cover no-repeat;}
+.page-hero-bg.has-film::before{display:none;}
+.film-about{background-image:url("hero-poster-about.jpg");}
+.film-events{background-image:url("hero-poster-events.jpg");}
+.film-updates{background-image:url("hero-poster-updates.jpg");}
+.film-sponsor{background-image:url("hero-poster-sponsor.jpg");}
+.film-join{background-image:url("hero-poster-join.jpg");}
+@media (max-aspect-ratio:3/4){
+  .film-about{background-image:url("hero-poster-about-mobile.jpg");}
+  .film-events{background-image:url("hero-poster-events-mobile.jpg");}
+  .film-updates{background-image:url("hero-poster-updates-mobile.jpg");}
+  .film-sponsor{background-image:url("hero-poster-sponsor-mobile.jpg");}
+  .film-join{background-image:url("hero-poster-join-mobile.jpg");}
+}
+.page-hero-shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(0,0,0,.66) 0%,rgba(0,0,0,.2) 24%,rgba(0,0,0,.28) 52%,rgba(6,6,7,.95) 100%),
+  linear-gradient(90deg,rgba(0,0,0,.74) 0%,rgba(0,0,0,.45) 50%,rgba(0,0,0,.08) 88%);}
+.page-hero-bg .grain{z-index:1;}
+
+/* About: five subteams on one row */
+.paths-5{grid-template-columns:repeat(5,minmax(0,1fr));}
+@media (max-width:1180px){
+  .paths-5{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .paths-5 .path:nth-child(5){grid-column:1/-1;border-left:0;min-height:0;}
+}
+@media (max-width:640px){
+  .paths-5{grid-template-columns:1fr;}
+}
+
+/* Profile pages: background and selected work */
+.profile-bg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(48px,8vw,128px);align-items:start;}
+.profile-bg .h2{margin-top:24px;max-width:17ch;font-size:clamp(30px,3.4vw,52px);}
+.profile-work{border-top:1px solid var(--line-2);}
+.profile-work li{padding:22px 0 24px;border-bottom:1px solid var(--line);}
+.profile-work h3{font-size:clamp(19px,1.5vw,23px);font-weight:450;line-height:1.25;letter-spacing:-.02em;}
+.profile-work p{margin-top:8px;max-width:58ch;font-size:16px;line-height:1.5;color:var(--muted);}
+.work-tag{display:block;margin-bottom:10px;font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--gold);}
+@media (max-width:900px){
+  .profile-bg{grid-template-columns:1fr;}
+}

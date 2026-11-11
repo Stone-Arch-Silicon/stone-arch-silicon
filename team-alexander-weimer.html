@@ -23,7 +23,7 @@
 <!-- Fonts: Geist + Geist Mono (SIL OFL 1.1, see assets/Geist-OFL.txt), self-hosted -->
 <link rel="preload" href="assets/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="assets/site.css?v=20261023-belt" />
+<link rel="stylesheet" href="assets/site.css?v=20261111-logistics" />
 <script>document.documentElement.className = 'js';</script>
 <!-- /shared:head -->
 </head>
@@ -120,7 +120,7 @@
     <div>
       <p class="eyebrow">At SASi</p>
       <h2 class="h2" id="focus-title">Verification</h2>
-      <p class="lead">The verification subteam checks that designs behave as intended before they move further through the chip development flow.</p>
+      <p class="lead">The verification subteam checks that designs behave as intended before they move further through the chip development flow. This fall the subteam is building a scan chain, with a pipelined FIR filter as the design under test.</p>
       <div class="profile-actions">
         <a class="btn btn-solid" href="about.html#subteams">Explore the subteams <span aria-hidden="true">↗</span></a>
       </div>
@@ -131,6 +131,23 @@
       <a class="link" href="mailto:SASI@umn.edu?subject=For%20Alexander%20Weimer%20%E2%80%94%20SASi">SASI@umn.edu <span aria-hidden="true">↗</span></a>
       <a class="btn btn-line" href="join.html">Join SASi <span aria-hidden="true">→</span></a>
     </aside>
+  </div>
+</section>
+<section class="sec theme-dark" aria-labelledby="background-title" data-nav="dark">
+  <div class="wrap profile-bg">
+    <div>
+      <p class="eyebrow">Background</p>
+      <h2 class="h2" id="background-title">Projects that run from hardware security RTL to qubit control.</h2>
+      <div class="profile-actions">
+        <a class="btn btn-line" href="https://a0.ax" target="_blank" rel="noopener">Personal website <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-line" href="https://github.com/a0ax" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <ul class="profile-work">
+        <li><span class="work-tag">Hardware security</span><h3><a class="link" href="https://github.com/a0ax/ArbiterPUF" target="_blank" rel="noopener">ArbiterPUF</a></h3><p>A compact RTL framework for simulating arbiter PUF variants, extracting challenge-response pairs, and measuring core PUF metrics.</p></li>
+        <li><span class="work-tag">Quantum hardware</span><h3><a class="link" href="https://github.com/a0ax/QubitPulseGenerator" target="_blank" rel="noopener">Qubit pulse generator</a></h3><p>A multi-channel programmable pulse generator for qubit control.</p></li>
+        <li><span class="work-tag">Software</span><h3><a class="link" href="https://github.com/a0ax/fastgeotoolkit" target="_blank" rel="noopener">fastgeotoolkit</a></h3><p>A performant JavaScript library for GPS route density mapping.</p></li>
+    </ul>
   </div>
 </section>
 <section class="sec theme-light" aria-labelledby="more-leads" data-nav="light">
@@ -145,6 +162,7 @@
           <li><a class="link" href="team-madeline-ngo.html">Madeline Ngo</a></li>
           <li><a class="link" href="team-bear-blinschauer.html">Bear Blinschauer</a></li>
           <li><a class="link" href="team-ethan-chung.html">Ethan Chung</a></li>
+          <li><a class="link" href="team-aparajita-lohmor.html">Aparajita Lohmor</a></li>
       </ul>
     </nav>
   </div>
@@ -199,7 +217,7 @@
 </footer>
 <!-- /shared:footer -->
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=20261111-logistics"></script>
 </body>
 </html>
      
