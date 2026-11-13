@@ -41,7 +41,7 @@ The site is plain HTML, CSS, and JavaScript with no build step. GitHub Pages ser
 | Path | Purpose |
 | --- | --- |
 | [index.html](index.html) | Home page, and the master copy of the shared head, header, menu, and footer |
-| [about.html](about.html) | The five subteams, the team (board and advisors), the ASIC Network, and club facts |
+| [about.html](about.html) | The five subteams, the team (technical leads, logistics, and advisors), the ASIC Network, and club facts |
 | `team-*.html` | Individual profiles for the eleven student leads and officers, linked from Home and About |
 | [events.html](events.html) | The SASi Google Calendar |
 | [updates.html](updates.html) | News cards (the home page lists the latest headlines) |
